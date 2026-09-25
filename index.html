@@ -15,19 +15,19 @@ body{background:#000;overflow:hidden}
 button,input{font:inherit}button{cursor:pointer}
 .app{height:100vh;display:flex;align-items:center;justify-content:center;padding:8px}
 .screen{width:min(96vw,980px);aspect-ratio:4/3;background:#000;border:4px solid #222;position:relative;overflow:hidden;box-shadow:0 0 0 3px #000,0 0 0 6px #2747a7}
-.topbar{position:absolute;left:0;top:0;right:0;height:18%;min-height:84px;background:#000;display:grid;grid-template-columns:20% 1fr 19%;align-items:center;padding:1.2% 2%;gap:1.2%}
+.topbar{position:absolute;left:0;top:0;right:0;height:18%;min-height:84px;background:#000;display:grid;grid-template-columns:22% 1fr;align-items:center;padding:1.2% 2%;gap:1.2%}
 .minimapBox{height:100%;display:flex;align-items:center;justify-content:flex-start}
-#miniMap{width:100%;height:78%;background:#6b6b6b;border:2px solid #222;display:block;cursor:pointer}
+#miniGraph{width:100%;height:78%;background:#02040a;border:2px solid #5c6fc7;display:block;cursor:pointer}
 .statusStrip{height:100%;display:flex;align-items:center;justify-content:space-between;gap:1.2%;min-width:0}
 .statGroup{display:flex;align-items:center;gap:1%;min-width:0}
 .pixelLabel{font-weight:900;color:#fff;text-shadow:2px 2px 0 #555;line-height:1;letter-spacing:0;white-space:nowrap}
 .itemPair{display:flex;align-items:center;gap:2px;margin-right:8px}
 .smallIcon{width:36px;height:36px;background:#000;display:block}
 .count{font-size:clamp(19px,2.7vw,34px);font-weight:900;color:#fff;text-shadow:2px 2px 0 #555;line-height:1}
-.lifeBox{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:4px}
-.lifeTitle{font-size:clamp(12px,1.8vw,24px);font-weight:900;color:#b44d10;letter-spacing:0;line-height:1}
-.hearts{display:flex;gap:4px}
-.heart{width:20px;height:18px;background:#b95315;clip-path:polygon(50% 100%,0 58%,0 28%,20% 7%,50% 23%,80% 7%,100% 28%,100% 58%)}
+.statusControls{display:flex;align-items:center;gap:6px;margin-left:auto}
+.statusBtn{border:3px solid #fff;background:#12204b;color:#fff;box-shadow:3px 3px 0 #000;padding:5px 9px;line-height:1;font-weight:900;white-space:nowrap}
+.statusBtn.run{background:#8f2038}
+.statusBtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
 .playfieldWrap{position:absolute;left:0;right:0;top:18%;bottom:0;background:#000;display:flex;align-items:center;justify-content:center;padding:0}
 #map{background:#000;display:block;image-rendering:pixelated;max-width:100%;max-height:100%}
 .overlayBtn{border:3px solid #fff;background:#12204b;color:#fff;box-shadow:3px 3px 0 #000;padding:4px 8px;line-height:1;white-space:nowrap}
@@ -42,7 +42,7 @@ button,input{font:inherit}button{cursor:pointer}
 .graphBox{width:min(94%,900px);background:#081126;border:4px solid #fff;outline:4px solid #000;box-shadow:8px 8px 0 #000;padding:12px}.graphHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px}#bigGraph{width:100%;height:260px;display:block;background:#02040a;border:3px solid #465fd4}.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;font-size:12px}.dot{display:inline-block;width:10px;height:10px;margin-right:4px}
 .help{margin:0;padding-left:1.25em;line-height:1.8;font-size:13px}.url{margin-top:10px;color:#9cd7ff;word-break:break-all;font-size:13px;text-align:center}.qrWrap{text-align:center}.qrWrap img{width:min(280px,80vw);height:auto;background:#fff;padding:12px;border:4px solid #000}
 .copy{position:absolute;left:50%;transform:translateX(-50%);bottom:4px;background:#000a;border:1px solid #6073c9;padding:2px 8px;font-size:10px;color:#cdd7ff;z-index:4}
-@media (max-width:760px){.screen{width:100vw;height:100vh;aspect-ratio:auto;border:none;box-shadow:none}.topbar{grid-template-columns:24% 1fr 18%;padding:1.5%}.smallIcon{width:28px;height:28px}.count{font-size:18px}.menuBtns{top:.8%;right:.8%}.overlayBtn{padding:3px 6px;font-size:12px}.lifeTitle{font-size:12px}.heart{width:14px;height:13px}.setGrid{grid-template-columns:1fr}.copy{font-size:9px}}
+@media (max-width:760px){.screen{width:100vw;height:100vh;aspect-ratio:auto;border:none;box-shadow:none}.topbar{grid-template-columns:24% 1fr 18%;padding:1.5%}.smallIcon{width:28px;height:28px}.count{font-size:18px}.menuBtns{top:.8%;right:.8%}.overlayBtn{padding:3px 6px;font-size:12px}.statusBtn{font-size:11px;padding:4px 6px}.setGrid{grid-template-columns:1fr}.copy{font-size:9px}}
 </style>
 </head>
 <body>
@@ -54,7 +54,7 @@ button,input{font:inherit}button{cursor:pointer}
   </div>
 
   <div class="topbar">
-    <div class="minimapBox"><canvas id="miniMap" width="160" height="96" title="クリックでグラフ表示"></canvas></div>
+    <div class="minimapBox"><canvas id="miniGraph" width="160" height="96" title="クリックでグラフを拡大"></canvas></div>
     <div class="statusStrip">
       <div class="statGroup">
         <div class="itemPair"><canvas id="hudGrass" class="smallIcon" width="36" height="36"></canvas><div class="count" id="grassCount">0</div></div>
@@ -62,9 +62,11 @@ button,input{font:inherit}button{cursor:pointer}
         <div class="itemPair"><canvas id="hudWolf" class="smallIcon" width="36" height="36"></canvas><div class="count" id="wolfCount">0</div></div>
       </div>
       <div class="statGroup"><div class="pixelLabel" id="turnLabel">TURN 0</div></div>
-      <div class="lifeBox"><div class="lifeTitle">-LIFE-</div><div class="hearts"><span class="heart"></span><span class="heart"></span><span class="heart"></span></div></div>
+      <div class="statusControls">
+        <button id="runTop" class="statusBtn run">START</button>
+        <button id="resetTop" class="statusBtn">RESET</button>
+      </div>
     </div>
-    <div></div>
   </div>
 
   <div class="playfieldWrap"><canvas id="map" width="768" height="576"></canvas></div>
@@ -81,8 +83,8 @@ button,input{font:inherit}button{cursor:pointer}
       <div class="f"><label>初期シカ数</label><input id="di" type="number" min="0" value="12"></div>
       <div class="f"><label>初期オオカミ数</label><input id="wi" type="number" min="0" value="5"></div>
     </div>
-    <div class="row"><button id="mapchg" class="btn">MAP CHANGE</button><button id="reset" class="btn">RESET</button><button id="run" class="btn red">START</button><button id="step" class="btn">1 TURN</button></div>
-    <div class="miniInfo">ファミコン風の画面構成に合わせ、フィールドを中心にし、設定はポップアップ表示にしました。左上の小窓は現在の生態系の小マップ兼グラフボタンです。</div>
+    <div class="row"><button id="mapchg" class="btn">MAP CHANGE</button><button id="step" class="btn">1 TURN</button></div>
+    <div class="miniInfo">設定はポップアップ表示です。START / PAUSE と RESET は上部ステータスにあります。左上の小窓は個体数グラフの縮小表示で、クリックすると横長に拡大します。</div>
   </div></div>
 
   <div id="graphModal" class="modal"><div class="graphBox">
@@ -92,7 +94,7 @@ button,input{font:inherit}button{cursor:pointer}
     <div class="legend"><span><i class="dot" style="background:#69ff69"></i>草</span><span><i class="dot" style="background:#ffd84a"></i>シカ</span><span><i class="dot" style="background:#c796ff"></i>オオカミ</span></div>
   </div></div>
 
-  <div id="helpModal" class="modal"><div class="box"><div class="mh"><h2>HELP / あそびかた</h2><button class="x" data-close="helpModal">×</button></div><ol class="help"><li>SETを押すと設定画面が開きます。</li><li>STARTで連続再生、1 TURNで1ターンずつ進みます。</li><li>シカは草を食べ、オオカミはシカを食べます。オオカミはシカがいないとき、ときどき草も食べます。</li><li>左上の小窓は小マップです。クリックすると横長の個体数グラフが表示されます。</li><li>フィールド中央の変化を観察しながら、増えすぎ・減りすぎ・周期的変化を見てください。</li></ol></div></div>
+  <div id="helpModal" class="modal"><div class="box"><div class="mh"><h2>HELP / あそびかた</h2><button class="x" data-close="helpModal">×</button></div><ol class="help"><li>SETを押すと設定画面が開きます。</li><li>上部ステータスの START / PAUSE で連続再生・停止、RESETで初期状態に戻します。1 TURNは設定画面から1ターンずつ進めます。</li><li>シカは草を食べ、オオカミはシカを食べます。オオカミはシカがいないとき、ときどき草も食べます。</li><li>左上の小窓は個体数グラフです。クリックすると横長のグラフが表示されます。</li><li>フィールド中央の変化を観察しながら、増えすぎ・減りすぎ・周期的変化を見てください。</li></ol></div></div>
 
   <div id="qrModal" class="modal"><div class="box qrWrap"><div class="mh"><h2>QR CODE</h2><button class="x" data-close="qrModal">×</button></div><img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=https%3A%2F%2Fscd-ku.github.io%2Flifegame" alt="QR"><div class="url">https://scd-ku.github.io/lifegame</div></div></div>
 
@@ -103,7 +105,7 @@ button,input{font:inherit}button{cursor:pointer}
 const $=id=>document.getElementById(id);
 const S={n:20,c:[],d:[],w:[],t:0,timer:0,hg:[],hd:[],hw:[],a:0};
 const mapCanvas=$('map'),ctx=mapCanvas.getContext('2d');
-const mini=$('miniMap'),mctx=mini.getContext('2d');
+const mini=$('miniGraph'),mctx=mini.getContext('2d');
 const gCanvas=$('bigGraph'),gctx=gCanvas.getContext('2d');
 const cl=(v,a,b)=>Math.min(b,Math.max(a,v)),pick=a=>a.length?a[Math.random()*a.length|0]:null;
 const nb=(x,y)=>{const a=[];if(x>0)a.push({x:x-1,y});if(x<S.n-1)a.push({x:x+1,y});if(y>0)a.push({x,y:y-1});if(y<S.n-1)a.push({x,y:y+1});return a};
@@ -123,17 +125,75 @@ function seaTile(c,x,y,t){px(c,x,y,t,t,'#2a69ff');px(c,x,y+t-4,t,4,'#1849b8');px
 function deerTile(c,x,y,t,f){drawDeerIcon(c,x,y,t,f)}
 function wolfTile(c,x,y,t,f){drawWolfIcon(c,x,y,t,f)}
 function draw(){const ratio=4/3;const wrap=mapCanvas.parentElement.getBoundingClientRect();const fw=wrap.width-20,fh=wrap.height-20;let w=fw,h=Math.floor(w/ratio);if(h>fh){h=fh;w=Math.floor(h*ratio)}mapCanvas.width=w;mapCanvas.height=h;const tile=Math.max(12,Math.floor(Math.min(w,h)/S.n));ctx.imageSmoothingEnabled=false;px(ctx,0,0,w,h,'#000');for(let y=0;y<S.n;y++)for(let x=0;x<S.n;x++){const cell=S.c[y][x],xx=Math.floor((w-tile*S.n)/2)+x*tile,yy=Math.floor((h-tile*S.n)/2)+y*tile;if(cell.terrain==='grass'){if(cell.g)grassTile(ctx,xx,yy,tile);else{px(ctx,xx,yy,tile,tile,'#5a4a2a');px(ctx,xx,yy+tile-4,tile,4,'#3b2f18')}}else if(cell.terrain==='waste')wasteTile(ctx,xx,yy,tile);else seaTile(ctx,xx,yy,tile);if(cell.d)deerTile(ctx,xx,yy,tile,S.a);if(cell.w)wolfTile(ctx,xx,yy,tile,S.a)}}
-function ui(){let grass=0;for(const c of S.c.flat())if(c.terrain==='grass'&&c.g)grass++;$('grassCount').textContent=grass;$('deerCount').textContent=S.d.length;$('wolfCount').textContent=S.w.length;$('turnLabel').textContent='TURN '+S.t;$('graphTurn').textContent='TURN '+S.t;renderMiniMap()}
+function ui(){let grass=0;for(const c of S.c.flat())if(c.terrain==='grass'&&c.g)grass++;$('grassCount').textContent=grass;$('deerCount').textContent=S.d.length;$('wolfCount').textContent=S.w.length;$('turnLabel').textContent='TURN '+S.t;$('graphTurn').textContent='TURN '+S.t;drawMiniGraph()}
 function hist(){let grass=0;for(const c of S.c.flat())if(c.terrain==='grass'&&c.g)grass++;S.hg.push(grass);S.hd.push(S.d.length);S.hw.push(S.w.length);if(S.hg.length>200){S.hg.shift();S.hd.shift();S.hw.shift()}drawGraph()}
-function renderMiniMap(){const w=mini.width,h=mini.height;mctx.imageSmoothingEnabled=false;px(mctx,0,0,w,h,'#6b6b6b');if(!S.c.length)return;const tw=Math.max(2,Math.floor(w/S.n)),th=Math.max(2,Math.floor(h/S.n));for(let y=0;y<S.n;y++)for(let x=0;x<S.n;x++){const c=S.c[y][x],xx=x*tw,yy=y*th;let col='#cdb991';if(c.terrain==='grass')col=c.g?'#51da48':'#85704a';if(c.terrain==='waste')col='#d8bf91';if(c.terrain==='sea')col='#4d75ff';px(mctx,xx,yy,tw,th,col);if(c.d)px(mctx,xx,yy,tw,th,'#b8752b');if(c.w)px(mctx,xx,yy,tw,th,'#e7e7ef')}}
-function drawGraph(){const w=gCanvas.clientWidth||720,h=260,d=devicePixelRatio||1;gCanvas.width=w*d;gCanvas.height=h*d;gctx.setTransform(d,0,0,d,0,0);px(gctx,0,0,w,h,'#02040a');const L=34,R=8,T=8,B=20,PW=w-L-R,PH=h-T-B,m=Math.max(1,...S.hg,...S.hd,...S.hw);gctx.strokeStyle='#27315f';gctx.fillStyle='#aab7ff';gctx.font='10px monospace';for(let i=0;i<=4;i++){const y=T+PH*i/4;gctx.beginPath();gctx.moveTo(L,y);gctx.lineTo(w-R,y);gctx.stroke();gctx.fillText(String(Math.round(m*(4-i)/4)),3,y+3)}function p(a,col){if(a.length<2)return;gctx.strokeStyle=col;gctx.lineWidth=2;gctx.beginPath();a.forEach((v,i)=>{const x=L+PW*i/(a.length-1),y=T+PH*(1-v/m);if(i===0)gctx.moveTo(x,y);else gctx.lineTo(x,y)});gctx.stroke()}p(S.hg,'#69ff69');p(S.hd,'#ffd84a');p(S.hw,'#c796ff')}
+function drawMiniGraph(){const w=mini.width,h=mini.height;mctx.imageSmoothingEnabled=false;px(mctx,0,0,w,h,'#6b6b6b');if(!S.c.length)return;const tw=Math.max(2,Math.floor(w/S.n)),th=Math.max(2,Math.floor(h/S.n));for(let y=0;y<S.n;y++)for(let x=0;x<S.n;x++){const c=S.c[y][x],xx=x*tw,yy=y*th;let col='#cdb991';if(c.terrain==='grass')col=c.g?'#51da48':'#85704a';if(c.terrain==='waste')col='#d8bf91';if(c.terrain==='sea')col='#4d75ff';px(mctx,xx,yy,tw,th,col);if(c.d)px(mctx,xx,yy,tw,th,'#b8752b');if(c.w)px(mctx,xx,yy,tw,th,'#e7e7ef')}}
+function drawGraph(){
+  const w=gCanvas.clientWidth||720,h=260,d=devicePixelRatio||1;
+  gCanvas.width=w*d;gCanvas.height=h*d;gctx.setTransform(d,0,0,d,0,0);
+  px(gctx,0,0,w,h,'#02040a');
+  const L=58,R=16,T=18,B=46,PW=w-L-R,PH=h-T-B;
+  const maxData=Math.max(1,...S.hg,...S.hd,...S.hw);
+  const yStep=Math.max(1,Math.ceil(maxData/5));
+  const yMax=yStep*5;
+  const startTurn=Math.max(0,S.t-(S.hg.length-1));
+  const xStep=S.t>=50?10:5;
+  const endTurn=Math.max(xStep,Math.ceil(S.t/xStep)*xStep);
+
+  gctx.font='11px monospace';
+  gctx.textAlign='right';gctx.textBaseline='middle';
+  for(let i=0;i<=5;i++){
+    const val=i*yStep;
+    const y=T+PH-(val/yMax)*PH;
+    gctx.strokeStyle=i===0?'#fff':'#2c355d';
+    gctx.lineWidth=i===0?2:1;
+    gctx.beginPath();gctx.moveTo(L,y);gctx.lineTo(w-R,y);gctx.stroke();
+    gctx.fillStyle='#fff';gctx.fillText(String(val),L-7,y);
+  }
+
+  gctx.textAlign='center';gctx.textBaseline='top';
+  for(let turn=0;turn<=endTurn;turn+=xStep){
+    if(turn<startTurn) continue;
+    const denom=Math.max(1,endTurn-startTurn);
+    const x=L+((turn-startTurn)/denom)*PW;
+    gctx.strokeStyle=turn===0?'#fff':'#2c355d';
+    gctx.lineWidth=turn===0?2:1;
+    gctx.beginPath();gctx.moveTo(x,T);gctx.lineTo(x,T+PH);gctx.stroke();
+    gctx.fillStyle='#fff';gctx.fillText(String(turn),x,T+PH+7);
+  }
+
+  gctx.strokeStyle='#fff';gctx.lineWidth=2;
+  gctx.beginPath();gctx.moveTo(L,T);gctx.lineTo(L,T+PH);gctx.lineTo(w-R,T+PH);gctx.stroke();
+
+  function p(a,col){
+    if(a.length<2)return;
+    gctx.strokeStyle=col;gctx.lineWidth=2;gctx.beginPath();
+    a.forEach((v,i)=>{
+      const turn=startTurn+i;
+      const denom=Math.max(1,endTurn-startTurn);
+      const x=L+((turn-startTurn)/denom)*PW;
+      const y=T+PH*(1-v/yMax);
+      i?gctx.lineTo(x,y):gctx.moveTo(x,y);
+    });
+    gctx.stroke();
+  }
+  p(S.hg,'#69ff69');p(S.hd,'#ffd84a');p(S.hw,'#c796ff');
+
+  gctx.fillStyle='#fff';gctx.font='12px monospace';
+  gctx.textAlign='center';gctx.textBaseline='bottom';
+  gctx.fillText('ターン数',L+PW/2,h-3);
+  gctx.save();
+  gctx.translate(14,T+PH/2);gctx.rotate(-Math.PI/2);
+  gctx.textAlign='center';gctx.textBaseline='top';gctx.fillText('残数',0,0);
+  gctx.restore();
+}
 function tick(){if(!S.c.length)return;const q=conf();S.t++;for(const c of S.c.flat())if(c.terrain==='grass'&&!c.g&&--c.gt<=0)c.g=true;const od=[...S.d];S.d=[];for(const d of od){const o=S.c[d.y]?.[d.x];if(!o||o.d!==d)continue;o.d=null;let a=d.a+1,h=d.h+1;const opts=nb(d.x,d.y).filter(p=>{const c=S.c[p.y][p.x];return c.terrain!=='sea'&&!c.d&&!c.w}),food=opts.filter(p=>{const c=S.c[p.y][p.x];return c.terrain==='grass'&&c.g}),p=pick(food.length?food:opts)||{x:d.x,y:d.y},c=S.c[p.y][p.x];if(c.terrain==='grass'&&c.g){c.g=false;c.gt=q.gr;h=0}if(h>q.ds||a>q.dl)continue;const nd={x:p.x,y:p.y,a,h};S.d.push(nd);c.d=nd;if(a>q.dl/3&&Math.random()<.12){const b=pick(nb(p.x,p.y).filter(v=>{const cc=S.c[v.y][v.x];return cc.terrain!=='sea'&&!cc.d&&!cc.w}));if(b){const baby={x:b.x,y:b.y,a:0,h:0};S.d.push(baby);S.c[b.y][b.x].d=baby}}}
 const ow=[...S.w];S.w=[];for(const w of ow){const o=S.c[w.y]?.[w.x];if(!o||o.w!==w)continue;o.w=null;let a=w.a+1,h=w.h+1;const n=nb(w.x,w.y),prey=n.filter(p=>S.c[p.y][p.x].d),move=n.filter(p=>{const c=S.c[p.y][p.x];return c.terrain!=='sea'&&!c.w}),p=pick(prey.length?prey:move)||{x:w.x,y:w.y},c=S.c[p.y][p.x];let ate=0;if(c.d){const v=c.d;S.d=S.d.filter(d=>d!==v);c.d=null;h=0;ate=1}if(!ate&&c.terrain==='grass'&&c.g&&Math.random()<.25){c.g=false;c.gt=q.gr;h=Math.max(0,h-2)}if(h>q.ws||a>q.wl)continue;const nw={x:p.x,y:p.y,a,h};S.w.push(nw);c.w=nw;if(a>q.wl/3&&Math.random()<.08){const b=pick(nb(p.x,p.y).filter(v=>{const cc=S.c[v.y][v.x];return cc.terrain!=='sea'&&!cc.w&&!cc.d}));if(b){const baby={x:b.x,y:b.y,a:0,h:0};S.w.push(baby);S.c[b.y][b.x].w=baby}}}
 S.a^=1;renderSmallIcons();draw();ui();hist();if(!S.d.length&&!S.w.length)stop()}
 function reset(newMap){stop();const n=cl(+$('sz').value||20,8,40);S.n=n;if(newMap||!S.c.length||S.c.length!==n)mkmap();S.t=0;S.a=0;animals();renderSmallIcons();draw();ui();S.hg=[];S.hd=[];S.hw=[];hist()}
-function start(){if(S.timer)return;S.timer=setInterval(tick,420);$('run').textContent='PAUSE'}function stop(){if(S.timer)clearInterval(S.timer);S.timer=0;$('run').textContent='START'}
+function start(){if(S.timer)return;S.timer=setInterval(tick,420);$('runTop').textContent='PAUSE'}function stop(){if(S.timer)clearInterval(S.timer);S.timer=0;$('runTop').textContent='START'}
 function openM(id){$(id).classList.add('on')}function closeM(id){$(id).classList.remove('on')}
-$('mapchg').onclick=()=>reset(true);$('reset').onclick=()=>reset(false);$('step').onclick=()=>{stop();tick()};$('run').onclick=()=>S.timer?stop():start();$('openSettings').onclick=()=>openM('settingsModal');$('openHelp').onclick=()=>openM('helpModal');$('openQR').onclick=()=>openM('qrModal');$('miniMap').onclick=()=>openM('graphModal');document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeM(b.dataset.close));document.querySelectorAll('.modal').forEach(m=>m.onclick=e=>{if(e.target===m)m.classList.remove('on')});addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on'))});addEventListener('resize',()=>{draw();drawGraph();renderMiniMap()});reset(true);setInterval(()=>{S.a^=1;renderSmallIcons();draw()},700);
+$('mapchg').onclick=()=>reset(true);$('step').onclick=()=>{stop();tick()};$('runTop').onclick=()=>S.timer?stop():start();$('resetTop').onclick=()=>reset(false);$('openSettings').onclick=()=>openM('settingsModal');$('openHelp').onclick=()=>openM('helpModal');$('openQR').onclick=()=>openM('qrModal');$('miniGraph').onclick=()=>{drawGraph();openM('graphModal')};document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeM(b.dataset.close));document.querySelectorAll('.modal').forEach(m=>m.onclick=e=>{if(e.target===m)m.classList.remove('on')});addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on'))});addEventListener('resize',()=>{draw();drawGraph();drawMiniGraph()});reset(true);
 </script>
 </body>
 </html>
