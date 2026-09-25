@@ -127,7 +127,31 @@ function wolfTile(c,x,y,t,f){drawWolfIcon(c,x,y,t,f)}
 function draw(){const ratio=4/3;const wrap=mapCanvas.parentElement.getBoundingClientRect();const fw=wrap.width-20,fh=wrap.height-20;let w=fw,h=Math.floor(w/ratio);if(h>fh){h=fh;w=Math.floor(h*ratio)}mapCanvas.width=w;mapCanvas.height=h;const tile=Math.max(12,Math.floor(Math.min(w,h)/S.n));ctx.imageSmoothingEnabled=false;px(ctx,0,0,w,h,'#000');for(let y=0;y<S.n;y++)for(let x=0;x<S.n;x++){const cell=S.c[y][x],xx=Math.floor((w-tile*S.n)/2)+x*tile,yy=Math.floor((h-tile*S.n)/2)+y*tile;if(cell.terrain==='grass'){if(cell.g)grassTile(ctx,xx,yy,tile);else{px(ctx,xx,yy,tile,tile,'#5a4a2a');px(ctx,xx,yy+tile-4,tile,4,'#3b2f18')}}else if(cell.terrain==='waste')wasteTile(ctx,xx,yy,tile);else seaTile(ctx,xx,yy,tile);if(cell.d)deerTile(ctx,xx,yy,tile,S.a);if(cell.w)wolfTile(ctx,xx,yy,tile,S.a)}}
 function ui(){let grass=0;for(const c of S.c.flat())if(c.terrain==='grass'&&c.g)grass++;$('grassCount').textContent=grass;$('deerCount').textContent=S.d.length;$('wolfCount').textContent=S.w.length;$('turnLabel').textContent='TURN '+S.t;$('graphTurn').textContent='TURN '+S.t;drawMiniGraph()}
 function hist(){let grass=0;for(const c of S.c.flat())if(c.terrain==='grass'&&c.g)grass++;S.hg.push(grass);S.hd.push(S.d.length);S.hw.push(S.w.length);if(S.hg.length>200){S.hg.shift();S.hd.shift();S.hw.shift()}drawGraph()}
-function drawMiniGraph(){const w=mini.width,h=mini.height;mctx.imageSmoothingEnabled=false;px(mctx,0,0,w,h,'#6b6b6b');if(!S.c.length)return;const tw=Math.max(2,Math.floor(w/S.n)),th=Math.max(2,Math.floor(h/S.n));for(let y=0;y<S.n;y++)for(let x=0;x<S.n;x++){const c=S.c[y][x],xx=x*tw,yy=y*th;let col='#cdb991';if(c.terrain==='grass')col=c.g?'#51da48':'#85704a';if(c.terrain==='waste')col='#d8bf91';if(c.terrain==='sea')col='#4d75ff';px(mctx,xx,yy,tw,th,col);if(c.d)px(mctx,xx,yy,tw,th,'#b8752b');if(c.w)px(mctx,xx,yy,tw,th,'#e7e7ef')}}
+function drawMiniGraph(){
+  const w=mini.width,h=mini.height;
+  mctx.imageSmoothingEnabled=false;
+  px(mctx,0,0,w,h,'#02040a');
+  const L=13,R=4,T=5,B=11,PW=w-L-R,PH=h-T-B;
+  const maxY=Math.max(1,...S.hg,...S.hd,...S.hw);
+  mctx.strokeStyle='#2e385f';mctx.lineWidth=1;
+  for(let i=1;i<4;i++){
+    const y=T+PH*i/4;
+    mctx.beginPath();mctx.moveTo(L,y);mctx.lineTo(w-R,y);mctx.stroke();
+  }
+  mctx.strokeStyle='#fff';mctx.lineWidth=1;
+  mctx.beginPath();mctx.moveTo(L,T);mctx.lineTo(L,h-B);mctx.lineTo(w-R,h-B);mctx.stroke();
+  function p(arr,col){
+    if(arr.length<2)return;
+    mctx.strokeStyle=col;mctx.lineWidth=1;mctx.beginPath();
+    arr.forEach((v,i)=>{
+      const x=L+PW*i/(arr.length-1);
+      const y=T+PH*(1-v/maxY);
+      i?mctx.lineTo(x,y):mctx.moveTo(x,y);
+    });
+    mctx.stroke();
+  }
+  p(S.hg,'#69ff69');p(S.hd,'#ffd84a');p(S.hw,'#c796ff');
+}
 function drawGraph(){
   const w=gCanvas.clientWidth||720,h=260,d=devicePixelRatio||1;
   gCanvas.width=w*d;gCanvas.height=h*d;gctx.setTransform(d,0,0,d,0,0);
