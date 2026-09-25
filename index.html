@@ -16,23 +16,22 @@ body{overflow:hidden}
 button,input{font:inherit} button{cursor:pointer}
 .app{height:100vh;display:flex;align-items:center;justify-content:center;padding:8px;background:#000}
  .screen{width:min(97vw,1180px);aspect-ratio:4/3;position:relative;background:#000;border:4px solid #2a2a2a;box-shadow:0 0 0 3px #000,0 0 0 6px #213d89;overflow:hidden}
-.topbar{position:absolute;left:0;right:0;top:0;height:128px;padding:8px 14px;display:grid;grid-template-columns:250px 150px minmax(344px,1fr) 218px;gap:12px;align-items:center;background:#000;z-index:4}
-.miniPanel{height:112px;border:4px solid #516fd6;padding:6px;background:#000;display:flex;align-items:center}
-#miniGraph{width:100%;height:100%;display:block;background:#02040a;border:2px solid #233564;cursor:pointer;image-rendering:pixelated}
-.titleTurn{height:112px;display:grid;grid-template-rows:1fr 1fr;align-items:center;justify-items:start;min-width:0}
-.titleLogo,.turnText{font-size:24px;line-height:32px;font-weight:900;white-space:nowrap;margin:0}
-.titleLogo{letter-spacing:.03em;color:#ffd45c;text-shadow:2px 0 0 #6f3200,-2px 0 0 #6f3200,0 2px 0 #6f3200,0 -2px 0 #6f3200,3px 3px 0 #2f0f00}
+.topbar{position:absolute;left:0;right:0;top:0;height:96px;padding:6px 12px;display:grid;grid-template-columns:228px 132px 280px 208px;gap:10px;align-items:center;justify-content:space-between;background:#000;z-index:4}
+.miniPanel{height:80px;border:3px solid #516fd6;padding:5px;background:#000;display:flex;align-items:center}
+#miniGraph{width:100%;height:100%;display:block;background:#02040a;border:1px solid #233564;cursor:pointer;image-rendering:pixelated}
+.titleTurn{height:80px;display:grid;grid-template-rows:32px 32px;align-content:center;row-gap:2px;justify-items:start;min-width:0}
+.titleLogo,.turnText{font-size:20px;line-height:32px;font-weight:900;white-space:nowrap;margin:0}
+.titleLogo{letter-spacing:.02em;color:#ffd45c;text-shadow:2px 0 0 #6f3200,-2px 0 0 #6f3200,0 2px 0 #6f3200,0 -2px 0 #6f3200,2px 2px 0 #2f0f00}
 .turnText{color:#fff;text-shadow:2px 2px 0 #555}
-.countGrid{height:112px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:0 12px;align-items:center}
-.hudStat{display:grid;grid-template-columns:32px 14px 56px;align-items:center;column-gap:3px;min-width:105px;height:48px}
-.iconCounter{width:32px;height:32px;background:#000;display:block;image-rendering:pixelated}
-.cross{font-size:22px;line-height:32px;font-weight:900;color:#fff;text-shadow:2px 2px 0 #555;text-align:center}
-.num{display:block;width:56px;font-size:34px;line-height:40px;font-weight:900;color:#fff;text-shadow:2px 2px 0 #555;letter-spacing:0;text-align:left;font-variant-numeric:tabular-nums}
-.buttonPanel{height:112px;display:grid;grid-template-columns:repeat(2,100px);grid-template-rows:repeat(3,1fr);gap:6px 8px;justify-content:end;align-items:stretch}
-.hudBtn{min-height:0;border:4px solid #fff;background:#1b2b66;color:#fff;box-shadow:3px 3px 0 #000;padding:3px 7px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.countGrid{height:80px;display:grid;grid-template-columns:132px 132px;grid-template-rows:34px 34px;gap:2px 8px;align-content:center}
+.hudStat{display:grid;grid-template-columns:30px 94px;align-items:center;column-gap:6px;width:130px;height:34px}
+.iconCounter{width:30px;height:30px;background:#000;display:block;image-rendering:pixelated}
+.countPix{width:94px;height:28px;display:block;background:#000;image-rendering:pixelated}
+.buttonPanel{height:80px;display:grid;grid-template-columns:repeat(2,96px);grid-template-rows:repeat(3,1fr);gap:4px 8px;justify-content:end;align-items:stretch}
+.hudBtn{min-height:0;border:3px solid #fff;background:#1b2b66;color:#fff;box-shadow:2px 2px 0 #000;padding:2px 6px;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center}
 .hudBtn.run{background:#a52a43}.hudBtn.span2{grid-column:span 2}
-.hudBtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
-.playfieldWrap{position:absolute;left:0;right:0;top:128px;bottom:18px;display:flex;align-items:center;justify-content:center;background:#000}
+.hudBtn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #000}
+.playfieldWrap{position:absolute;left:0;right:0;top:96px;bottom:18px;display:flex;align-items:center;justify-content:center;background:#000}
 #field{max-width:100%;max-height:100%;display:block;image-rendering:pixelated;background:#000}
 .copy{position:absolute;left:50%;transform:translateX(-50%);bottom:4px;z-index:8;background:#03060c;border:1px solid #5570c9;padding:2px 8px;font-size:10px;color:#d3dbff}
 .modal{position:absolute;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:14px;z-index:20}.modal.on{display:flex}
@@ -49,13 +48,14 @@ button,input{font:inherit} button{cursor:pointer}
 .help{margin:0;padding-left:1.25em;line-height:1.8;font-size:13px}.qrWrap{text-align:center}.qrWrap img{width:min(300px,80vw);height:auto;background:#fff;padding:10px;border:4px solid #000}.url{margin-top:10px;color:#9cd7ff;word-break:break-all;font-size:13px}
 @media (max-width:860px){
   .screen{width:100vw;height:100vh;aspect-ratio:auto;border:none;box-shadow:none}
-  .topbar{grid-template-columns:170px 120px 1fr;height:184px;padding:8px 10px}
-  .miniPanel,.titleTurn,.countGrid{height:96px}
-  .buttonPanel{grid-column:1/4;width:100%;height:72px;grid-template-columns:repeat(5,1fr);grid-template-rows:1fr;gap:6px}
+  .topbar{grid-template-columns:150px 108px 1fr;height:150px;padding:6px 8px}
+  .miniPanel,.titleTurn,.countGrid{height:72px}
+  .buttonPanel{grid-column:1/4;width:100%;height:62px;grid-template-columns:repeat(5,1fr);grid-template-rows:1fr;gap:4px}
   .hudBtn.span2{grid-column:span 1}
-  .titleLogo,.turnText{font-size:18px;line-height:28px}.num{font-size:26px;width:42px;line-height:30px}.hudStat{grid-template-columns:24px 11px 42px;min-width:80px;height:40px}.iconCounter{width:24px;height:24px}.cross{font-size:17px;line-height:24px}
-  .countGrid{gap:2px 6px}
-  .playfieldWrap{top:184px}
+  .titleLogo,.turnText{font-size:16px;line-height:28px}.titleTurn{grid-template-rows:28px 28px}
+  .countGrid{grid-template-columns:112px 112px;grid-template-rows:30px 30px;gap:2px 4px}
+  .hudStat{grid-template-columns:26px 78px;width:108px;height:30px;column-gap:4px}.iconCounter{width:26px;height:26px}.countPix{width:78px;height:24px}
+  .playfieldWrap{top:150px}
   .settingsGrid{grid-template-columns:1fr}
 }
 </style>
@@ -69,10 +69,10 @@ button,input{font:inherit} button{cursor:pointer}
       <div class="turnText" id="turnText">TURN 000</div>
     </div>
     <div class="countGrid">
-      <div class="hudStat"><canvas class="iconCounter" id="cGrass" width="30" height="30"></canvas><div class="cross">×</div><div class="num" id="grassCount">000</div></div>
-      <div class="hudStat"><canvas class="iconCounter" id="cWaste" width="30" height="30"></canvas><div class="cross">×</div><div class="num" id="wasteCount">000</div></div>
-      <div class="hudStat"><canvas class="iconCounter" id="cDeer" width="30" height="30"></canvas><div class="cross">×</div><div class="num" id="deerCount">000</div></div>
-      <div class="hudStat"><canvas class="iconCounter" id="cWolf" width="30" height="30"></canvas><div class="cross">×</div><div class="num" id="wolfCount">000</div></div>
+      <div class="hudStat"><canvas class="iconCounter" id="cGrass" width="30" height="30"></canvas><canvas class="countPix" id="grassCount" width="47" height="14" aria-label="草 × 000"></canvas></div>
+      <div class="hudStat"><canvas class="iconCounter" id="cWaste" width="30" height="30"></canvas><canvas class="countPix" id="wasteCount" width="47" height="14" aria-label="荒地 × 000"></canvas></div>
+      <div class="hudStat"><canvas class="iconCounter" id="cDeer" width="30" height="30"></canvas><canvas class="countPix" id="deerCount" width="47" height="14" aria-label="シカ × 000"></canvas></div>
+      <div class="hudStat"><canvas class="iconCounter" id="cWolf" width="30" height="30"></canvas><canvas class="countPix" id="wolfCount" width="47" height="14" aria-label="オオカミ × 000"></canvas></div>
     </div>
     <div class="buttonPanel">
       <button id="openSettings" class="hudBtn">SET</button>
@@ -241,6 +241,33 @@ function renderAllSmallIcons(){
   document.querySelectorAll('.icon-waste').forEach(c=>renderSmallIconCanvas(c,'waste'));
 }
 
+const PIX_FONT={
+  '0':['11111','10001','10011','10101','11001','10001','11111'],
+  '1':['00100','01100','00100','00100','00100','00100','01110'],
+  '2':['11110','00001','00001','11110','10000','10000','11111'],
+  '3':['11110','00001','00001','01110','00001','00001','11110'],
+  '4':['10010','10010','10010','11111','00010','00010','00010'],
+  '5':['11111','10000','10000','11110','00001','00001','11110'],
+  '6':['01111','10000','10000','11110','10001','10001','01110'],
+  '7':['11111','00001','00010','00100','01000','01000','01000'],
+  '8':['01110','10001','10001','01110','10001','10001','01110'],
+  '9':['01110','10001','10001','01111','00001','00001','11110'],
+  'X':['10001','01010','00100','01010','10001','00000','00000']
+};
+function drawPixelGlyph(ctx,glyph,x,y,scale,col='#fff'){
+  const rows=PIX_FONT[glyph]||PIX_FONT['0'];
+  ctx.fillStyle=col;
+  for(let r=0;r<rows.length;r++) for(let k=0;k<rows[r].length;k++) if(rows[r][k]==='1') ctx.fillRect(x+k*scale,y+r*scale,scale,scale);
+}
+function drawPixelCounter(canvas,value){
+  const ctx=canvas.getContext('2d'); ctx.imageSmoothingEnabled=false; ctx.clearRect(0,0,canvas.width,canvas.height);
+  const text='X'+String(Math.max(0,value)).padStart(3,'0').slice(-3), s=1, charW=6;
+  for(let i=0;i<text.length;i++){
+    // one-pixel dark shadow like the reference HUD
+    drawPixelGlyph(ctx,text[i],i*charW+1,1,s,'#555');
+    drawPixelGlyph(ctx,text[i],i*charW,0,s,'#fff');
+  }
+}
 function boardMetrics(){
   const wrap=field.parentElement.getBoundingClientRect();
   const maxW=wrap.width-8, maxH=wrap.height-8; const ratio=4/3;
@@ -249,6 +276,18 @@ function boardMetrics(){
   const cell=Math.floor(Math.min(w,h)/S.n); const ox=Math.floor((w-cell*S.n)/2), oy=Math.floor((h-cell*S.n)/2);
   return {w,h,cell,ox,oy};
 }
+function drawFeedingPicture(ctx,kind,x,y,size,dir){
+  if(kind==='munch'){
+    // one static picture: deer with a small remaining grass tuft under its muzzle
+    drawSprite(ctx,'grass',x+size*.56,y+size*.44,size*.38,'R',0,'grow');
+    drawSprite(ctx,'deer',x,y,size,dir,1);
+  } else if(kind==='attack'){
+    // one static picture: deer underneath, wolf overlapping from its approach direction
+    const dx=dir==='L'?.10:dir==='R'?.18:0.12, dy=dir==='U'?.10:dir==='D'?.18:0.12;
+    drawSprite(ctx,'deer',x+size*.08,y+size*.12,size*.82,dir==='L'?'R':'L',1);
+    drawSprite(ctx,'wolf',x+size*dx,y+size*dy,size*.94,dir,1);
+  }
+}
 function drawScene(progress=1){
   const M=boardMetrics(); fctx.imageSmoothingEnabled=false; px(fctx,0,0,M.w,M.h,'#000');
   const anim=S.anim, fromGrid=anim?anim.fromCells:S.cells, toGrid=anim?anim.toCells:S.cells;
@@ -256,11 +295,9 @@ function drawScene(progress=1){
   for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){
     const from=cellAt(fromGrid,x,y), to=cellAt(toGrid,x,y); if(!from||!to) continue;
     const X=M.ox+x*M.cell, Y=M.oy+y*M.cell;
-    if(to.terrain==='sea'){
-      drawSprite(fctx,'sea',X,Y,M.cell,'R',progress>.5?1:0);
-    } else if(to.terrain==='waste'){
-      drawSprite(fctx,'waste',X,Y,M.cell);
-    } else {
+    if(to.terrain==='sea') drawSprite(fctx,'sea',X,Y,M.cell,'R',progress>.5?1:0);
+    else if(to.terrain==='waste') drawSprite(fctx,'waste',X,Y,M.cell);
+    else {
       drawSprite(fctx,'waste',X,Y,M.cell);
       if(from.grass&&to.grass) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
       else if(!from.grass&&to.grass){
@@ -268,59 +305,31 @@ function drawScene(progress=1){
         else if(progress<.65) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'grow');
         else drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
       } else if(from.grass&&!to.grass){
-        // keep grass visible until the eating phase, then reduce it in two bites
-        if(progress<.58) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
+        if(progress<.55) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
         else if(progress<.80) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'grow');
       }
     }
   }
 
   if(anim){
-    // attacked deer remain visible until the wolf makes contact
-    for(const a of (anim.attacks||[])){
-      if(progress<.76){
-        const shake=progress>.58 ? Math.sin(progress*90)*M.cell*.04 : 0;
-        drawSprite(fctx,'deer',M.ox+a.x*M.cell+shake,M.oy+a.y*M.cell,M.cell,a.dir,progress>.58?1:0);
-      }
-    }
+    // attacked deer remain in place until the overlap-picture phase
+    for(const a of (anim.attacks||[])) if(progress<.55) drawSprite(fctx,'deer',M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,a.dir,0);
 
     for(const mv of anim.moves){
-      let xx,yy,pose=progress>.5?1:0;
-      if(mv.action==='munch'){
-        const travel=Math.min(1,progress/.52);
-        xx=mv.from.x+(mv.to.x-mv.from.x)*travel; yy=mv.from.y+(mv.to.y-mv.from.y)*travel;
-        if(progress>.52){
-          const bob=Math.sin((progress-.52)*42)*M.cell*.055;
-          yy+=Math.abs(bob);
-          // simple pixel "もしゃ" flecks around the mouth
-          if(progress>.60&&progress<.88){
-            const fx=M.ox+mv.to.x*M.cell+M.cell*.70, fy=M.oy+mv.to.y*M.cell+M.cell*.58;
-            px(fctx,fx,fy,M.cell*.08,M.cell*.08,'#8cff67');
-            px(fctx,fx+M.cell*.10,fy-M.cell*.10,M.cell*.06,M.cell*.06,'#4fdc43');
-          }
-        }
-      } else if(mv.action==='attack'){
-        const travel=Math.min(1,progress/.55);
-        xx=mv.from.x+(mv.to.x-mv.from.x)*travel; yy=mv.from.y+(mv.to.y-mv.from.y)*travel;
-        if(progress>.55&&progress<.88){
-          const lunge=Math.sin((progress-.55)*34)*M.cell*.10;
-          if(mv.dir==='L') xx-=Math.abs(lunge/M.cell);
-          else if(mv.dir==='R') xx+=Math.abs(lunge/M.cell);
-          else if(mv.dir==='U') yy-=Math.abs(lunge/M.cell);
-          else yy+=Math.abs(lunge/M.cell);
-          const sx=M.ox+mv.to.x*M.cell+M.cell*.54, sy=M.oy+mv.to.y*M.cell+M.cell*.42;
-          if(progress>.66){
-            px(fctx,sx,sy,M.cell*.10,M.cell*.04,'#fff1b8');
-            px(fctx,sx+M.cell*.08,sy-M.cell*.08,M.cell*.05,M.cell*.12,'#ffcc55');
-          }
+      if(mv.action==='munch'||mv.action==='attack'){
+        if(progress<.55){
+          const p=progress/.55;
+          const xx=mv.from.x+(mv.to.x-mv.from.x)*p, yy=mv.from.y+(mv.to.y-mv.from.y)*p;
+          drawSprite(fctx,mv.type,M.ox+xx*M.cell,M.oy+yy*M.cell,M.cell,mv.dir,p>.5?1:0);
+        } else {
+          drawFeedingPicture(fctx,mv.action,M.ox+mv.to.x*M.cell,M.oy+mv.to.y*M.cell,M.cell,mv.dir);
         }
       } else {
-        xx=mv.from.x+(mv.to.x-mv.from.x)*progress; yy=mv.from.y+(mv.to.y-mv.from.y)*progress;
+        const xx=mv.from.x+(mv.to.x-mv.from.x)*progress, yy=mv.from.y+(mv.to.y-mv.from.y)*progress;
+        drawSprite(fctx,mv.type,M.ox+xx*M.cell,M.oy+yy*M.cell,M.cell,mv.dir,progress>.5?1:0);
       }
-      drawSprite(fctx,mv.type,M.ox+xx*M.cell,M.oy+yy*M.cell,M.cell,mv.dir,pose);
     }
-
-    for(const b of anim.births){ if(progress>.65) drawSprite(fctx,b.type,M.ox+b.to.x*M.cell,M.oy+b.to.y*M.cell,M.cell,b.dir,1); }
+    for(const b of anim.births) if(progress>.65) drawSprite(fctx,b.type,M.ox+b.to.x*M.cell,M.oy+b.to.y*M.cell,M.cell,b.dir,1);
   } else {
     S.deer.forEach(a=>drawSprite(fctx,'deer',M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,a.dir,0));
     S.wolf.forEach(a=>drawSprite(fctx,'wolf',M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,a.dir,0));
@@ -381,7 +390,7 @@ function simulateNext(){
   return {fromCells,toCells:cells,toDeer:survivors,toWolf:wolfNext,moves:[...survivorMoves,...wolfMoves],births:[...deerBirths,...wolfBirths],attacks};
 }
 function animateToNext(next,done,manual=false){
-  if(S.anim) return; S.anim={...next,start:performance.now(),dur:460,done,manual,heldAt:null,frame:null};
+  if(S.anim) return; S.anim={...next,start:performance.now(),dur:340,done,manual,heldAt:null,frame:null};
   const frame=now=>{
     if(!S.anim) return;
     if(!S.anim.manual&&!S.running){ S.anim.heldAt=now; S.anim.frame=frame; return; }
@@ -400,7 +409,7 @@ function resetAll(newMap=false){ stopRun(); S.anim=null; const q=conf(); if(newM
 function pad3(n){return String(Math.max(0,n)).padStart(3,'0')}
 function updateCounts(){
   let grass=0,waste=0; for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){const v=S.cells[y][x]; if(v.terrain==='grass'&&v.grass) grass++; if(v.terrain==='waste'||(v.terrain==='grass'&&!v.grass)) waste++;}
-  $('grassCount').textContent=pad3(grass); $('wasteCount').textContent=pad3(waste); $('deerCount').textContent=pad3(S.deer.length); $('wolfCount').textContent=pad3(S.wolf.length); $('turnText').textContent='TURN '+pad3(S.turn); $('graphTurn').textContent='TURN '+S.turn;
+  drawPixelCounter($('grassCount'),grass); drawPixelCounter($('wasteCount'),waste); drawPixelCounter($('deerCount'),S.deer.length); drawPixelCounter($('wolfCount'),S.wolf.length); $('turnText').textContent='TURN '+pad3(S.turn); $('graphTurn').textContent='TURN '+S.turn;
   drawMiniGraph(); drawBigGraph();
 }
 function pushHistory(){
