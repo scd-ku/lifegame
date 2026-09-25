@@ -16,18 +16,18 @@ body{overflow:hidden}
 button,input{font:inherit} button{cursor:pointer}
 .app{height:100vh;display:flex;align-items:center;justify-content:center;padding:8px;background:#000}
  .screen{width:min(97vw,1180px);aspect-ratio:4/3;position:relative;background:#000;border:4px solid #2a2a2a;box-shadow:0 0 0 3px #000,0 0 0 6px #213d89;overflow:hidden}
-.topbar{position:absolute;left:0;right:0;top:0;height:19%;min-height:118px;padding:8px 18px;display:grid;grid-template-columns:250px 1fr 228px;gap:14px;align-items:start;background:#000;z-index:4}
-.miniPanel{height:100px;border:3px solid #516fd6;padding:6px;background:#000;display:flex;align-items:center;align-self:center}
+.topbar{position:absolute;left:0;right:0;top:0;height:19%;min-height:118px;padding:8px 16px;display:grid;grid-template-columns:250px minmax(480px,1fr) 218px;gap:14px;align-items:center;background:#000;z-index:4}
+.miniPanel{height:98px;border:3px solid #516fd6;padding:6px;background:#000;display:flex;align-items:center}
 #miniGraph{width:100%;height:100%;display:block;background:#02040a;border:1px solid #233564;cursor:pointer}
-.statusCenter{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:8px;min-width:0;padding-top:8px}
-.titleLogo{font-size:30px;line-height:1;font-weight:900;letter-spacing:.06em;color:#ffd45c;text-shadow:2px 0 0 #6f3200,-2px 0 0 #6f3200,0 2px 0 #6f3200,0 -2px 0 #6f3200,3px 3px 0 #2f0f00}
-.statusRow{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.hudStat{display:grid;grid-template-columns:34px 16px 3ch;align-items:center;column-gap:4px;min-width:92px}
-.iconCounter{width:34px;height:34px;background:#000}
-.cross{font-size:28px;line-height:1;font-weight:900;color:#fff;text-shadow:2px 2px 0 #666;text-align:center}
-.num{display:inline-block;width:3ch;font-size:46px;line-height:1;font-weight:900;color:#fff;text-shadow:3px 3px 0 #666;letter-spacing:0;text-align:left}
-.turnText{font-size:22px;font-weight:900;text-shadow:2px 2px 0 #666;white-space:nowrap;margin-left:4px}
-.buttonPanel{display:grid;grid-template-columns:repeat(2,104px);grid-auto-rows:40px;gap:9px;justify-content:end;padding-top:8px}
+.statusCenter{display:grid;grid-template-rows:auto auto;align-content:center;justify-items:start;row-gap:9px;min-width:0}
+.titleLogo{font-size:27px;line-height:1;font-weight:900;letter-spacing:.04em;color:#ffd45c;white-space:nowrap;text-shadow:2px 0 0 #6f3200,-2px 0 0 #6f3200,0 2px 0 #6f3200,0 -2px 0 #6f3200,3px 3px 0 #2f0f00}
+.statusRow{display:grid;grid-template-columns:repeat(3,102px) 96px;align-items:center;column-gap:10px;white-space:nowrap}
+.hudStat{display:grid;grid-template-columns:30px 14px 54px;align-items:center;column-gap:2px;width:102px;min-width:102px}
+.iconCounter{width:30px;height:30px;background:#000}
+.cross{font-size:22px;line-height:1;font-weight:900;color:#fff;text-shadow:2px 2px 0 #555;text-align:center}
+.num{display:block;width:54px;font-size:36px;line-height:1;font-weight:900;color:#fff;text-shadow:2px 2px 0 #555;letter-spacing:0;text-align:left;font-variant-numeric:tabular-nums}
+.turnText{width:96px;font-size:18px;line-height:1;font-weight:900;text-shadow:2px 2px 0 #555;white-space:nowrap;margin:0}
+.buttonPanel{display:grid;grid-template-columns:repeat(2,100px);grid-auto-rows:38px;gap:8px;justify-content:end}
 .hudBtn{min-height:40px;border:4px solid #fff;background:#1b2b66;color:#fff;box-shadow:3px 3px 0 #000;padding:5px 8px;font-weight:900;display:flex;align-items:center;justify-content:center}
 .hudBtn.run{background:#a52a43}.hudBtn.span2{grid-column:span 2}
 .hudBtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
@@ -50,7 +50,7 @@ button,input{font:inherit} button{cursor:pointer}
   .screen{width:100vw;height:100vh;aspect-ratio:auto;border:none;box-shadow:none}
   .topbar{grid-template-columns:190px 1fr;grid-template-rows:auto auto;height:24%;padding:8px 10px}
   .buttonPanel{grid-column:1/3;grid-template-columns:repeat(5,1fr)}
-  .titleLogo{font-size:22px}.num{font-size:34px}.turnText{font-size:16px}.hudStat{grid-template-columns:28px 14px 3ch;min-width:78px}.iconCounter{width:28px;height:28px}.cross{font-size:22px}
+  .titleLogo{font-size:20px}.statusRow{grid-template-columns:repeat(3,82px) 78px;column-gap:5px}.num{font-size:28px;width:44px}.turnText{font-size:14px;width:78px}.hudStat{grid-template-columns:25px 12px 44px;width:82px;min-width:82px}.iconCounter{width:25px;height:25px}.cross{font-size:18px}
   .playfieldWrap{top:24%}
   .settingsGrid{grid-template-columns:1fr}
 }
@@ -167,33 +167,56 @@ function seedAnimals(){
 function drawSprite(ctx,type,x,y,size,dir='R',pose=0,mode='normal'){
   ctx.save(); ctx.translate(x,y); const u=size/24;
   const fill=(ix,iy,w,h,col)=>px(ctx,ix*u,iy*u,w*u,h*u,col);
+
   if(type==='grass'){
-    const stage=mode==='sprout'?0:mode==='grow'?1:2;
-    if(stage===0){ fill(10,18,2,4,'#45ee55'); fill(12,16,2,6,'#20c83d'); fill(11,15,2,2,'#baff9a'); ctx.restore(); return; }
-    const cols=['#9aff72','#50f45a','#22cb3d','#0b8e22'];
-    [[2,23,2,12],[5,23,4,7],[8,23,8,4],[11,23,10,8],[14,23,15,3],[17,23,18,7],[20,23,21,11],[23,23,23,14],[6,23,2,15],[13,23,9,11],[18,23,22,15]].forEach((b,i)=>{
-      const top=23-(23-b[3])*(stage===1?.58:1); ctx.strokeStyle=cols[i%4]; ctx.lineWidth=Math.max(1,u*1.5);
-      ctx.beginPath(); ctx.moveTo(b[0]*u,b[1]*u); ctx.lineTo(b[2]*u,top*u); ctx.stroke();
-    }); fill(1,21,22,3,'#107f22');
-  } else if(type==='waste'){
-    fill(0,0,24,24,'#c6a16b'); fill(0,0,24,3,'#e7cea2'); fill(0,19,24,5,'#9a7042');
-    fill(11,4,2,13,'#75400f'); fill(9,6,2,4,'#75400f'); fill(13,8,3,2,'#75400f'); fill(8,3,1,5,'#4d2708'); fill(15,3,1,6,'#4d2708');
-    [[3,17,3,2],[6,14,2,2],[18,16,3,2],[20,12,2,2]].forEach((r,i)=>fill(r[0],r[1],r[2],r[3],i%2?'#f4dfbb':'#865d32'));
-  } else if(type==='sea'){
-    fill(0,0,24,24,'#1f5ed8'); fill(0,15,24,9,'#1745a8'); fill(0,4,24,11,'#337df1'); const sh=pose?2:0;
-    [[2,8,5],[8,6,6],[15,8,5],[4,12,7],[14,13,7]].forEach(r=>{ fill((r[0]+sh)%22,r[1],r[2],1,'#edf9ff'); fill((r[0]+1+sh)%22,r[1]+1,Math.max(2,r[2]-2),1,'#7dd8ff'); });
-  } else {
-    const deer=type==='deer', body=deer?'#c8742d':'#a7abb7', light=deer?'#f3ad66':'#eef1f7', dark=deer?'#6f380d':'#646873', white='#fff7ec';
-    if(dir==='L'||dir==='R'){
-      if(dir==='L'){ ctx.translate(size,0); ctx.scale(-1,1); }
-      fill(5,10,11,6,body); fill(14,7,6,6,light); fill(18,8,3,3,white); fill(20,9,1,1,'#111'); fill(4,11,2,3,light);
-      fill(18,5,2,3,dark); fill(14,5,2,3,dark); fill(6,16,2,6,white); fill(13,16,2,6,white); fill(16,15,2,5,body); fill(3,12,2,4,white);
-      if(deer){ [[7,11],[9,13],[11,10],[13,12]].forEach(p=>fill(p[0],p[1],1,1,'#fff')); fill(15,4,1,3,dark); fill(19,4,1,3,dark); }
-      if(pose){ fill(7,18,2,4,white); fill(13,17,2,5,white); }
+    if(mode==='sprout'){
+      fill(11,17,2,5,'#116b22'); fill(10,16,2,2,'#64f16a'); fill(12,14,2,4,'#39d64a'); fill(13,15,2,2,'#91ff7d');
+    } else if(mode==='grow'){
+      fill(7,15,10,7,'#13882b'); fill(8,13,2,7,'#57ef5f'); fill(11,10,2,11,'#2bd043'); fill(14,12,2,9,'#8aff78'); fill(16,14,2,7,'#1aa434');
     } else {
-      const up=dir==='U'; fill(8,7,8,11,body); fill(7,up?3:14,10,7,light); fill(10,up?1:19,2,4,dark); fill(14,up?1:19,2,4,dark);
-      fill(9,17,2,5,white); fill(13,17,2,5,white); if(!up){ fill(10,16,4,2,white); fill(11,16,1,1,'#111'); }
-      if(deer){ fill(8,9,1,1,'#fff'); fill(15,9,1,1,'#fff'); } if(pose){ fill(8,18,2,4,white); fill(14,18,2,4,white); }
+      fill(0,0,24,24,'#43b947');
+      [[2,3],[8,5],[18,4],[4,12],[12,10],[20,14],[7,19],[16,20]].forEach((p,i)=>fill(p[0],p[1],2,2,i%2?'#2a9334':'#6bd35f'));
+      fill(0,21,24,3,'#31953b');
+    }
+  } else if(type==='waste'){
+    fill(0,0,24,24,'#d9c59a');
+    [[3,4],[11,3],[18,6],[5,14],[14,13],[20,18],[8,21]].forEach((p,i)=>fill(p[0],p[1],i%3===0?2:1,1,i%2?'#b79a69':'#9d7d4c'));
+    fill(0,21,24,3,'#c1a678');
+  } else if(type==='sea'){
+    fill(0,0,24,24,'#315bd8'); const sh=pose?2:0;
+    [[2,6,6],[11,5,7],[4,14,8],[14,15,6]].forEach(r=>{
+      fill((r[0]+sh)%21,r[1],r[2],2,'#6f8ff0'); fill((r[0]+1+sh)%21,r[1],Math.max(2,r[2]-3),1,'#d7e5ff');
+    });
+    fill(0,21,24,3,'#284ab1');
+  } else {
+    const deer=type==='deer';
+    const outline=deer?'#3b1d08':'#20232a', body=deer?'#d4792d':'#aeb5c2', light=deer?'#f4b06a':'#f4f6fb', dark=deer?'#6d360d':'#6c7480', white='#fff9ef';
+    // small shadow anchors the character against any terrain tile
+    fill(5,20,14,2,'rgba(0,0,0,.55)');
+
+    if(dir==='L'||dir==='R'){
+      if(dir==='L'){ctx.translate(size,0);ctx.scale(-1,1);}
+      // dark silhouette/outline first
+      fill(3,8,14,10,outline); fill(14,5,7,9,outline); fill(17,3,3,4,outline); fill(13,3,3,4,outline);
+      // body and head
+      fill(5,10,10,6,body); fill(15,7,5,5,light); fill(19,8,2,2,white); fill(20,9,1,1,'#111');
+      // legs
+      fill(5,16,3,6,outline); fill(12,16,3,6,outline); fill(6,16,1,5,white); fill(13,16,1,5,white);
+      // tail
+      fill(2,11,3,4,outline); fill(3,11,2,2,white);
+      // ears / antlers
+      fill(16,4,2,3,dark); fill(19,4,2,3,dark);
+      if(deer){ fill(14,2,1,4,dark); fill(18,1,1,5,dark); fill(13,2,2,1,dark); fill(18,2,2,1,dark); [[7,11],[10,13],[12,10]].forEach(p=>fill(p[0],p[1],1,1,'#fff')); }
+      else { fill(15,4,2,2,dark); fill(19,4,2,2,dark); }
+      if(pose){ fill(8,17,2,4,white); fill(13,16,2,5,white); }
+    } else {
+      const up=dir==='U';
+      fill(7,6,10,13,outline); fill(6,up?2:14,12,8,outline);
+      fill(9,8,6,9,body); fill(8,up?4:15,8,5,light); fill(11,up?3:19,2,3,white);
+      fill(8,17,3,5,outline); fill(13,17,3,5,outline); fill(9,17,1,4,white); fill(14,17,1,4,white);
+      fill(8,up?2:13,2,3,dark); fill(14,up?2:13,2,3,dark);
+      if(deer){ fill(7,up?1:12,1,3,dark); fill(16,up?1:12,1,3,dark); }
+      if(!up){ fill(10,16,4,2,white); fill(11,16,1,1,'#111'); }
     }
   }
   ctx.restore();
@@ -222,16 +245,20 @@ function drawScene(progress=1){
   for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){
     const from=cellAt(fromGrid,x,y), to=cellAt(toGrid,x,y); if(!from||!to) continue;
     const X=M.ox+x*M.cell, Y=M.oy+y*M.cell;
-    if(to.terrain==='sea') drawSprite(fctx,'sea',X,Y,M.cell,'R',progress>.5?1:0);
-    else {
+    if(to.terrain==='sea'){
+      drawSprite(fctx,'sea',X,Y,M.cell,'R',progress>.5?1:0);
+    } else if(to.terrain==='waste'){
       drawSprite(fctx,'waste',X,Y,M.cell);
-      if(to.terrain==='grass'){
-        if(from.grass&&to.grass) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
-        else if(!from.grass&&to.grass){
-          if(progress<.34) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'sprout');
-          else if(progress<.72) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'grow');
-          else drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
-        } else if(from.grass&&!to.grass&&progress<.45) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,progress<.2?'normal':'grow');
+    } else {
+      drawSprite(fctx,'waste',X,Y,M.cell);
+      if(from.grass&&to.grass) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
+      else if(!from.grass&&to.grass){
+        if(progress<.32) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'sprout');
+        else if(progress<.68) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'grow');
+        else drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
+      } else if(from.grass&&!to.grass){
+        if(progress<.22) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
+        else if(progress<.48) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'grow');
       }
     }
   }
