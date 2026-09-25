@@ -34,14 +34,28 @@ button,input{font:inherit} button{cursor:pointer}
 #field{max-width:100%;max-height:100%;display:block;image-rendering:pixelated;background:#000}
 .copy{position:absolute;left:50%;transform:translateX(-50%);bottom:4px;z-index:8;background:#03060c;border:1px solid #5570c9;padding:2px 8px;font-size:10px;color:#d3dbff}
 .modal{position:absolute;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:14px;z-index:20}.modal.on{display:flex}
-.box{width:min(92%,880px);max-height:92%;overflow:auto;background:#081126;border:4px solid #fff;outline:4px solid #000;box-shadow:8px 8px 0 #000;padding:12px}
-.mh{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:3px solid #6f85d6;padding-bottom:8px;margin-bottom:10px}.mh h2{margin:0;font-size:18px;line-height:1}
+.box{width:min(96%,1040px);max-height:calc(100% - 20px);overflow:auto;background:#081126;border:4px solid #fff;outline:4px solid #000;box-shadow:8px 8px 0 #000;padding:9px}
+.mh{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:3px solid #6f85d6;padding-bottom:5px;margin-bottom:7px}.mh h2{margin:0;font-size:17px;line-height:1}
 .x{background:#8d1f35;color:#fff;border:3px solid #fff;box-shadow:3px 3px 0 #000;padding:4px 8px}
-.settingSections{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.settingGroup{background:#07101f;border:3px solid #3b4c8f;box-shadow:inset 0 0 0 2px #02050d;padding:8px}
-.settingGroup.wide{grid-column:1/-1}
-.groupTitle{display:flex;align-items:center;gap:8px;margin:-2px -2px 8px;padding:5px 7px;background:#111d42;border-bottom:2px solid #627bea;color:#fff;font-size:14px;font-weight:900}
-.groupTitle .labelIcon{width:26px;height:26px}
+.settingSections{display:grid;grid-template-columns:.72fr 1fr 1fr;grid-template-areas:"map deer wolf" "grass deer wolf" "speed diet diet";gap:7px}
+.settingGroup{background:#07101f;border:2px solid #3b4c8f;box-shadow:inset 0 0 0 1px #02050d;padding:5px}
+.settingGroup.map{grid-area:map}.settingGroup.grass{grid-area:grass}.settingGroup.deer{grid-area:deer}.settingGroup.wolf{grid-area:wolf}.settingGroup.diet{grid-area:diet}.settingGroup.speed{grid-area:speed}
+.groupTitle{display:flex;align-items:center;gap:6px;margin:-1px -1px 5px;padding:3px 5px;background:#111d42;border-bottom:2px solid #627bea;color:#fff;font-size:12px;font-weight:900}
+.groupTitle .labelIcon{width:22px;height:22px}
+.groupBody{display:grid;gap:4px}
+.f{display:grid;grid-template-columns:minmax(116px,1fr) 78px;gap:6px;align-items:center;background:#09101f;border:1px solid #263d7c;padding:3px 5px;min-height:30px}
+.f label{display:flex;align-items:center;gap:5px;font-size:11px;line-height:1.15;color:#d8e1ff;margin:0}
+.f input,.f select{width:78px;justify-self:end;background:#02040a;color:#fff;border:2px solid #88a0ff;padding:2px 5px;font-size:13px;line-height:1.2}
+.f select{width:154px;max-width:100%}
+.f .ruleNote,.ruleNote.full{grid-column:1/-1;margin:0;font-size:9.5px;line-height:1.25;color:#bfcaff}
+.diet .groupBody{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 6px}
+.diet .f{grid-template-columns:minmax(120px,1fr) 84px}
+.diet .f:first-child{grid-column:1/-1;grid-template-columns:minmax(130px,1fr) 180px}
+.diet .f select{width:180px}
+.speedBox{display:block;background:#09101f;border:1px solid #263d7c;padding:5px}
+.speedBox>label{display:flex;align-items:center;gap:6px;font-size:11px;color:#d8e1ff;margin-bottom:4px}
+.speedLine{display:grid;grid-template-columns:42px 1fr 42px;gap:5px;align-items:center}.speedWord{font-size:9px;color:#d8e1ff;text-align:center}.pixelRange{-webkit-appearance:none;appearance:none;width:100%;height:16px;background:#02040a;border:2px solid #88a0ff;box-shadow:inset 0 0 0 1px #000;padding:0}.pixelRange::-webkit-slider-runnable-track{height:5px;background:repeating-linear-gradient(90deg,#516fd6 0 10%,#1a2d66 10% 20%)}.pixelRange::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;margin-top:-5px;background:#ffd45c;border:2px solid #6f3200;box-shadow:1px 1px 0 #000}.pixelRange::-moz-range-track{height:5px;background:#516fd6}.pixelRange::-moz-range-thumb{width:12px;height:12px;background:#ffd45c;border:2px solid #6f3200;border-radius:0}.help a{color:#8fd6ff;text-decoration:underline}
+.labelIcon{width:26px;height:26px}
 .groupBody{display:grid;gap:6px}
 .f{display:grid;grid-template-columns:minmax(150px,1fr) 104px;gap:8px;align-items:center;background:#09101f;border:1px solid #263d7c;padding:5px 7px;min-height:38px}
 .f label{display:flex;align-items:center;gap:7px;font-size:12px;line-height:1.25;color:#d8e1ff;margin:0}
@@ -52,8 +66,8 @@ button,input{font:inherit} button{cursor:pointer}
 .speedBox>label{display:flex;align-items:center;gap:8px;font-size:12px;color:#d8e1ff;margin-bottom:6px}
 .speedLine{display:grid;grid-template-columns:54px 1fr 54px;gap:8px;align-items:center}.speedWord{font-size:11px;color:#d8e1ff;text-align:center}.pixelRange{-webkit-appearance:none;appearance:none;width:100%;height:18px;background:#02040a;border:3px solid #88a0ff;box-shadow:inset 0 0 0 2px #000;padding:0}.pixelRange::-webkit-slider-runnable-track{height:6px;background:repeating-linear-gradient(90deg,#516fd6 0 10%,#1a2d66 10% 20%)}.pixelRange::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;margin-top:-6px;background:#ffd45c;border:3px solid #6f3200;box-shadow:2px 2px 0 #000}.pixelRange::-moz-range-track{height:6px;background:#516fd6}.pixelRange::-moz-range-thumb{width:14px;height:14px;background:#ffd45c;border:3px solid #6f3200;border-radius:0}.help a{color:#8fd6ff;text-decoration:underline}
 .labelIcon{width:24px;height:24px;display:block;background:#000;flex:none}
-.row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.btn{background:#121a34;color:#fff;border:3px solid #fff;box-shadow:3px 3px 0 #000;padding:6px 10px;min-height:36px;font-weight:900}.btn.red{background:#8f2038}
-.miniInfo{margin-top:10px;font-size:13px;line-height:1.6;color:#d7e1ff}
+.row{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}.btn{background:#121a34;color:#fff;border:3px solid #fff;box-shadow:2px 2px 0 #000;padding:4px 9px;min-height:30px;font-size:12px;font-weight:900}.btn.red{background:#8f2038}
+.miniInfo{margin-top:6px;font-size:10.5px;line-height:1.3;color:#d7e1ff}
 .graphBox{width:min(96%,980px);background:#081126;border:4px solid #fff;outline:4px solid #000;box-shadow:8px 8px 0 #000;padding:12px}.graphHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px}.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;font-size:12px}.legendItem{display:flex;align-items:center;gap:6px}.legendIcon{width:22px;height:22px;background:#000;border:1px solid #3650a4}
 #bigGraph{width:100%;height:290px;display:block;background:#02040a;border:3px solid #465fd4}
 .help{margin:0;padding-left:1.25em;line-height:1.8;font-size:13px}.qrWrap{text-align:center}.qrWrap img{width:min(300px,80vw);height:auto;background:#fff;padding:10px;border:4px solid #000}.url{margin-top:10px;color:#9cd7ff;word-break:break-all;font-size:13px}
@@ -67,7 +81,7 @@ button,input{font:inherit} button{cursor:pointer}
   .countGrid{grid-template-columns:120px 120px;grid-template-rows:34px 34px;gap:2px 4px}
   .hudStat{grid-template-columns:30px 86px;width:118px;height:34px;column-gap:4px}.iconCounter{width:30px;height:30px}.countPix{width:86px;height:30px}
   .playfieldWrap{top:158px}
-  .settingSections{grid-template-columns:1fr}.settingGroup.wide{grid-column:auto}.f{grid-template-columns:minmax(130px,1fr) 92px}.f input{width:92px}.f select{width:170px}
+  .settingSections{grid-template-columns:1fr;grid-template-areas:"map" "grass" "deer" "wolf" "speed" "diet"}.diet .groupBody{grid-template-columns:1fr}.diet .f:first-child{grid-column:auto;grid-template-columns:minmax(120px,1fr) 160px}.f{grid-template-columns:minmax(120px,1fr) 82px}.f input{width:82px}.f select{width:160px}
 }
 </style>
 </head>
@@ -100,22 +114,22 @@ button,input{font:inherit} button{cursor:pointer}
   <div id="settingsModal" class="modal"><div class="box">
     <div class="mh"><h2>SETTINGS / せってい</h2><button class="x" data-close="settingsModal">×</button></div>
     <div class="settingSections">
-      <section class="settingGroup">
-        <div class="groupTitle"><canvas class="labelIcon icon-waste" width="26" height="26"></canvas>MAP / フィールド</div>
+      <section class="settingGroup map">
+        <div class="groupTitle"><canvas class="labelIcon icon-waste" width="22" height="22"></canvas>MAP</div>
         <div class="groupBody">
-          <div class="f"><label>MAP SIZE</label><input id="sz" type="number" min="8" max="40" value="20"></div>
+          <div class="f"><label>マップサイズ</label><input id="sz" type="number" min="8" max="40" value="20"></div>
         </div>
       </section>
 
-      <section class="settingGroup">
-        <div class="groupTitle"><canvas class="labelIcon icon-grass" width="26" height="26"></canvas>GRASS / 草</div>
+      <section class="settingGroup grass">
+        <div class="groupTitle"><canvas class="labelIcon icon-grass" width="22" height="22"></canvas>GRASS / 草</div>
         <div class="groupBody">
-          <div class="f"><label>草の再生ターン</label><input id="gr" type="number" min="1" max="50" value="6"></div>
+          <div class="f"><label>再生ターン</label><input id="gr" type="number" min="1" max="50" value="6"></div>
         </div>
       </section>
 
-      <section class="settingGroup">
-        <div class="groupTitle"><canvas class="labelIcon icon-deer" width="26" height="26"></canvas>DEER / シカ</div>
+      <section class="settingGroup deer">
+        <div class="groupTitle"><canvas class="labelIcon icon-deer" width="22" height="22"></canvas>DEER / シカ</div>
         <div class="groupBody">
           <div class="f"><label>寿命</label><input id="dl" type="number" min="1" max="200" value="35"></div>
           <div class="f"><label>空腹限界</label><input id="ds" type="number" min="1" max="50" value="7"></div>
@@ -123,33 +137,33 @@ button,input{font:inherit} button{cursor:pointer}
         </div>
       </section>
 
-      <section class="settingGroup">
-        <div class="groupTitle"><canvas class="labelIcon icon-wolf" width="26" height="26"></canvas>WOLF / オオカミ</div>
+      <section class="settingGroup wolf">
+        <div class="groupTitle"><canvas class="labelIcon icon-wolf" width="22" height="22"></canvas>WOLF / オオカミ</div>
         <div class="groupBody">
           <div class="f"><label>寿命</label><input id="wl" type="number" min="1" max="200" value="45"></div>
           <div class="f"><label>空腹限界</label><input id="ws" type="number" min="1" max="50" value="9"></div>
           <div class="f"><label>初期個体数</label><input id="wi" type="number" min="0" value="5"></div>
-          <div class="f"><label>出現ターン</label><input id="wstart" type="number" min="0" max="999" value="0"><div class="ruleNote">0 = 最初から。20なら TURN 20 で参加します。</div></div>
+          <div class="f"><label>出現ターン</label><input id="wstart" type="number" min="0" max="999" value="0"><div class="ruleNote">0=最初から / 20=TURN 20から</div></div>
         </div>
       </section>
 
-      <section class="settingGroup wide">
-        <div class="groupTitle"><canvas class="labelIcon icon-wolf" width="26" height="26"></canvas>WOLF DIET / オオカミの植物食</div>
+      <section class="settingGroup speed">
+        <div class="groupTitle">GAME SPEED</div>
+        <div class="speedBox"><label>TURN SPEED <span id="speedValue">3</span></label><div class="speedLine"><span class="speedWord">SLOW</span><input id="speed" class="pixelRange" type="range" min="1" max="5" step="1" value="3"><span class="speedWord">FAST</span></div></div>
+      </section>
+
+      <section class="settingGroup diet">
+        <div class="groupTitle"><canvas class="labelIcon icon-wolf" width="22" height="22"></canvas>WOLF DIET / 植物食</div>
         <div class="groupBody">
-          <div class="f"><label>植物を食べるルール</label><select id="wgMode"><option value="opportunistic" selected>補助食として許可</option><option value="off">食べない</option></select><div class="ruleNote">シカが隣接していない場合だけ判定します。</div></div>
-          <div class="f"><label>許可する空腹ターン</label><input id="wgh" type="number" min="0" max="50" value="2"></div>
-          <div class="f"><label>植物を食べる確率 (%)</label><input id="wgp" type="number" min="0" max="100" value="25"></div>
-          <div class="f"><label>植物食で回復する空腹</label><input id="wgr" type="number" min="0" max="50" value="2"></div>
+          <div class="f"><label>ルール</label><select id="wgMode"><option value="opportunistic" selected>補助食として許可</option><option value="off">食べない</option></select><div class="ruleNote">隣接するシカがいない場合だけ判定</div></div>
+          <div class="f"><label>許可する空腹</label><input id="wgh" type="number" min="0" max="50" value="2"></div>
+          <div class="f"><label>食べる確率 (%)</label><input id="wgp" type="number" min="0" max="100" value="25"></div>
+          <div class="f"><label>回復する空腹</label><input id="wgr" type="number" min="0" max="50" value="2"></div>
         </div>
-      </section>
-
-      <section class="settingGroup wide">
-        <div class="groupTitle">GAME SPEED / 進行速度</div>
-        <div class="speedBox"><label>TURN SPEED <span id="speedValue">3</span></label><div class="speedLine"><span class="speedWord">SLOW</span><input id="speed" class="pixelRange" type="range" min="1" max="5" step="1" value="3"><span class="speedWord">FAST</span></div><div class="ruleNote full">1が最も遅く、5が最も速い。ターン内の変化とターン間隔が一緒に変わります。</div></div>
       </section>
     </div>
     <div class="row"><button id="mapchg" class="btn">MAP CHANGE</button><button id="stepBtn" class="btn">1 TURN</button></div>
-    <div class="miniInfo">MAP SIZE は RESET / MAP CHANGE で反映します。オオカミ出現ターン・植物食ルール・速度は次のターンから反映されます。草は荒地色の土から芽→成長→草へ変化します。</div>
+    <div class="miniInfo">MAP SIZE は RESET / MAP CHANGE で反映。その他の設定は次のターンから反映します。詳細は HELP を参照。</div>
   </div></div>
 
   <div id="graphModal" class="modal"><div class="graphBox">
