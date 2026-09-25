@@ -14,15 +14,14 @@
 html,body{margin:0;height:100%;background:#000;color:var(--text);font-family:monospace;image-rendering:pixelated}
 body{overflow:hidden}
 button,input{font:inherit} button{cursor:pointer}
-.app{height:100vh;display:flex;align-items:center;justify-content:center;padding:8px;background:#000}
- .screen{width:min(97vw,1180px);aspect-ratio:4/3;position:relative;background:#000;border:4px solid #2a2a2a;box-shadow:0 0 0 3px #000,0 0 0 6px #213d89;overflow:hidden}
-.topbar{position:absolute;left:0;right:0;top:0;height:104px;padding:6px 12px;display:grid;grid-template-columns:228px 136px 312px 208px;gap:10px;align-items:center;justify-content:space-between;background:#000;z-index:4}
+.app{height:100dvh;display:flex;align-items:flex-start;justify-content:center;padding:8px;background:#000}
+.screen{width:min(97vw,calc((100dvh - 16px)*4/3),1180px);aspect-ratio:4/3;position:relative;background:#000;border:4px solid #2a2a2a;box-shadow:0 0 0 3px #000,0 0 0 6px #213d89;overflow:hidden}
+.topbar{position:absolute;left:0;right:0;top:0;height:104px;padding:6px 12px;display:grid;grid-template-columns:228px 200px 312px 208px;gap:10px;align-items:center;justify-content:space-between;background:#000;z-index:4}
 .miniPanel{height:88px;border:3px solid #516fd6;padding:5px;background:#000;display:flex;align-items:center}
 #miniGraph{width:100%;height:100%;display:block;background:#02040a;border:1px solid #233564;cursor:pointer;image-rendering:pixelated}
-.titleTurn{height:88px;display:grid;grid-template-rows:36px 36px;align-content:center;row-gap:2px;justify-items:start;min-width:0}
-.titleLogo,.turnText{font-size:22px;line-height:36px;font-weight:900;white-space:nowrap;margin:0}
-.titleLogo{letter-spacing:.02em;color:#ffd45c;text-shadow:2px 0 0 #6f3200,-2px 0 0 #6f3200,0 2px 0 #6f3200,0 -2px 0 #6f3200,2px 2px 0 #2f0f00}
-.turnText{color:#fff;text-shadow:2px 2px 0 #555}
+.titleTurn{height:88px;display:grid;grid-template-rows:40px 40px;align-content:center;row-gap:2px;justify-items:start;min-width:0}
+.titleLogo{font-size:34px;line-height:40px;font-weight:900;white-space:nowrap;margin:0;letter-spacing:0;color:#ffd45c;text-shadow:2px 0 0 #6f3200,-2px 0 0 #6f3200,0 2px 0 #6f3200,0 -2px 0 #6f3200,3px 3px 0 #2f0f00}
+.turnPix{width:192px;height:36px;display:block;background:#000;image-rendering:pixelated}
 .countGrid{height:88px;display:grid;grid-template-columns:148px 148px;grid-template-rows:40px 40px;gap:2px 10px;align-content:center}
 .hudStat{display:grid;grid-template-columns:36px 108px;align-items:center;column-gap:6px;width:150px;height:40px}
 .iconCounter{width:36px;height:36px;background:#000;display:block;image-rendering:pixelated}
@@ -47,12 +46,12 @@ button,input{font:inherit} button{cursor:pointer}
 #bigGraph{width:100%;height:290px;display:block;background:#02040a;border:3px solid #465fd4}
 .help{margin:0;padding-left:1.25em;line-height:1.8;font-size:13px}.qrWrap{text-align:center}.qrWrap img{width:min(300px,80vw);height:auto;background:#fff;padding:10px;border:4px solid #000}.url{margin-top:10px;color:#9cd7ff;word-break:break-all;font-size:13px}
 @media (max-width:860px){
-  .screen{width:100vw;height:100vh;aspect-ratio:auto;border:none;box-shadow:none}
+  .screen{width:100vw;height:100dvh;aspect-ratio:auto;border:none;box-shadow:none}
   .topbar{grid-template-columns:150px 108px 1fr;height:158px;padding:6px 8px}
   .miniPanel,.titleTurn,.countGrid{height:78px}
   .buttonPanel{grid-column:1/4;width:100%;height:64px;grid-template-columns:repeat(5,1fr);grid-template-rows:1fr;gap:4px}
   .hudBtn.span2{grid-column:span 1}
-  .titleLogo,.turnText{font-size:16px;line-height:30px}.titleTurn{grid-template-rows:30px 30px}
+  .titleLogo{font-size:24px;line-height:30px}.turnPix{width:144px;height:30px}.titleTurn{grid-template-rows:30px 30px}
   .countGrid{grid-template-columns:120px 120px;grid-template-rows:34px 34px;gap:2px 4px}
   .hudStat{grid-template-columns:30px 86px;width:118px;height:34px;column-gap:4px}.iconCounter{width:30px;height:30px}.countPix{width:86px;height:30px}
   .playfieldWrap{top:158px}
@@ -66,7 +65,7 @@ button,input{font:inherit} button{cursor:pointer}
     <div class="miniPanel"><canvas id="miniGraph" width="160" height="64" title="クリックでグラフを拡大"></canvas></div>
     <div class="titleTurn">
       <div class="titleLogo" aria-label="食物連鎖">食物連鎖</div>
-      <div class="turnText" id="turnText">TURN 000</div>
+      <canvas class="turnPix" id="turnText" width="96" height="18" aria-label="TURN 000"></canvas>
     </div>
     <div class="countGrid">
       <div class="hudStat"><canvas class="iconCounter" id="cGrass" width="36" height="36"></canvas><canvas class="countPix" id="grassCount" width="54" height="18" aria-label="草 × 000"></canvas></div>
@@ -252,7 +251,12 @@ const PIX_FONT={
   '7':['11111','00001','00010','00100','01000','01000','01000'],
   '8':['01110','10001','10001','01110','10001','10001','01110'],
   '9':['01110','10001','10001','01111','00001','00001','11110'],
-  'X':['10001','01010','00100','01010','10001','00000','00000']
+  'X':['10001','01010','00100','01010','10001','00000','00000'],
+  'T':['11111','00100','00100','00100','00100','00100','00100'],
+  'U':['10001','10001','10001','10001','10001','10001','01110'],
+  'R':['11110','10001','10001','11110','10100','10010','10001'],
+  'N':['10001','11001','11001','10101','10011','10011','10001'],
+  ' ':['00000','00000','00000','00000','00000','00000','00000']
 };
 function drawPixelGlyph(ctx,glyph,x,y,scale,col='#fff'){
   const rows=PIX_FONT[glyph]||PIX_FONT['0'];
@@ -263,6 +267,14 @@ function drawPixelCounter(canvas,value){
   const ctx=canvas.getContext('2d'); ctx.imageSmoothingEnabled=false; ctx.clearRect(0,0,canvas.width,canvas.height);
   const text='X'+String(Math.max(0,value)).padStart(3,'0').slice(-3);
   const s=2, charW=12, totalW=text.length*charW-2, ox=Math.max(0,Math.floor((canvas.width-totalW)/2)), oy=2;
+  for(let i=0;i<text.length;i++){
+    drawPixelGlyph(ctx,text[i],ox+i*charW+1,oy+1,s,'#555');
+    drawPixelGlyph(ctx,text[i],ox+i*charW,oy,s,'#fff');
+  }
+}
+function drawPixelText(canvas,text){
+  const ctx=canvas.getContext('2d'); ctx.imageSmoothingEnabled=false; ctx.clearRect(0,0,canvas.width,canvas.height);
+  const s=2,charW=12,totalW=text.length*charW-2,ox=Math.max(0,Math.floor((canvas.width-totalW)/2)),oy=2;
   for(let i=0;i<text.length;i++){
     drawPixelGlyph(ctx,text[i],ox+i*charW+1,oy+1,s,'#555');
     drawPixelGlyph(ctx,text[i],ox+i*charW,oy,s,'#fff');
@@ -304,22 +316,48 @@ function drawFeedingPicture(ctx,kind,x,y,size,dir){
     ctx.save(); ctx.translate(x,y);
     if(side==='L'){ctx.translate(size,0);ctx.scale(-1,1);}
     const u=size/24, f=(ix,iy,w,h,col)=>px(ctx,ix*u,iy*u,w*u,h*u,col);
-    const wo='#1d2530', wb='#8e99aa', wf='#e8eef7', wd='#4f5968', white='#fff9ef';
-    // tiny deer being bitten
-    f(2,14,9,6,'#3a1b07'); f(3,15,7,4,'#cb6f28'); f(8,12,5,5,'#3a1b07'); f(9,13,3,3,'#f6b36b');
-    f(3,19,2,3,'#fff9ef'); f(7,19,2,3,'#fff9ef'); f(11,14,2,2,'#fff');
-    // wolf body
-    f(5,8,11,10,wo); f(7,10,9,6,wb); f(5,18,13,2,'rgba(0,0,0,.55)');
-    // huge head, upper and lower jaws separated by black mouth
-    f(13,3,11,12,wo); f(15,5,8,5,wf); f(16,10,8,4,wd);
-    f(16,9,8,3,'#090a0d');         // open mouth cavity
-    f(17,8,1,2,white); f(20,8,1,2,white); f(22,9,1,2,white);
-    f(17,11,1,2,white); f(20,11,1,2,white); f(22,11,1,2,white);
-    f(20,6,1,1,'#111');            // eye
-    f(23,7,1,1,'#111');            // nose
-    f(14,1,3,5,wd); f(19,1,3,5,wd); // ears
-    // place the small deer partly inside the mouth opening
-    f(12,10,4,3,'#3a1b07'); f(13,11,3,2,'#cb6f28');
+    const wo='#18212d', wb='#8e99aa', wf='#eef3fb', wd='#4b5667', white='#fff9ef';
+    const do1='#3a1b07', db='#cb6f28', df='#f6b36b';
+
+    // smaller deer crouched under the wolf
+    f(1,15,9,5,do1); f(2,16,7,3,db);
+    f(7,13,5,5,do1); f(8,14,3,3,df);
+    f(2,19,2,3,white); f(6,19,2,3,white);
+    f(10,15,2,2,white); f(11,15,1,1,'#111');
+
+    // wolf body leaning over prey
+    f(7,8,10,10,wo); f(9,10,8,6,wb);
+    f(7,19,12,2,'rgba(0,0,0,.58)');
+
+    // rear leg planted
+    f(13,16,3,6,wo); f(14,17,1,4,white);
+
+    // raised front leg / paw crossing over the deer
+    f(9,9,3,4,wo);
+    f(8,12,3,4,wo);
+    f(6,14,4,3,wo);
+    f(5,16,4,3,wf);   // visible raised paw
+
+    // much larger wolf head
+    f(12,2,12,13,wo);
+    f(14,4,9,5,wf);   // forehead / cheek
+    f(13,8,11,3,wd);  // upper jaw
+    f(14,13,10,3,wd); // lower jaw
+    f(14,10,10,4,'#07090c'); // wide open mouth
+
+    // teeth around the open mouth
+    f(15,9,1,2,white); f(18,9,1,2,white); f(21,9,1,2,white);
+    f(16,13,1,2,white); f(19,13,1,2,white); f(22,13,1,2,white);
+
+    // big readable face
+    f(19,6,2,2,'#111'); // eye
+    f(23,8,1,2,'#111'); // nose
+    f(13,0,3,5,wd); f(19,0,3,5,wd); // ears
+
+    // deer head/body enters the mouth, making the bite obvious
+    f(10,11,5,4,do1); f(11,12,4,2,db);
+    f(13,12,2,2,df);
+
     ctx.restore();
   }
 }
@@ -444,7 +482,7 @@ function resetAll(newMap=false){ stopRun(); S.anim=null; const q=conf(); if(newM
 function pad3(n){return String(Math.max(0,n)).padStart(3,'0')}
 function updateCounts(){
   let grass=0,waste=0; for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){const v=S.cells[y][x]; if(v.terrain==='grass'&&v.grass) grass++; if(v.terrain==='waste'||(v.terrain==='grass'&&!v.grass)) waste++;}
-  drawPixelCounter($('grassCount'),grass); drawPixelCounter($('wasteCount'),waste); drawPixelCounter($('deerCount'),S.deer.length); drawPixelCounter($('wolfCount'),S.wolf.length); $('turnText').textContent='TURN '+pad3(S.turn); $('graphTurn').textContent='TURN '+S.turn;
+  drawPixelCounter($('grassCount'),grass); drawPixelCounter($('wasteCount'),waste); drawPixelCounter($('deerCount'),S.deer.length); drawPixelCounter($('wolfCount'),S.wolf.length); drawPixelText($('turnText'),'TURN '+pad3(S.turn)); $('graphTurn').textContent='TURN '+S.turn;
   drawMiniGraph(); drawBigGraph();
 }
 function pushHistory(){
