@@ -37,8 +37,20 @@ button,input{font:inherit} button{cursor:pointer}
 .box{width:min(92%,880px);max-height:92%;overflow:auto;background:#081126;border:4px solid #fff;outline:4px solid #000;box-shadow:8px 8px 0 #000;padding:12px}
 .mh{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:3px solid #6f85d6;padding-bottom:8px;margin-bottom:10px}.mh h2{margin:0;font-size:18px;line-height:1}
 .x{background:#8d1f35;color:#fff;border:3px solid #fff;box-shadow:3px 3px 0 #000;padding:4px 8px}
-.settingsGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.f{background:#09101f;border:2px solid #3b4c8f;padding:6px}.f label{display:flex;align-items:center;gap:8px;font-size:13px;line-height:1.2;margin-bottom:4px;color:#d8e1ff}.f input,.f select{width:100%;background:#02040a;color:#fff;border:2px solid #88a0ff;padding:6px;font-size:15px}.speedBox{grid-column:1/-1}.speedLine{display:grid;grid-template-columns:54px 1fr 54px;gap:8px;align-items:center}.speedWord{font-size:11px;color:#d8e1ff;text-align:center}.pixelRange{-webkit-appearance:none;appearance:none;height:18px;background:#02040a;border:3px solid #88a0ff;box-shadow:inset 0 0 0 2px #000;padding:0}.pixelRange::-webkit-slider-runnable-track{height:6px;background:repeating-linear-gradient(90deg,#516fd6 0 10%,#1a2d66 10% 20%)}.pixelRange::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;margin-top:-6px;background:#ffd45c;border:3px solid #6f3200;box-shadow:2px 2px 0 #000}.pixelRange::-moz-range-track{height:6px;background:#516fd6}.pixelRange::-moz-range-thumb{width:14px;height:14px;background:#ffd45c;border:3px solid #6f3200;border-radius:0}.ruleNote{margin-top:5px;font-size:11px;line-height:1.45;color:#bfcaff}.help a{color:#8fd6ff;text-decoration:underline}
+.settingSections{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.settingGroup{background:#07101f;border:3px solid #3b4c8f;box-shadow:inset 0 0 0 2px #02050d;padding:8px}
+.settingGroup.wide{grid-column:1/-1}
+.groupTitle{display:flex;align-items:center;gap:8px;margin:-2px -2px 8px;padding:5px 7px;background:#111d42;border-bottom:2px solid #627bea;color:#fff;font-size:14px;font-weight:900}
+.groupTitle .labelIcon{width:26px;height:26px}
+.groupBody{display:grid;gap:6px}
+.f{display:grid;grid-template-columns:minmax(150px,1fr) 104px;gap:8px;align-items:center;background:#09101f;border:1px solid #263d7c;padding:5px 7px;min-height:38px}
+.f label{display:flex;align-items:center;gap:7px;font-size:12px;line-height:1.25;color:#d8e1ff;margin:0}
+.f input,.f select{width:104px;justify-self:end;background:#02040a;color:#fff;border:2px solid #88a0ff;padding:4px 6px;font-size:14px}
+.f select{width:190px;max-width:100%}
+.f .ruleNote,.ruleNote.full{grid-column:1/-1;margin:1px 0 0;font-size:10.5px;line-height:1.45;color:#bfcaff}
+.speedBox{display:block;background:#09101f;border:1px solid #263d7c;padding:7px}
+.speedBox>label{display:flex;align-items:center;gap:8px;font-size:12px;color:#d8e1ff;margin-bottom:6px}
+.speedLine{display:grid;grid-template-columns:54px 1fr 54px;gap:8px;align-items:center}.speedWord{font-size:11px;color:#d8e1ff;text-align:center}.pixelRange{-webkit-appearance:none;appearance:none;width:100%;height:18px;background:#02040a;border:3px solid #88a0ff;box-shadow:inset 0 0 0 2px #000;padding:0}.pixelRange::-webkit-slider-runnable-track{height:6px;background:repeating-linear-gradient(90deg,#516fd6 0 10%,#1a2d66 10% 20%)}.pixelRange::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;margin-top:-6px;background:#ffd45c;border:3px solid #6f3200;box-shadow:2px 2px 0 #000}.pixelRange::-moz-range-track{height:6px;background:#516fd6}.pixelRange::-moz-range-thumb{width:14px;height:14px;background:#ffd45c;border:3px solid #6f3200;border-radius:0}.help a{color:#8fd6ff;text-decoration:underline}
 .labelIcon{width:24px;height:24px;display:block;background:#000;flex:none}
 .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.btn{background:#121a34;color:#fff;border:3px solid #fff;box-shadow:3px 3px 0 #000;padding:6px 10px;min-height:36px;font-weight:900}.btn.red{background:#8f2038}
 .miniInfo{margin-top:10px;font-size:13px;line-height:1.6;color:#d7e1ff}
@@ -55,7 +67,7 @@ button,input{font:inherit} button{cursor:pointer}
   .countGrid{grid-template-columns:120px 120px;grid-template-rows:34px 34px;gap:2px 4px}
   .hudStat{grid-template-columns:30px 86px;width:118px;height:34px;column-gap:4px}.iconCounter{width:30px;height:30px}.countPix{width:86px;height:30px}
   .playfieldWrap{top:158px}
-  .settingsGrid{grid-template-columns:1fr}
+  .settingSections{grid-template-columns:1fr}.settingGroup.wide{grid-column:auto}.f{grid-template-columns:minmax(130px,1fr) 92px}.f input{width:92px}.f select{width:170px}
 }
 </style>
 </head>
@@ -87,21 +99,54 @@ button,input{font:inherit} button{cursor:pointer}
 
   <div id="settingsModal" class="modal"><div class="box">
     <div class="mh"><h2>SETTINGS / せってい</h2><button class="x" data-close="settingsModal">×</button></div>
-    <div class="settingsGrid">
-      <div class="f"><label><canvas class="labelIcon icon-grass" width="24" height="24"></canvas>MAP SIZE</label><input id="sz" type="number" min="8" max="40" value="20"></div>
-      <div class="f"><label><canvas class="labelIcon icon-grass" width="24" height="24"></canvas>草の再生ターン</label><input id="gr" type="number" min="1" max="50" value="6"></div>
-      <div class="f"><label><canvas class="labelIcon icon-deer" width="24" height="24"></canvas>シカの寿命</label><input id="dl" type="number" min="1" max="200" value="35"></div>
-      <div class="f"><label><canvas class="labelIcon icon-deer" width="24" height="24"></canvas>シカの空腹限界</label><input id="ds" type="number" min="1" max="50" value="7"></div>
-      <div class="f"><label><canvas class="labelIcon icon-wolf" width="24" height="24"></canvas>オオカミの寿命</label><input id="wl" type="number" min="1" max="200" value="45"></div>
-      <div class="f"><label><canvas class="labelIcon icon-wolf" width="24" height="24"></canvas>オオカミの空腹限界</label><input id="ws" type="number" min="1" max="50" value="9"></div>
-      <div class="f"><label><canvas class="labelIcon icon-deer" width="24" height="24"></canvas>初期シカ数</label><input id="di" type="number" min="0" value="12"></div>
-      <div class="f"><label><canvas class="labelIcon icon-wolf" width="24" height="24"></canvas>初期オオカミ数</label><input id="wi" type="number" min="0" value="5"></div>
-      <div class="f"><label><canvas class="labelIcon icon-wolf" width="24" height="24"></canvas>オオカミ出現ターン</label><input id="wstart" type="number" min="0" max="999" value="0"><div class="ruleNote">0 = 最初から。例：20なら TURN 20 になった時点で初期オオカミ数が参加します。</div></div>
-      <div class="f"><label><canvas class="labelIcon icon-wolf" width="24" height="24"></canvas>植物を食べるルール</label><select id="wgMode"><option value="opportunistic" selected>補助食として許可</option><option value="off">食べない</option></select><div class="ruleNote">鹿が隣接していない場合だけ判定します。</div></div>
-      <div class="f"><label><canvas class="labelIcon icon-wolf" width="24" height="24"></canvas>植物食を許可する空腹ターン</label><input id="wgh" type="number" min="0" max="50" value="2"></div>
-      <div class="f"><label><canvas class="labelIcon icon-grass" width="24" height="24"></canvas>植物を食べる確率 (%)</label><input id="wgp" type="number" min="0" max="100" value="25"></div>
-      <div class="f"><label><canvas class="labelIcon icon-wolf" width="24" height="24"></canvas>植物食で回復する空腹ターン</label><input id="wgr" type="number" min="0" max="50" value="2"></div>
-      <div class="f speedBox"><label>TURN SPEED <span id="speedValue">3</span></label><div class="speedLine"><span class="speedWord">SLOW</span><input id="speed" class="pixelRange" type="range" min="1" max="5" step="1" value="3"><span class="speedWord">FAST</span></div><div class="ruleNote">1が最も遅く、5が最も速い。移動・再生・捕食絵の切替時間とターン間隔が一緒に変わります。</div></div>
+    <div class="settingSections">
+      <section class="settingGroup">
+        <div class="groupTitle"><canvas class="labelIcon icon-waste" width="26" height="26"></canvas>MAP / フィールド</div>
+        <div class="groupBody">
+          <div class="f"><label>MAP SIZE</label><input id="sz" type="number" min="8" max="40" value="20"></div>
+        </div>
+      </section>
+
+      <section class="settingGroup">
+        <div class="groupTitle"><canvas class="labelIcon icon-grass" width="26" height="26"></canvas>GRASS / 草</div>
+        <div class="groupBody">
+          <div class="f"><label>草の再生ターン</label><input id="gr" type="number" min="1" max="50" value="6"></div>
+        </div>
+      </section>
+
+      <section class="settingGroup">
+        <div class="groupTitle"><canvas class="labelIcon icon-deer" width="26" height="26"></canvas>DEER / シカ</div>
+        <div class="groupBody">
+          <div class="f"><label>寿命</label><input id="dl" type="number" min="1" max="200" value="35"></div>
+          <div class="f"><label>空腹限界</label><input id="ds" type="number" min="1" max="50" value="7"></div>
+          <div class="f"><label>初期個体数</label><input id="di" type="number" min="0" value="12"></div>
+        </div>
+      </section>
+
+      <section class="settingGroup">
+        <div class="groupTitle"><canvas class="labelIcon icon-wolf" width="26" height="26"></canvas>WOLF / オオカミ</div>
+        <div class="groupBody">
+          <div class="f"><label>寿命</label><input id="wl" type="number" min="1" max="200" value="45"></div>
+          <div class="f"><label>空腹限界</label><input id="ws" type="number" min="1" max="50" value="9"></div>
+          <div class="f"><label>初期個体数</label><input id="wi" type="number" min="0" value="5"></div>
+          <div class="f"><label>出現ターン</label><input id="wstart" type="number" min="0" max="999" value="0"><div class="ruleNote">0 = 最初から。20なら TURN 20 で参加します。</div></div>
+        </div>
+      </section>
+
+      <section class="settingGroup wide">
+        <div class="groupTitle"><canvas class="labelIcon icon-wolf" width="26" height="26"></canvas>WOLF DIET / オオカミの植物食</div>
+        <div class="groupBody">
+          <div class="f"><label>植物を食べるルール</label><select id="wgMode"><option value="opportunistic" selected>補助食として許可</option><option value="off">食べない</option></select><div class="ruleNote">シカが隣接していない場合だけ判定します。</div></div>
+          <div class="f"><label>許可する空腹ターン</label><input id="wgh" type="number" min="0" max="50" value="2"></div>
+          <div class="f"><label>植物を食べる確率 (%)</label><input id="wgp" type="number" min="0" max="100" value="25"></div>
+          <div class="f"><label>植物食で回復する空腹</label><input id="wgr" type="number" min="0" max="50" value="2"></div>
+        </div>
+      </section>
+
+      <section class="settingGroup wide">
+        <div class="groupTitle">GAME SPEED / 進行速度</div>
+        <div class="speedBox"><label>TURN SPEED <span id="speedValue">3</span></label><div class="speedLine"><span class="speedWord">SLOW</span><input id="speed" class="pixelRange" type="range" min="1" max="5" step="1" value="3"><span class="speedWord">FAST</span></div><div class="ruleNote full">1が最も遅く、5が最も速い。ターン内の変化とターン間隔が一緒に変わります。</div></div>
+      </section>
     </div>
     <div class="row"><button id="mapchg" class="btn">MAP CHANGE</button><button id="stepBtn" class="btn">1 TURN</button></div>
     <div class="miniInfo">MAP SIZE は RESET / MAP CHANGE で反映します。オオカミ出現ターン・植物食ルール・速度は次のターンから反映されます。草は荒地色の土から芽→成長→草へ変化します。</div>
