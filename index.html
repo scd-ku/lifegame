@@ -88,7 +88,7 @@ button,input{font:inherit} button{cursor:pointer}
       <div class="f"><label><canvas class="labelIcon icon-wolf" width="24" height="24"></canvas>初期オオカミ数</label><input id="wi" type="number" min="0" value="5"></div>
     </div>
     <div class="row"><button id="mapchg" class="btn">MAP CHANGE</button><button id="stepBtn" class="btn">1 TURN</button></div>
-    <div class="miniInfo">フィールドの変化は1ターンごとにアニメで遷移します。草の再生は芽のフレームをはさんで次の状態になります。生き物は移動方向に向きを変えます。</div>
+    <div class="miniInfo">MAP SIZE は RESET / MAP CHANGE で反映します。草は荒地色の土から芽→成長→草へ変化し、生き物は移動方向を向いて1ターン内で移動します。</div>
   </div></div>
 
   <div id="graphModal" class="modal"><div class="graphBox">
@@ -136,66 +136,59 @@ const neigh=(x,y)=>{const a=[]; if(x>0)a.push({x:x-1,y,dir:'L'}); if(x<S.n-1)a.p
 const px=(c,x,y,w,h,col)=>{c.fillStyle=col;c.fillRect(Math.round(x),Math.round(y),Math.ceil(w),Math.ceil(h));};
 
 function conf(){
-  S.n=clamp(+$('sz').value||20,8,40);
-  return {gr:clamp(+$('gr').value||6,1,50),dl:clamp(+$('dl').value||35,1,200),ds:clamp(+$('ds').value||7,1,50),wl:clamp(+$('wl').value||45,1,200),ws:clamp(+$('ws').value||9,1,50),di:Math.max(0,+$('di').value||0),wi:Math.max(0,+$('wi').value||0)};
+  return {n:clamp(+$('sz').value||20,8,40),gr:clamp(+$('gr').value||6,1,50),dl:clamp(+$('dl').value||35,1,200),ds:clamp(+$('ds').value||7,1,50),wl:clamp(+$('wl').value||45,1,200),ws:clamp(+$('ws').value||9,1,50),di:Math.max(0,+$('di').value||0),wi:Math.max(0,+$('wi').value||0)};
 }
-function makeGrid(){
-  const q=conf(); S.cells=[];
-  for(let y=0;y<S.n;y++){
-    const row=[];
-    for(let x=0;x<S.n;x++){
-      const r=Math.random(); const terrain=r<0.68?'grass':(r<0.84?'waste':'sea');
-      row.push({terrain, grass:terrain==='grass', gt:0, gr:q.gr});
-    }
-    S.cells.push(row);
-  }
+function makeGrid(n=conf().n){
+  S.n=n; const q=conf(); S.cells=[];
+  for(let y=0;y<S.n;y++){ const row=[]; for(let x=0;x<S.n;x++){
+    const r=Math.random(), terrain=r<.68?'grass':r<.84?'waste':'sea';
+    row.push({terrain,grass:terrain==='grass',gt:0,gr:q.gr});
+  } S.cells.push(row); }
 }
-function cloneGrid(cells){ return cells.map(r=>r.map(c=>({...c}))); }
+function cloneGrid(cells){ return cells.map(r=>r.map(v=>({...v}))); }
+function cellAt(cells,x,y){ return cells[y]&&cells[y][x] ? cells[y][x] : null; }
 function landSpots(cells,deer,wolf){
-  const occ=new Set([...deer,...wolf].map(a=>a.x+','+a.y)); const a=[];
-  for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++) if(cells[y][x].terrain!=='sea' && !occ.has(x+','+y)) a.push({x,y});
-  return a;
+  const occ=new Set([...deer,...wolf].map(a=>a.x+','+a.y)), out=[];
+  for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){ const v=cellAt(cells,x,y); if(v&&v.terrain!=='sea'&&!occ.has(x+','+y)) out.push({x,y}); }
+  return out;
 }
 function seedAnimals(){
-  S.deer=[]; S.wolf=[];
-  const q=conf(); let spots=landSpots(S.cells,S.deer,S.wolf);
-  for(let i=0;i<q.di && spots.length;i++){ const p=spots.splice((Math.random()*spots.length)|0,1)[0]; S.deer.push({x:p.x,y:p.y,a:0,h:0,dir:'R'}); }
-  for(let i=0;i<q.wi && spots.length;i++){ const p=spots.splice((Math.random()*spots.length)|0,1)[0]; S.wolf.push({x:p.x,y:p.y,a:0,h:0,dir:'L'}); }
+  S.deer=[]; S.wolf=[]; const q=conf(); let spots=landSpots(S.cells,S.deer,S.wolf);
+  for(let i=0;i<q.di&&spots.length;i++){ const p=spots.splice((Math.random()*spots.length)|0,1)[0]; S.deer.push({x:p.x,y:p.y,a:0,h:0,dir:'R'}); }
+  for(let i=0;i<q.wi&&spots.length;i++){ const p=spots.splice((Math.random()*spots.length)|0,1)[0]; S.wolf.push({x:p.x,y:p.y,a:0,h:0,dir:'L'}); }
 }
-
 /* sprite drawing: SNES-ish 16x16 pixel art scaled */
 function drawSprite(ctx,type,x,y,size,dir='R',pose=0,mode='normal'){
-  ctx.save(); ctx.translate(x,y);
-  if(dir==='L'){ ctx.translate(size,0); ctx.scale(-1,1); }
-  const p=Math.max(1,Math.floor(size/16));
-  const fill=(ix,iy,w,h,col)=>px(ctx,ix*p,iy*p,w*p,h*p,col);
+  ctx.save(); ctx.translate(x,y); const u=size/24;
+  const fill=(ix,iy,w,h,col)=>px(ctx,ix*u,iy*u,w*u,h*u,col);
   if(type==='grass'){
-    fill(0,0,16,16,'#0000');
-    const cols=['#49f54c','#1fd235','#0f8f1a','#a5ff7a'];
-    [[2,15,2,7],[4,15,4,4],[6,15,6,2],[8,15,8,4],[10,15,10,1],[12,15,13,4],[14,15,14,7],[1,15,0,8],[5,15,3,6],[9,15,7,5],[11,15,13,6],[15,15,15,8]].forEach((b,i)=>{ctx.strokeStyle=cols[i%4];ctx.lineWidth=p*1.4;ctx.beginPath();ctx.moveTo(b[0]*p,b[1]*p);ctx.lineTo(b[2]*p,b[3]*p);ctx.stroke();});
-    if(mode==='sprout'){ fill(6,11,2,3,'#7bff78'); fill(8,10,2,4,'#39e548'); fill(7,9,2,2,'#b8ff96'); }
-  }
-  if(type==='waste'){
-    fill(0,0,16,16,'#d9c490'); fill(0,13,16,3,'#c1a069'); fill(0,0,16,2,'#f1ddb7');
-    fill(7,2,2,10,'#9e6223'); fill(6,3,1,4,'#9e6223'); fill(9,4,1,4,'#9e6223'); fill(5,1,1,3,'#68380d'); fill(10,1,1,3,'#68380d');
-    fill(2,11,2,2,'#fff0cf'); fill(4,8,2,2,'#b98a49'); fill(12,10,2,2,'#b98a49'); fill(10,12,2,2,'#fff0cf');
-  }
-  if(type==='sea'){
-    fill(0,0,16,16,'#3a78ff'); fill(0,12,16,4,'#204dcc'); fill(1,3,14,9,'#4e8bff');
-    fill(2,5,3,1,'#eff9ff'); fill(5,4,4,1,'#eff9ff'); fill(10,5,3,1,'#eff9ff'); fill(7,6,5,1,'#d9f4ff');
-  }
-  if(type==='deer'){
-    fill(4,8,7,4,'#d67d31'); fill(9,5,4,4,'#f2aa67'); fill(11,6,2,2,'#fff'); fill(12,6,1,1,'#000');
-    fill(5,12,1,4,'#f4eadc'); fill(8,12,1,4,'#f4eadc'); fill(3,9,1,3,'#fff0e0'); fill(13,9,1,3,'#c66d26');
-    fill(8,4,1,2,'#6f3a0e'); fill(7,3,1,3,'#6f3a0e'); fill(10,3,1,3,'#6f3a0e');
-    fill(5,9,1,1,'#fff'); fill(6,8,1,1,'#fff'); fill(7,9,1,1,'#fff'); fill(8,8,1,1,'#fff'); fill(9,9,1,1,'#fff');
-    if(pose){ fill(8,13,1,3,'#f4eadc'); } else { fill(9,13,1,3,'#f4eadc'); }
-  }
-  if(type==='wolf'){
-    fill(4,8,8,4,'#b8bcc7'); fill(9,5,4,4,'#eef1f8'); fill(11,6,2,2,'#fff'); fill(12,6,1,1,'#000');
-    fill(8,3,1,2,'#7f8189'); fill(10,3,1,2,'#7f8189'); fill(3,8,2,2,'#7f8189');
-    fill(5,12,1,4,'#fff'); fill(8,12,1,4,'#fff'); fill(3,10,2,2,'#fff'); fill(13,9,1,3,'#a9adb8');
-    if(pose){ fill(8,13,1,3,'#fff'); } else { fill(9,13,1,3,'#fff'); }
+    const stage=mode==='sprout'?0:mode==='grow'?1:2;
+    if(stage===0){ fill(10,18,2,4,'#45ee55'); fill(12,16,2,6,'#20c83d'); fill(11,15,2,2,'#baff9a'); ctx.restore(); return; }
+    const cols=['#9aff72','#50f45a','#22cb3d','#0b8e22'];
+    [[2,23,2,12],[5,23,4,7],[8,23,8,4],[11,23,10,8],[14,23,15,3],[17,23,18,7],[20,23,21,11],[23,23,23,14],[6,23,2,15],[13,23,9,11],[18,23,22,15]].forEach((b,i)=>{
+      const top=23-(23-b[3])*(stage===1?.58:1); ctx.strokeStyle=cols[i%4]; ctx.lineWidth=Math.max(1,u*1.5);
+      ctx.beginPath(); ctx.moveTo(b[0]*u,b[1]*u); ctx.lineTo(b[2]*u,top*u); ctx.stroke();
+    }); fill(1,21,22,3,'#107f22');
+  } else if(type==='waste'){
+    fill(0,0,24,24,'#c6a16b'); fill(0,0,24,3,'#e7cea2'); fill(0,19,24,5,'#9a7042');
+    fill(11,4,2,13,'#75400f'); fill(9,6,2,4,'#75400f'); fill(13,8,3,2,'#75400f'); fill(8,3,1,5,'#4d2708'); fill(15,3,1,6,'#4d2708');
+    [[3,17,3,2],[6,14,2,2],[18,16,3,2],[20,12,2,2]].forEach((r,i)=>fill(r[0],r[1],r[2],r[3],i%2?'#f4dfbb':'#865d32'));
+  } else if(type==='sea'){
+    fill(0,0,24,24,'#1f5ed8'); fill(0,15,24,9,'#1745a8'); fill(0,4,24,11,'#337df1'); const sh=pose?2:0;
+    [[2,8,5],[8,6,6],[15,8,5],[4,12,7],[14,13,7]].forEach(r=>{ fill((r[0]+sh)%22,r[1],r[2],1,'#edf9ff'); fill((r[0]+1+sh)%22,r[1]+1,Math.max(2,r[2]-2),1,'#7dd8ff'); });
+  } else {
+    const deer=type==='deer', body=deer?'#c8742d':'#a7abb7', light=deer?'#f3ad66':'#eef1f7', dark=deer?'#6f380d':'#646873', white='#fff7ec';
+    if(dir==='L'||dir==='R'){
+      if(dir==='L'){ ctx.translate(size,0); ctx.scale(-1,1); }
+      fill(5,10,11,6,body); fill(14,7,6,6,light); fill(18,8,3,3,white); fill(20,9,1,1,'#111'); fill(4,11,2,3,light);
+      fill(18,5,2,3,dark); fill(14,5,2,3,dark); fill(6,16,2,6,white); fill(13,16,2,6,white); fill(16,15,2,5,body); fill(3,12,2,4,white);
+      if(deer){ [[7,11],[9,13],[11,10],[13,12]].forEach(p=>fill(p[0],p[1],1,1,'#fff')); fill(15,4,1,3,dark); fill(19,4,1,3,dark); }
+      if(pose){ fill(7,18,2,4,white); fill(13,17,2,5,white); }
+    } else {
+      const up=dir==='U'; fill(8,7,8,11,body); fill(7,up?3:14,10,7,light); fill(10,up?1:19,2,4,dark); fill(14,up?1:19,2,4,dark);
+      fill(9,17,2,5,white); fill(13,17,2,5,white); if(!up){ fill(10,16,4,2,white); fill(11,16,1,1,'#111'); }
+      if(deer){ fill(8,9,1,1,'#fff'); fill(15,9,1,1,'#fff'); } if(pose){ fill(8,18,2,4,white); fill(14,18,2,4,white); }
+    }
   }
   ctx.restore();
 }
@@ -219,83 +212,75 @@ function boardMetrics(){
 }
 function drawScene(progress=1){
   const M=boardMetrics(); fctx.imageSmoothingEnabled=false; px(fctx,0,0,M.w,M.h,'#000');
-  const anim=S.anim; const fromGrid=anim?anim.fromCells:S.cells, toGrid=anim?anim.toCells:S.cells;
+  const anim=S.anim, fromGrid=anim?anim.fromCells:S.cells, toGrid=anim?anim.toCells:S.cells;
   for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){
-    const fx=M.ox+x*M.cell, fy=M.oy+y*M.cell; const from=fromGrid[y][x], to=toGrid[y][x]; const cellState=progress<1?from:to;
-    let terrain=to.terrain; drawSprite(fctx, terrain==='grass' ? ((to.grass||from.grass)?'grass':'waste') : terrain, fx, fy, M.cell, 'R', 0, 'normal');
-    if(terrain==='grass' && !from.grass && to.grass && progress<0.7) drawSprite(fctx,'grass',fx,fy,M.cell,'R',0,'sprout');
-    if(terrain==='grass' && !to.grass && from.grass && progress<0.7) drawSprite(fctx,'grass',fx,fy,M.cell,'R',0,'sprout');
-  }
-  const entries=anim?anim.moves:null;
-  if(entries){
-    const shown=new Set();
-    for(const mv of entries){
-      const x=(mv.from.x+(mv.to.x-mv.from.x)*progress), y=(mv.from.y+(mv.to.y-mv.from.y)*progress);
-      drawSprite(fctx,mv.type,M.ox+x*M.cell,M.oy+y*M.cell,M.cell,mv.dir,progress>0.5?1:0);
-      shown.add(mv.id);
+    const from=cellAt(fromGrid,x,y), to=cellAt(toGrid,x,y); if(!from||!to) continue;
+    const X=M.ox+x*M.cell, Y=M.oy+y*M.cell;
+    if(to.terrain==='sea') drawSprite(fctx,'sea',X,Y,M.cell,'R',progress>.5?1:0);
+    else {
+      drawSprite(fctx,'waste',X,Y,M.cell);
+      if(to.terrain==='grass'){
+        if(from.grass&&to.grass) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
+        else if(!from.grass&&to.grass){
+          if(progress<.34) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'sprout');
+          else if(progress<.72) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'grow');
+          else drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
+        } else if(from.grass&&!to.grass&&progress<.45) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,progress<.2?'normal':'grow');
+      }
     }
-    for(const b of anim.births){ if(progress>0.6) drawSprite(fctx,b.type,M.ox+b.to.x*M.cell,M.oy+b.to.y*M.cell,M.cell,b.dir,1); }
+  }
+  if(anim){
+    for(const mv of anim.moves){
+      const xx=mv.from.x+(mv.to.x-mv.from.x)*progress, yy=mv.from.y+(mv.to.y-mv.from.y)*progress;
+      drawSprite(fctx,mv.type,M.ox+xx*M.cell,M.oy+yy*M.cell,M.cell,mv.dir,progress>.5?1:0);
+    }
+    for(const b of anim.births){ if(progress>.65) drawSprite(fctx,b.type,M.ox+b.to.x*M.cell,M.oy+b.to.y*M.cell,M.cell,b.dir,1); }
   } else {
-    S.deer.forEach((a,i)=>drawSprite(fctx,'deer',M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,a.dir,i%2));
-    S.wolf.forEach((a,i)=>drawSprite(fctx,'wolf',M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,a.dir,i%2));
+    S.deer.forEach(a=>drawSprite(fctx,'deer',M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,a.dir,0));
+    S.wolf.forEach(a=>drawSprite(fctx,'wolf',M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,a.dir,0));
   }
 }
-
 function occupyMap(animals){ const m=new Map(); animals.forEach(a=>m.set(a.x+','+a.y,a)); return m; }
 function simulateNext(){
-  const q=conf();
-  const fromCells=cloneGrid(S.cells), fromDeer=S.deer.map(a=>({...a})), fromWolf=S.wolf.map(a=>({...a}));
-  const cells=cloneGrid(S.cells);
-  const regrowth=[];
-  for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){
-    const c=cells[y][x];
-    if(c.terrain==='grass' && !c.grass){ c.gt--; if(c.gt<=0){ c.grass=true; regrowth.push({x,y}); } }
-  }
-  let deerOcc=occupyMap(fromDeer), wolfOcc=occupyMap(fromWolf);
-  const deerNext=[], deerMoves=[], deerBirths=[];
+  const q=conf(), fromCells=cloneGrid(S.cells), fromDeer=S.deer.map(a=>({...a})), fromWolf=S.wolf.map(a=>({...a})), cells=cloneGrid(S.cells);
+  for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){ const v=cellAt(cells,x,y); if(!v) continue; v.gr=q.gr; if(v.terrain==='grass'&&!v.grass){ v.gt--; if(v.gt<=0){v.grass=true;v.gt=0;} } }
+  let wolfOcc=occupyMap(fromWolf); const deerNext=[], deerMoves=[], deerBirths=[];
   for(let i=0;i<fromDeer.length;i++){
-    const d=fromDeer[i]; const opts=neigh(d.x,d.y).filter(p=>cells[p.y][p.x].terrain!=='sea' && !deerNext.some(a=>a.x===p.x&&a.y===p.y) && !wolfOcc.has(p.x+','+p.y));
-    const food=opts.filter(p=>cells[p.y][p.x].terrain==='grass' && cells[p.y][p.x].grass);
-    const dest=randPick(food.length?food:opts) || {x:d.x,y:d.y,dir:d.dir};
-    let h=d.h+1, a=d.a+1; if(cells[dest.y][dest.x].terrain==='grass' && cells[dest.y][dest.x].grass){ cells[dest.y][dest.x].grass=false; cells[dest.y][dest.x].gt=q.gr; h=0; }
-    if(h>q.ds || a>q.dl) continue;
+    const d=fromDeer[i], opts=neigh(d.x,d.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!deerNext.some(a=>a.x===p.x&&a.y===p.y)&&!wolfOcc.has(p.x+','+p.y)}),
+      food=opts.filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain==='grass'&&v.grass}), dest=randPick(food.length?food:opts)||{x:d.x,y:d.y,dir:d.dir};
+    let h=d.h+1,a=d.a+1; const dv=cellAt(cells,dest.x,dest.y); if(dv&&dv.terrain==='grass'&&dv.grass){dv.grass=false;dv.gt=q.gr;h=0;} if(h>q.ds||a>q.dl) continue;
     const nd={x:dest.x,y:dest.y,a,h,dir:dest.dir||d.dir}; deerNext.push(nd); deerMoves.push({id:'d'+i,type:'deer',from:{x:d.x,y:d.y},to:{x:nd.x,y:nd.y},dir:nd.dir});
-    if(a>q.dl/3 && Math.random()<0.12){ const places=neigh(nd.x,nd.y).filter(p=>cells[p.y][p.x].terrain!=='sea' && !deerNext.some(v=>v.x===p.x&&v.y===p.y) && !wolfOcc.has(p.x+','+p.y)); const b=randPick(places); if(b){ const baby={x:b.x,y:b.y,a:0,h:0,dir:b.dir}; deerNext.push(baby); deerBirths.push({type:'deer',to:{x:b.x,y:b.y},dir:b.dir}); } }
+    if(a>q.dl/3&&Math.random()<.12){ const places=neigh(nd.x,nd.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!deerNext.some(x=>x.x===p.x&&x.y===p.y)&&!wolfOcc.has(p.x+','+p.y)}), b=randPick(places); if(b){const baby={x:b.x,y:b.y,a:0,h:0,dir:b.dir};deerNext.push(baby);deerBirths.push({type:'deer',to:{x:b.x,y:b.y},dir:b.dir});} }
   }
-  deerOcc=occupyMap(deerNext);
-  const wolfNext=[], wolfMoves=[], wolfBirths=[];
+  let deerOcc=occupyMap(deerNext); const wolfNext=[], wolfMoves=[], wolfBirths=[], eaten=new Set();
   for(let i=0;i<fromWolf.length;i++){
-    const w=fromWolf[i]; let a=w.a+1, h=w.h+1;
-    const n=neigh(w.x,w.y);
-    const prey=n.filter(p=>deerOcc.has(p.x+','+p.y));
-    const move=n.filter(p=>cells[p.y][p.x].terrain!=='sea' && !wolfNext.some(v=>v.x===p.x&&v.y===p.y));
-    const dest=randPick(prey.length?prey:move) || {x:w.x,y:w.y,dir:w.dir};
-    if(deerOcc.has(dest.x+','+dest.y)){
-      const victim=deerOcc.get(dest.x+','+dest.y); deerOcc.delete(dest.x+','+dest.y); const idx=deerNext.indexOf(victim); if(idx>=0) deerNext.splice(idx,1); h=0;
-    } else if(cells[dest.y][dest.x].terrain==='grass' && cells[dest.y][dest.x].grass && Math.random()<0.25){ cells[dest.y][dest.x].grass=false; cells[dest.y][dest.x].gt=q.gr; h=Math.max(0,h-2); }
-    if(h>q.ws || a>q.wl) continue;
-    const nw={x:dest.x,y:dest.y,a,h,dir:dest.dir||w.dir}; wolfNext.push(nw); wolfMoves.push({id:'w'+i,type:'wolf',from:{x:w.x,y:w.y},to:{x:nw.x,y:nw.y},dir:nw.dir});
-    if(a>q.wl/3 && Math.random()<0.08){ const places=neigh(nw.x,nw.y).filter(p=>cells[p.y][p.x].terrain!=='sea' && !wolfNext.some(v=>v.x===p.x&&v.y===p.y) && !deerOcc.has(p.x+','+p.y)); const b=randPick(places); if(b){ const baby={x:b.x,y:b.y,a:0,h:0,dir:b.dir}; wolfNext.push(baby); wolfBirths.push({type:'wolf',to:{x:b.x,y:b.y},dir:b.dir}); } }
+    const w=fromWolf[i], near=neigh(w.x,w.y), prey=near.filter(p=>deerOcc.has(p.x+','+p.y)), move=near.filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!wolfNext.some(a=>a.x===p.x&&a.y===p.y)}),
+      dest=randPick(prey.length?prey:move)||{x:w.x,y:w.y,dir:w.dir}; let h=w.h+1,a=w.a+1;
+    const victim=deerOcc.get(dest.x+','+dest.y); if(victim){ eaten.add(victim); deerOcc.delete(dest.x+','+dest.y); h=0; }
+    else { const v=cellAt(cells,dest.x,dest.y); if(v&&v.terrain==='grass'&&v.grass&&Math.random()<.25){v.grass=false;v.gt=q.gr;h=Math.max(0,h-2);} }
+    if(h>q.ws||a>q.wl) continue; const nw={x:dest.x,y:dest.y,a,h,dir:dest.dir||w.dir}; wolfNext.push(nw); wolfMoves.push({id:'w'+i,type:'wolf',from:{x:w.x,y:w.y},to:{x:nw.x,y:nw.y},dir:nw.dir});
+    if(a>q.wl/3&&Math.random()<.08){ const places=neigh(nw.x,nw.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!wolfNext.some(x=>x.x===p.x&&x.y===p.y)&&!deerOcc.has(p.x+','+p.y)}), b=randPick(places); if(b){const baby={x:b.x,y:b.y,a:0,h:0,dir:b.dir};wolfNext.push(baby);wolfBirths.push({type:'wolf',to:{x:b.x,y:b.y},dir:b.dir});} }
   }
-  return {fromCells,toCells:cells,fromDeer,fromWolf,toDeer:deerNext,toWolf:wolfNext,moves:[...deerMoves,...wolfMoves],births:[...deerBirths,...wolfBirths],regrowth};
+  const survivors=deerNext.filter(d=>!eaten.has(d)), survivorMoves=deerMoves.filter((m,i)=>!eaten.has(deerNext[i]));
+  return {fromCells,toCells:cells,toDeer:survivors,toWolf:wolfNext,moves:[...survivorMoves,...wolfMoves],births:[...deerBirths,...wolfBirths]};
 }
-function animateToNext(next,done){
-  S.anim=next; const start=performance.now(); const dur=260;
-  const step=(t)=>{
-    const p=Math.min(1,(t-start)/dur); drawScene(p);
-    if(p<1){ requestAnimationFrame(step); }
-    else {
-      S.cells=next.toCells; S.deer=next.toDeer; S.wolf=next.toWolf; S.turn++; S.anim=null; updateCounts(); pushHistory(); done&&done();
-    }
+function animateToNext(next,done,manual=false){
+  if(S.anim) return; S.anim={...next,start:performance.now(),dur:340,done,manual,heldAt:null,frame:null};
+  const frame=now=>{
+    if(!S.anim) return;
+    if(!S.anim.manual&&!S.running){ S.anim.heldAt=now; S.anim.frame=frame; return; }
+    if(S.anim.heldAt!=null){ S.anim.start+=now-S.anim.heldAt; S.anim.heldAt=null; }
+    const p=Math.min(1,(now-S.anim.start)/S.anim.dur); drawScene(p);
+    if(p<1) requestAnimationFrame(frame);
+    else { const cb=S.anim.done; S.cells=S.anim.toCells; S.deer=S.anim.toDeer; S.wolf=S.anim.toWolf; S.turn++; S.anim=null; updateCounts(); pushHistory(); drawScene(1); cb&&cb(); }
   };
-  requestAnimationFrame(step);
+  S.anim.frame=frame; requestAnimationFrame(frame);
 }
-function stepOnce(after){ if(S.anim) return; const next=simulateNext(); animateToNext(next,after); }
-function scheduleRun(){ if(!S.running) return; stepOnce(()=>{ if(S.running) S.pendingTimeout=setTimeout(scheduleRun,100); }); }
+function stepOnce(after){ if(!S.anim) animateToNext(simulateNext(),after,true); }
+function scheduleRun(){ if(!S.running) return; if(S.anim&&S.anim.heldAt!=null){ requestAnimationFrame(S.anim.frame); return; } if(!S.anim) animateToNext(simulateNext(),()=>{if(S.running)S.pendingTimeout=setTimeout(scheduleRun,70)},false); }
 function startRun(){ if(S.running) return; S.running=true; $('runBtn').textContent='PAUSE'; scheduleRun(); }
-function stopRun(){ S.running=false; $('runBtn').textContent='START'; if(S.pendingTimeout) clearTimeout(S.pendingTimeout); S.pendingTimeout=null; }
-function resetAll(newMap=false){ stopRun(); S.turn=0; S.anim=null; if(newMap || !S.cells.length || S.cells.length!==S.n) makeGrid(); seedAnimals(); S.hg=[]; S.hd=[]; S.hw=[]; updateCounts(); pushHistory(); drawScene(1); }
-
+function stopRun(){ S.running=false; $('runBtn').textContent='START'; if(S.pendingTimeout)clearTimeout(S.pendingTimeout); S.pendingTimeout=null; }
+function resetAll(newMap=false){ stopRun(); S.anim=null; const q=conf(); if(newMap||!S.cells.length||q.n!==S.n) makeGrid(q.n); S.turn=0; seedAnimals(); S.hg=[]; S.hd=[]; S.hw=[]; updateCounts(); pushHistory(); drawScene(1); }
 function updateCounts(){
   let grass=0; for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++) if(S.cells[y][x].terrain==='grass' && S.cells[y][x].grass) grass++;
   $('grassCount').textContent=grass; $('deerCount').textContent=S.deer.length; $('wolfCount').textContent=S.wolf.length; $('turnText').textContent='TURN '+S.turn; $('graphTurn').textContent='TURN '+S.turn;
