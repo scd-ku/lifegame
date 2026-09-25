@@ -38,7 +38,7 @@ button,input{font:inherit} button{cursor:pointer}
 .mh{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:3px solid #6f85d6;padding-bottom:8px;margin-bottom:10px}.mh h2{margin:0;font-size:18px;line-height:1}
 .x{background:#8d1f35;color:#fff;border:3px solid #fff;box-shadow:3px 3px 0 #000;padding:4px 8px}
 .settingsGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.f{background:#09101f;border:2px solid #3b4c8f;padding:6px}.f label{display:flex;align-items:center;gap:8px;font-size:13px;line-height:1.2;margin-bottom:4px;color:#d8e1ff}.f input{width:100%;background:#02040a;color:#fff;border:2px solid #88a0ff;padding:6px;font-size:15px}
+.f{background:#09101f;border:2px solid #3b4c8f;padding:6px}.f label{display:flex;align-items:center;gap:8px;font-size:13px;line-height:1.2;margin-bottom:4px;color:#d8e1ff}.f input,.f select{width:100%;background:#02040a;color:#fff;border:2px solid #88a0ff;padding:6px;font-size:15px}.speedBox{grid-column:1/-1}.speedLine{display:grid;grid-template-columns:54px 1fr 54px;gap:8px;align-items:center}.speedWord{font-size:11px;color:#d8e1ff;text-align:center}.pixelRange{-webkit-appearance:none;appearance:none;height:18px;background:#02040a;border:3px solid #88a0ff;box-shadow:inset 0 0 0 2px #000;padding:0}.pixelRange::-webkit-slider-runnable-track{height:6px;background:repeating-linear-gradient(90deg,#516fd6 0 10%,#1a2d66 10% 20%)}.pixelRange::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;margin-top:-6px;background:#ffd45c;border:3px solid #6f3200;box-shadow:2px 2px 0 #000}.pixelRange::-moz-range-track{height:6px;background:#516fd6}.pixelRange::-moz-range-thumb{width:14px;height:14px;background:#ffd45c;border:3px solid #6f3200;border-radius:0}.ruleNote{margin-top:5px;font-size:11px;line-height:1.45;color:#bfcaff}.help a{color:#8fd6ff;text-decoration:underline}
 .labelIcon{width:24px;height:24px;display:block;background:#000;flex:none}
 .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.btn{background:#121a34;color:#fff;border:3px solid #fff;box-shadow:3px 3px 0 #000;padding:6px 10px;min-height:36px;font-weight:900}.btn.red{background:#8f2038}
 .miniInfo{margin-top:10px;font-size:13px;line-height:1.6;color:#d7e1ff}
@@ -96,9 +96,15 @@ button,input{font:inherit} button{cursor:pointer}
       <div class="f"><label><canvas class="labelIcon icon-wolf" width="24" height="24"></canvas>オオカミの空腹限界</label><input id="ws" type="number" min="1" max="50" value="9"></div>
       <div class="f"><label><canvas class="labelIcon icon-deer" width="24" height="24"></canvas>初期シカ数</label><input id="di" type="number" min="0" value="12"></div>
       <div class="f"><label><canvas class="labelIcon icon-wolf" width="24" height="24"></canvas>初期オオカミ数</label><input id="wi" type="number" min="0" value="5"></div>
+      <div class="f"><label><canvas class="labelIcon icon-wolf" width="24" height="24"></canvas>オオカミ出現ターン</label><input id="wstart" type="number" min="0" max="999" value="0"><div class="ruleNote">0 = 最初から。例：20なら TURN 20 になった時点で初期オオカミ数が参加します。</div></div>
+      <div class="f"><label><canvas class="labelIcon icon-wolf" width="24" height="24"></canvas>植物を食べるルール</label><select id="wgMode"><option value="opportunistic" selected>補助食として許可</option><option value="off">食べない</option></select><div class="ruleNote">鹿が隣接していない場合だけ判定します。</div></div>
+      <div class="f"><label><canvas class="labelIcon icon-wolf" width="24" height="24"></canvas>植物食を許可する空腹ターン</label><input id="wgh" type="number" min="0" max="50" value="2"></div>
+      <div class="f"><label><canvas class="labelIcon icon-grass" width="24" height="24"></canvas>植物を食べる確率 (%)</label><input id="wgp" type="number" min="0" max="100" value="25"></div>
+      <div class="f"><label><canvas class="labelIcon icon-wolf" width="24" height="24"></canvas>植物食で回復する空腹ターン</label><input id="wgr" type="number" min="0" max="50" value="2"></div>
+      <div class="f speedBox"><label>TURN SPEED <span id="speedValue">3</span></label><div class="speedLine"><span class="speedWord">SLOW</span><input id="speed" class="pixelRange" type="range" min="1" max="5" step="1" value="3"><span class="speedWord">FAST</span></div><div class="ruleNote">1が最も遅く、5が最も速い。移動・再生・捕食絵の切替時間とターン間隔が一緒に変わります。</div></div>
     </div>
     <div class="row"><button id="mapchg" class="btn">MAP CHANGE</button><button id="stepBtn" class="btn">1 TURN</button></div>
-    <div class="miniInfo">MAP SIZE は RESET / MAP CHANGE で反映します。草は荒地色の土から芽→成長→草へ変化し、生き物は移動方向を向いて1ターン内で移動します。</div>
+    <div class="miniInfo">MAP SIZE は RESET / MAP CHANGE で反映します。オオカミ出現ターン・植物食ルール・速度は次のターンから反映されます。草は荒地色の土から芽→成長→草へ変化します。</div>
   </div></div>
 
   <div id="graphModal" class="modal"><div class="graphBox">
@@ -116,11 +122,17 @@ button,input{font:inherit} button{cursor:pointer}
 
   <div id="helpModal" class="modal"><div class="box"><div class="mh"><h2>HELP / あそびかた</h2><button class="x" data-close="helpModal">×</button></div>
     <ol class="help">
-      <li>STARTで連続再生、PAUSEで停止します。RESETで現在の設定から初期状態に戻します。</li>
-      <li>SETで設定画面が開きます。1 TURNは1ターンずつ変化を観察するときに使います。</li>
-      <li>左上の小さなグラフをクリックすると、横長の大きなグラフが開きます。</li>
-      <li>シカは草を食べ、オオカミはシカを食べます。シカがいないとき、オオカミはときどき草も食べます。</li>
-      <li>草の再生や生き物の移動は、1ターンの変化として一度アニメしてから次の状態に移ります。</li>
+      <li>STARTで連続再生、PAUSEで停止します。RESETで現在の設定から初期状態に戻します。SET内の「TURN SPEED」で1〜5段階の速度を選べます。</li>
+      <li>オオカミ出現ターンは <b>0なら最初から</b>、Nなら <b>TURN Nになった時点</b>で「初期オオカミ数」の個体がフィールドに参加します。参加後に全滅しても同じ設定で再出現はしません。</li>
+      <li>シカは上下左右4マスの移動候補から草のあるマスを優先し、草を食べると空腹値が0に戻ります。</li>
+      <li><b>オオカミの植物食ルール</b>：①上下左右4マスにシカがいれば必ずシカを優先し、植物は食べません。②シカが隣接していない、③空腹値が設定した「植物食を許可する空腹ターン」以上、④移動先に草がある、の3条件を満たしたときだけ、設定した確率で草を食べます。食べた場合、空腹値は0には戻らず「植物食で回復する空腹ターン」の分だけ減ります。「食べない」を選ぶとこの判定は無効です。</li>
+      <li>オオカミが草を食べる設定は、生態系モデルを比較するための<b>簡略化した任意ルール</b>です。野生のオオカミは主に有蹄類などを捕食しますが、季節によって果実やその他の植物質も利用することが報告されています。</li>
+      <li>左上の小さなグラフをクリックすると、横長の大きな個体数グラフが開きます。</li>
+      <li><b>関連資料：</b>
+        <a href="https://www.usgs.gov/publications/weekly-summer-diet-gray-wolves-canis-lupus-northeastern-minnesota" target="_blank" rel="noopener">USGS: Weekly summer diet of gray wolves</a> ／
+        <a href="https://nsojournals.onlinelibrary.wiley.com/doi/10.1002/wlb3.01224" target="_blank" rel="noopener">Wildlife Biology (2024): Wolf diet in the Notecka Forest</a> ／
+        <a href="https://www.nps.gov/yell/learn/nature/cyclesprocesses.htm" target="_blank" rel="noopener">Yellowstone NPS: Trophic Cascade</a>
+      </li>
     </ol>
   </div></div>
 
@@ -130,7 +142,7 @@ button,input{font:inherit} button{cursor:pointer}
 <script>
 const $=id=>document.getElementById(id);
 const S={
-  n:20,cells:[],deer:[],wolf:[],turn:0,hg:[],hd:[],hw:[],
+  n:20,cells:[],deer:[],wolf:[],turn:0,hg:[],hd:[],hw:[],wolfIntroduced:false,
   running:false, timer:null, anim:null, pendingTimeout:null
 };
 const field=$('field'), fctx=field.getContext('2d');
@@ -146,7 +158,22 @@ const neigh=(x,y)=>{const a=[]; if(x>0)a.push({x:x-1,y,dir:'L'}); if(x<S.n-1)a.p
 const px=(c,x,y,w,h,col)=>{c.fillStyle=col;c.fillRect(Math.round(x),Math.round(y),Math.ceil(w),Math.ceil(h));};
 
 function conf(){
-  return {n:clamp(+$('sz').value||20,8,40),gr:clamp(+$('gr').value||6,1,50),dl:clamp(+$('dl').value||35,1,200),ds:clamp(+$('ds').value||7,1,50),wl:clamp(+$('wl').value||45,1,200),ws:clamp(+$('ws').value||9,1,50),di:Math.max(0,+$('di').value||0),wi:Math.max(0,+$('wi').value||0)};
+  return {
+    n:clamp(+$('sz').value||20,8,40),gr:clamp(+$('gr').value||6,1,50),
+    dl:clamp(+$('dl').value||35,1,200),ds:clamp(+$('ds').value||7,1,50),
+    wl:clamp(+$('wl').value||45,1,200),ws:clamp(+$('ws').value||9,1,50),
+    di:Math.max(0,+$('di').value||0),wi:Math.max(0,+$('wi').value||0),
+    wstart:clamp(+$('wstart').value||0,0,999),
+    wgMode:$('wgMode').value,
+    wgh:clamp(+$('wgh').value||0,0,50),
+    wgp:clamp(+$('wgp').value||0,0,100),
+    wgr:clamp(+$('wgr').value||0,0,50),
+    speed:clamp(+$('speed').value||3,1,5)
+  };
+}
+function turnTiming(){
+  const v=conf().speed;
+  return [{dur:0,gap:0},{dur:760,gap:280},{dur:560,gap:170},{dur:340,gap:70},{dur:220,gap:25},{dur:130,gap:0}][v];
 }
 function makeGrid(n=conf().n){
   S.n=n; const q=conf(); S.cells=[];
@@ -162,10 +189,19 @@ function landSpots(cells,deer,wolf){
   for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){ const v=cellAt(cells,x,y); if(v&&v.terrain!=='sea'&&!occ.has(x+','+y)) out.push({x,y}); }
   return out;
 }
+function makeWolfBatch(count,cells,deer,wolf){
+  let spots=landSpots(cells,deer,wolf), made=[];
+  for(let i=0;i<count&&spots.length;i++){
+    const p=spots.splice((Math.random()*spots.length)|0,1)[0];
+    const a={x:p.x,y:p.y,a:0,h:0,dir:'L'}; wolf.push(a); made.push(a);
+  }
+  return made;
+}
 function seedAnimals(){
   S.deer=[]; S.wolf=[]; const q=conf(); let spots=landSpots(S.cells,S.deer,S.wolf);
   for(let i=0;i<q.di&&spots.length;i++){ const p=spots.splice((Math.random()*spots.length)|0,1)[0]; S.deer.push({x:p.x,y:p.y,a:0,h:0,dir:'R'}); }
-  for(let i=0;i<q.wi&&spots.length;i++){ const p=spots.splice((Math.random()*spots.length)|0,1)[0]; S.wolf.push({x:p.x,y:p.y,a:0,h:0,dir:'L'}); }
+  S.wolfIntroduced=q.wstart===0;
+  if(S.wolfIntroduced) makeWolfBatch(q.wi,S.cells,S.deer,S.wolf);
 }
 /* sprite drawing: SNES-ish 16x16 pixel art scaled */
 function drawSprite(ctx,type,x,y,size,dir='R',pose=0,mode='normal'){
@@ -312,6 +348,22 @@ function drawFeedingPicture(ctx,kind,x,y,size,dir){
     // grass visibly inside mouth
     f(21,19,2,3,'#167c28'); f(22,17,1,4,'#58ee5b'); f(23,16,1,5,'#92ff78');
     ctx.restore();
+  } else if(kind==='wolfgrass'){
+    ctx.save(); ctx.translate(x,y);
+    if(side==='L'){ctx.translate(size,0);ctx.scale(-1,1);}
+    const u=size/24, f=(ix,iy,w,h,col)=>px(ctx,ix*u,iy*u,w*u,h*u,col);
+    const outline='#18212d', body='#8e99aa', face='#eef3fb', dark='#4b5667', white='#fff9ef';
+    f(4,20,15,2,'rgba(0,0,0,.58)');
+    f(3,10,13,9,outline); f(5,11,10,6,body);
+    f(5,17,3,5,outline); f(12,17,3,5,outline); f(6,17,1,4,white); f(13,17,1,4,white);
+    f(13,10,4,7,outline); f(14,11,3,5,body);
+    // lowered wolf head
+    f(14,12,10,9,outline); f(16,13,7,5,face); f(18,17,6,4,dark);
+    f(19,14,1,1,'#111'); f(23,18,1,1,'#111');
+    f(15,9,3,4,dark); f(20,9,3,4,dark);
+    // grass held in the open/downward mouth
+    f(20,18,4,2,'#080b0a'); f(21,19,2,3,'#167c28'); f(22,17,1,4,'#58ee5b'); f(23,16,1,5,'#92ff78');
+    ctx.restore();
   } else if(kind==='attack'){
     ctx.save(); ctx.translate(x,y);
     if(side==='L'){ctx.translate(size,0);ctx.scale(-1,1);}
@@ -389,7 +441,7 @@ function drawScene(progress=1){
     for(const a of (anim.attacks||[])) if(progress<.55) drawSprite(fctx,'deer',M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,a.dir,0);
 
     for(const mv of anim.moves){
-      if(mv.action==='munch'||mv.action==='attack'){
+      if(mv.action==='munch'||mv.action==='attack'||mv.action==='wolfgrass'){
         if(progress<.55){
           const p=progress/.55;
           const xx=mv.from.x+(mv.to.x-mv.from.x)*p, yy=mv.from.y+(mv.to.y-mv.from.y)*p;
@@ -411,7 +463,10 @@ function drawScene(progress=1){
 function occupyMap(animals){ const m=new Map(); animals.forEach(a=>m.set(a.x+','+a.y,a)); return m; }
 function simulateNext(){
   const q=conf(), fromCells=cloneGrid(S.cells), fromDeer=S.deer.map(a=>({...a})), fromWolf=S.wolf.map(a=>({...a})), cells=cloneGrid(S.cells);
-  for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){ const v=cellAt(cells,x,y); if(!v) continue; v.gr=q.gr; if(v.terrain==='grass'&&!v.grass){ v.gt--; if(v.gt<=0){v.grass=true;v.gt=0;} } }
+  for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){
+    const v=cellAt(cells,x,y); if(!v) continue; v.gr=q.gr;
+    if(v.terrain==='grass'&&!v.grass){v.gt--;if(v.gt<=0){v.grass=true;v.gt=0;}}
+  }
 
   let wolfOcc=occupyMap(fromWolf);
   const deerNext=[], deerMoves=[], deerBirths=[];
@@ -420,7 +475,7 @@ function simulateNext(){
     const opts=neigh(d.x,d.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!deerNext.some(a=>a.x===p.x&&a.y===p.y)&&!wolfOcc.has(p.x+','+p.y)});
     const food=opts.filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain==='grass'&&v.grass});
     const dest=randPick(food.length?food:opts)||{x:d.x,y:d.y,dir:d.dir};
-    let h=d.h+1,a=d.a+1, ateGrass=false;
+    let h=d.h+1,a=d.a+1,ateGrass=false;
     const dv=cellAt(cells,dest.x,dest.y);
     if(dv&&dv.terrain==='grass'&&dv.grass){dv.grass=false;dv.gt=q.gr;h=0;ateGrass=true;}
     if(h>q.ds||a>q.dl) continue;
@@ -440,42 +495,52 @@ function simulateNext(){
     const prey=near.filter(p=>deerOcc.has(p.x+','+p.y));
     const move=near.filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!wolfNext.some(a=>a.x===p.x&&a.y===p.y)});
     const dest=randPick(prey.length?prey:move)||{x:w.x,y:w.y,dir:w.dir};
-    let h=w.h+1,a=w.a+1, attacked=false;
+    let h=w.h+1,a=w.a+1,action=null;
     const victim=deerOcc.get(dest.x+','+dest.y);
     if(victim){
-      eaten.add(victim); deerOcc.delete(dest.x+','+dest.y); h=0; attacked=true;
+      eaten.add(victim); deerOcc.delete(dest.x+','+dest.y); h=0; action='attack';
       attacks.push({x:victim.x,y:victim.y,dir:victim.dir||'R'});
     } else {
       const v=cellAt(cells,dest.x,dest.y);
-      if(v&&v.terrain==='grass'&&v.grass&&Math.random()<.25){v.grass=false;v.gt=q.gr;h=Math.max(0,h-2);}
+      const canPlant=q.wgMode==='opportunistic' && prey.length===0 && h>=q.wgh && v && v.terrain==='grass' && v.grass;
+      if(canPlant && Math.random()*100<q.wgp){
+        v.grass=false; v.gt=q.gr; h=Math.max(0,h-q.wgr); action='wolfgrass';
+      }
     }
     if(h>q.ws||a>q.wl) continue;
     const nw={x:dest.x,y:dest.y,a,h,dir:dest.dir||w.dir};
     wolfNext.push(nw);
-    wolfMoves.push({id:'w'+i,type:'wolf',from:{x:w.x,y:w.y},to:{x:nw.x,y:nw.y},dir:nw.dir,action:attacked?'attack':null});
+    wolfMoves.push({id:'w'+i,type:'wolf',from:{x:w.x,y:w.y},to:{x:nw.x,y:nw.y},dir:nw.dir,action});
     if(a>q.wl/3&&Math.random()<.08){
       const places=neigh(nw.x,nw.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!wolfNext.some(x=>x.x===p.x&&x.y===p.y)&&!deerOcc.has(p.x+','+p.y)});
       const b=randPick(places); if(b){const baby={x:b.x,y:b.y,a:0,h:0,dir:b.dir};wolfNext.push(baby);wolfBirths.push({type:'wolf',to:{x:b.x,y:b.y},dir:b.dir});}
     }
   }
+
   const survivors=deerNext.filter(d=>!eaten.has(d));
   const survivorMoves=deerMoves.filter(m=>!eaten.has(m.ref)).map(({ref,...m})=>m);
-  return {fromCells,toCells:cells,toDeer:survivors,toWolf:wolfNext,moves:[...survivorMoves,...wolfMoves],births:[...deerBirths,...wolfBirths],attacks};
+  let nextWolfIntroduced=S.wolfIntroduced;
+  if(!nextWolfIntroduced && (S.turn+1)>=q.wstart){
+    const newcomers=makeWolfBatch(q.wi,cells,survivors,wolfNext);
+    newcomers.forEach(w=>wolfBirths.push({type:'wolf',to:{x:w.x,y:w.y},dir:w.dir}));
+    nextWolfIntroduced=true;
+  }
+  return {fromCells,toCells:cells,toDeer:survivors,toWolf:wolfNext,moves:[...survivorMoves,...wolfMoves],births:[...deerBirths,...wolfBirths],attacks,nextWolfIntroduced};
 }
 function animateToNext(next,done,manual=false){
-  if(S.anim) return; S.anim={...next,start:performance.now(),dur:340,done,manual,heldAt:null,frame:null};
+  if(S.anim) return; S.anim={...next,start:performance.now(),dur:turnTiming().dur,done,manual,heldAt:null,frame:null};
   const frame=now=>{
     if(!S.anim) return;
     if(!S.anim.manual&&!S.running){ S.anim.heldAt=now; S.anim.frame=frame; return; }
     if(S.anim.heldAt!=null){ S.anim.start+=now-S.anim.heldAt; S.anim.heldAt=null; }
     const p=Math.min(1,(now-S.anim.start)/S.anim.dur); drawScene(p);
     if(p<1) requestAnimationFrame(frame);
-    else { const cb=S.anim.done; S.cells=S.anim.toCells; S.deer=S.anim.toDeer; S.wolf=S.anim.toWolf; S.turn++; S.anim=null; updateCounts(); pushHistory(); drawScene(1); cb&&cb(); }
+    else { const cb=S.anim.done; S.cells=S.anim.toCells; S.deer=S.anim.toDeer; S.wolf=S.anim.toWolf; S.wolfIntroduced=S.anim.nextWolfIntroduced??S.wolfIntroduced; S.turn++; S.anim=null; updateCounts(); pushHistory(); drawScene(1); cb&&cb(); }
   };
   S.anim.frame=frame; requestAnimationFrame(frame);
 }
 function stepOnce(after){ if(!S.anim) animateToNext(simulateNext(),after,true); }
-function scheduleRun(){ if(!S.running) return; if(S.anim&&S.anim.heldAt!=null){ requestAnimationFrame(S.anim.frame); return; } if(!S.anim) animateToNext(simulateNext(),()=>{if(S.running)S.pendingTimeout=setTimeout(scheduleRun,70)},false); }
+function scheduleRun(){ if(!S.running) return; if(S.anim&&S.anim.heldAt!=null){ requestAnimationFrame(S.anim.frame); return; } if(!S.anim) animateToNext(simulateNext(),()=>{if(S.running)S.pendingTimeout=setTimeout(scheduleRun,turnTiming().gap)},false); }
 function startRun(){ if(S.running) return; S.running=true; $('runBtn').textContent='PAUSE'; scheduleRun(); }
 function stopRun(){ S.running=false; $('runBtn').textContent='START'; if(S.pendingTimeout)clearTimeout(S.pendingTimeout); S.pendingTimeout=null; }
 function resetAll(newMap=false){ stopRun(); S.anim=null; const q=conf(); if(newMap||!S.cells.length||q.n!==S.n) makeGrid(q.n); S.turn=0; seedAnimals(); S.hg=[]; S.hd=[]; S.hw=[]; updateCounts(); pushHistory(); drawScene(1); }
@@ -534,6 +599,7 @@ function closeM(id){ $(id).classList.remove('on'); }
 
 $('openSettings').onclick=()=>openM('settingsModal'); $('openHelp').onclick=()=>openM('helpModal'); $('openQR').onclick=()=>openM('qrModal'); $('miniGraph').onclick=()=>openM('graphModal');
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeM(b.dataset.close)); document.querySelectorAll('.modal').forEach(m=>m.onclick=e=>{ if(e.target===m) m.classList.remove('on'); });
+$('speed').addEventListener('input',()=>{$('speedValue').textContent=$('speed').value;});
 $('runBtn').onclick=()=>S.running?stopRun():startRun(); $('resetBtn').onclick=()=>resetAll(false); $('mapchg').onclick=()=>resetAll(true); $('stepBtn').onclick=()=>{ stopRun(); stepOnce(); };
 window.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on')); });
 window.addEventListener('resize',()=>{ drawScene(1); drawMiniGraph(); drawBigGraph(); });
