@@ -16,22 +16,22 @@ body{overflow:hidden}
 button,input{font:inherit} button{cursor:pointer}
 .app{height:100vh;display:flex;align-items:center;justify-content:center;padding:8px;background:#000}
  .screen{width:min(97vw,1180px);aspect-ratio:4/3;position:relative;background:#000;border:4px solid #2a2a2a;box-shadow:0 0 0 3px #000,0 0 0 6px #213d89;overflow:hidden}
-.topbar{position:absolute;left:0;right:0;top:0;height:96px;padding:6px 12px;display:grid;grid-template-columns:228px 132px 280px 208px;gap:10px;align-items:center;justify-content:space-between;background:#000;z-index:4}
-.miniPanel{height:80px;border:3px solid #516fd6;padding:5px;background:#000;display:flex;align-items:center}
+.topbar{position:absolute;left:0;right:0;top:0;height:104px;padding:6px 12px;display:grid;grid-template-columns:228px 136px 312px 208px;gap:10px;align-items:center;justify-content:space-between;background:#000;z-index:4}
+.miniPanel{height:88px;border:3px solid #516fd6;padding:5px;background:#000;display:flex;align-items:center}
 #miniGraph{width:100%;height:100%;display:block;background:#02040a;border:1px solid #233564;cursor:pointer;image-rendering:pixelated}
-.titleTurn{height:80px;display:grid;grid-template-rows:32px 32px;align-content:center;row-gap:2px;justify-items:start;min-width:0}
-.titleLogo,.turnText{font-size:20px;line-height:32px;font-weight:900;white-space:nowrap;margin:0}
+.titleTurn{height:88px;display:grid;grid-template-rows:36px 36px;align-content:center;row-gap:2px;justify-items:start;min-width:0}
+.titleLogo,.turnText{font-size:22px;line-height:36px;font-weight:900;white-space:nowrap;margin:0}
 .titleLogo{letter-spacing:.02em;color:#ffd45c;text-shadow:2px 0 0 #6f3200,-2px 0 0 #6f3200,0 2px 0 #6f3200,0 -2px 0 #6f3200,2px 2px 0 #2f0f00}
 .turnText{color:#fff;text-shadow:2px 2px 0 #555}
-.countGrid{height:80px;display:grid;grid-template-columns:132px 132px;grid-template-rows:34px 34px;gap:2px 8px;align-content:center}
-.hudStat{display:grid;grid-template-columns:30px 94px;align-items:center;column-gap:6px;width:130px;height:34px}
-.iconCounter{width:30px;height:30px;background:#000;display:block;image-rendering:pixelated}
-.countPix{width:94px;height:28px;display:block;background:#000;image-rendering:pixelated}
-.buttonPanel{height:80px;display:grid;grid-template-columns:repeat(2,96px);grid-template-rows:repeat(3,1fr);gap:4px 8px;justify-content:end;align-items:stretch}
+.countGrid{height:88px;display:grid;grid-template-columns:148px 148px;grid-template-rows:40px 40px;gap:2px 10px;align-content:center}
+.hudStat{display:grid;grid-template-columns:36px 108px;align-items:center;column-gap:6px;width:150px;height:40px}
+.iconCounter{width:36px;height:36px;background:#000;display:block;image-rendering:pixelated}
+.countPix{width:108px;height:36px;display:block;background:#000;image-rendering:pixelated}
+.buttonPanel{height:88px;display:grid;grid-template-columns:repeat(2,96px);grid-template-rows:repeat(3,1fr);gap:4px 8px;justify-content:end;align-items:stretch}
 .hudBtn{min-height:0;border:3px solid #fff;background:#1b2b66;color:#fff;box-shadow:2px 2px 0 #000;padding:2px 6px;font-size:12px;font-weight:900;display:flex;align-items:center;justify-content:center}
 .hudBtn.run{background:#a52a43}.hudBtn.span2{grid-column:span 2}
 .hudBtn:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #000}
-.playfieldWrap{position:absolute;left:0;right:0;top:96px;bottom:18px;display:flex;align-items:center;justify-content:center;background:#000}
+.playfieldWrap{position:absolute;left:0;right:0;top:104px;bottom:18px;display:flex;align-items:center;justify-content:center;background:#000}
 #field{max-width:100%;max-height:100%;display:block;image-rendering:pixelated;background:#000}
 .copy{position:absolute;left:50%;transform:translateX(-50%);bottom:4px;z-index:8;background:#03060c;border:1px solid #5570c9;padding:2px 8px;font-size:10px;color:#d3dbff}
 .modal{position:absolute;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:14px;z-index:20}.modal.on{display:flex}
@@ -48,14 +48,14 @@ button,input{font:inherit} button{cursor:pointer}
 .help{margin:0;padding-left:1.25em;line-height:1.8;font-size:13px}.qrWrap{text-align:center}.qrWrap img{width:min(300px,80vw);height:auto;background:#fff;padding:10px;border:4px solid #000}.url{margin-top:10px;color:#9cd7ff;word-break:break-all;font-size:13px}
 @media (max-width:860px){
   .screen{width:100vw;height:100vh;aspect-ratio:auto;border:none;box-shadow:none}
-  .topbar{grid-template-columns:150px 108px 1fr;height:150px;padding:6px 8px}
-  .miniPanel,.titleTurn,.countGrid{height:72px}
-  .buttonPanel{grid-column:1/4;width:100%;height:62px;grid-template-columns:repeat(5,1fr);grid-template-rows:1fr;gap:4px}
+  .topbar{grid-template-columns:150px 108px 1fr;height:158px;padding:6px 8px}
+  .miniPanel,.titleTurn,.countGrid{height:78px}
+  .buttonPanel{grid-column:1/4;width:100%;height:64px;grid-template-columns:repeat(5,1fr);grid-template-rows:1fr;gap:4px}
   .hudBtn.span2{grid-column:span 1}
-  .titleLogo,.turnText{font-size:16px;line-height:28px}.titleTurn{grid-template-rows:28px 28px}
-  .countGrid{grid-template-columns:112px 112px;grid-template-rows:30px 30px;gap:2px 4px}
-  .hudStat{grid-template-columns:26px 78px;width:108px;height:30px;column-gap:4px}.iconCounter{width:26px;height:26px}.countPix{width:78px;height:24px}
-  .playfieldWrap{top:150px}
+  .titleLogo,.turnText{font-size:16px;line-height:30px}.titleTurn{grid-template-rows:30px 30px}
+  .countGrid{grid-template-columns:120px 120px;grid-template-rows:34px 34px;gap:2px 4px}
+  .hudStat{grid-template-columns:30px 86px;width:118px;height:34px;column-gap:4px}.iconCounter{width:30px;height:30px}.countPix{width:86px;height:30px}
+  .playfieldWrap{top:158px}
   .settingsGrid{grid-template-columns:1fr}
 }
 </style>
@@ -69,10 +69,10 @@ button,input{font:inherit} button{cursor:pointer}
       <div class="turnText" id="turnText">TURN 000</div>
     </div>
     <div class="countGrid">
-      <div class="hudStat"><canvas class="iconCounter" id="cGrass" width="30" height="30"></canvas><canvas class="countPix" id="grassCount" width="47" height="14" aria-label="草 × 000"></canvas></div>
-      <div class="hudStat"><canvas class="iconCounter" id="cWaste" width="30" height="30"></canvas><canvas class="countPix" id="wasteCount" width="47" height="14" aria-label="荒地 × 000"></canvas></div>
-      <div class="hudStat"><canvas class="iconCounter" id="cDeer" width="30" height="30"></canvas><canvas class="countPix" id="deerCount" width="47" height="14" aria-label="シカ × 000"></canvas></div>
-      <div class="hudStat"><canvas class="iconCounter" id="cWolf" width="30" height="30"></canvas><canvas class="countPix" id="wolfCount" width="47" height="14" aria-label="オオカミ × 000"></canvas></div>
+      <div class="hudStat"><canvas class="iconCounter" id="cGrass" width="36" height="36"></canvas><canvas class="countPix" id="grassCount" width="54" height="18" aria-label="草 × 000"></canvas></div>
+      <div class="hudStat"><canvas class="iconCounter" id="cWaste" width="36" height="36"></canvas><canvas class="countPix" id="wasteCount" width="54" height="18" aria-label="荒地 × 000"></canvas></div>
+      <div class="hudStat"><canvas class="iconCounter" id="cDeer" width="36" height="36"></canvas><canvas class="countPix" id="deerCount" width="54" height="18" aria-label="シカ × 000"></canvas></div>
+      <div class="hudStat"><canvas class="iconCounter" id="cWolf" width="36" height="36"></canvas><canvas class="countPix" id="wolfCount" width="54" height="18" aria-label="オオカミ × 000"></canvas></div>
     </div>
     <div class="buttonPanel">
       <button id="openSettings" class="hudBtn">SET</button>
@@ -261,11 +261,11 @@ function drawPixelGlyph(ctx,glyph,x,y,scale,col='#fff'){
 }
 function drawPixelCounter(canvas,value){
   const ctx=canvas.getContext('2d'); ctx.imageSmoothingEnabled=false; ctx.clearRect(0,0,canvas.width,canvas.height);
-  const text='X'+String(Math.max(0,value)).padStart(3,'0').slice(-3), s=1, charW=6;
+  const text='X'+String(Math.max(0,value)).padStart(3,'0').slice(-3);
+  const s=2, charW=12, totalW=text.length*charW-2, ox=Math.max(0,Math.floor((canvas.width-totalW)/2)), oy=2;
   for(let i=0;i<text.length;i++){
-    // one-pixel dark shadow like the reference HUD
-    drawPixelGlyph(ctx,text[i],i*charW+1,1,s,'#555');
-    drawPixelGlyph(ctx,text[i],i*charW,0,s,'#fff');
+    drawPixelGlyph(ctx,text[i],ox+i*charW+1,oy+1,s,'#555');
+    drawPixelGlyph(ctx,text[i],ox+i*charW,oy,s,'#fff');
   }
 }
 function boardMetrics(){
@@ -277,15 +277,50 @@ function boardMetrics(){
   return {w,h,cell,ox,oy};
 }
 function drawFeedingPicture(ctx,kind,x,y,size,dir){
+  const side=dir==='L'?'L':'R';
   if(kind==='munch'){
-    // one static picture: deer with a small remaining grass tuft under its muzzle
-    drawSprite(ctx,'grass',x+size*.56,y+size*.44,size*.38,'R',0,'grow');
-    drawSprite(ctx,'deer',x,y,size,dir,1);
+    ctx.save(); ctx.translate(x,y);
+    if(side==='L'){ctx.translate(size,0);ctx.scale(-1,1);}
+    const u=size/24, f=(ix,iy,w,h,col)=>px(ctx,ix*u,iy*u,w*u,h*u,col);
+    const outline='#3a1b07', body='#cb6f28', face='#f6b36b', dark='#6b350d', white='#fff9ef';
+    // shadow + body
+    f(3,20,16,2,'rgba(0,0,0,.58)'); f(3,10,13,9,outline); f(5,11,10,6,body);
+    // legs/tail
+    f(5,17,3,5,outline); f(12,17,3,5,outline); f(6,17,1,4,white); f(13,17,1,4,white);
+    f(1,12,4,4,outline); f(2,12,3,2,white);
+    // neck slopes downward
+    f(13,10,4,7,outline); f(14,11,3,5,body);
+    // oversized lowered head
+    f(15,12,9,9,outline); f(16,13,7,6,face);
+    f(19,17,5,4,white);            // enlarged jaw / muzzle
+    f(20,14,1,1,'#111');           // eye
+    f(23,18,1,1,'#4a2208');        // nose
+    // ears / horn silhouette
+    f(16,10,2,3,dark); f(20,10,2,3,dark); f(17,8,1,4,dark); f(21,8,1,4,dark);
+    // grass visibly inside mouth
+    f(21,19,2,3,'#167c28'); f(22,17,1,4,'#58ee5b'); f(23,16,1,5,'#92ff78');
+    ctx.restore();
   } else if(kind==='attack'){
-    // one static picture: deer underneath, wolf overlapping from its approach direction
-    const dx=dir==='L'?.10:dir==='R'?.18:0.12, dy=dir==='U'?.10:dir==='D'?.18:0.12;
-    drawSprite(ctx,'deer',x+size*.08,y+size*.12,size*.82,dir==='L'?'R':'L',1);
-    drawSprite(ctx,'wolf',x+size*dx,y+size*dy,size*.94,dir,1);
+    ctx.save(); ctx.translate(x,y);
+    if(side==='L'){ctx.translate(size,0);ctx.scale(-1,1);}
+    const u=size/24, f=(ix,iy,w,h,col)=>px(ctx,ix*u,iy*u,w*u,h*u,col);
+    const wo='#1d2530', wb='#8e99aa', wf='#e8eef7', wd='#4f5968', white='#fff9ef';
+    // tiny deer being bitten
+    f(2,14,9,6,'#3a1b07'); f(3,15,7,4,'#cb6f28'); f(8,12,5,5,'#3a1b07'); f(9,13,3,3,'#f6b36b');
+    f(3,19,2,3,'#fff9ef'); f(7,19,2,3,'#fff9ef'); f(11,14,2,2,'#fff');
+    // wolf body
+    f(5,8,11,10,wo); f(7,10,9,6,wb); f(5,18,13,2,'rgba(0,0,0,.55)');
+    // huge head, upper and lower jaws separated by black mouth
+    f(13,3,11,12,wo); f(15,5,8,5,wf); f(16,10,8,4,wd);
+    f(16,9,8,3,'#090a0d');         // open mouth cavity
+    f(17,8,1,2,white); f(20,8,1,2,white); f(22,9,1,2,white);
+    f(17,11,1,2,white); f(20,11,1,2,white); f(22,11,1,2,white);
+    f(20,6,1,1,'#111');            // eye
+    f(23,7,1,1,'#111');            // nose
+    f(14,1,3,5,wd); f(19,1,3,5,wd); // ears
+    // place the small deer partly inside the mouth opening
+    f(12,10,4,3,'#3a1b07'); f(13,11,3,2,'#cb6f28');
+    ctx.restore();
   }
 }
 function drawScene(progress=1){
