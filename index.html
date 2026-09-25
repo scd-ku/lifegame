@@ -16,22 +16,23 @@ body{overflow:hidden}
 button,input{font:inherit} button{cursor:pointer}
 .app{height:100vh;display:flex;align-items:center;justify-content:center;padding:8px;background:#000}
  .screen{width:min(97vw,1180px);aspect-ratio:4/3;position:relative;background:#000;border:4px solid #2a2a2a;box-shadow:0 0 0 3px #000,0 0 0 6px #213d89;overflow:hidden}
-.topbar{position:absolute;left:0;right:0;top:0;height:19%;min-height:118px;padding:8px 14px;display:grid;grid-template-columns:250px 150px minmax(344px,1fr) 218px;gap:12px;align-items:center;background:#000;z-index:4}
-.miniPanel{height:102px;border:3px solid #516fd6;padding:6px;background:#000;display:flex;align-items:center}
-#miniGraph{width:100%;height:100%;display:block;background:#02040a;border:1px solid #233564;cursor:pointer}
-.titleTurn{height:102px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:14px;min-width:0}
-.titleLogo{font-size:28px;line-height:1;font-weight:900;letter-spacing:.04em;color:#ffd45c;white-space:nowrap;text-shadow:2px 0 0 #6f3200,-2px 0 0 #6f3200,0 2px 0 #6f3200,0 -2px 0 #6f3200,3px 3px 0 #2f0f00}
-.turnText{font-size:20px;line-height:1;font-weight:900;text-shadow:2px 2px 0 #555;white-space:nowrap;margin:0}
-.countGrid{height:102px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:6px 10px;align-items:center}
-.hudStat{display:grid;grid-template-columns:30px 14px 54px;align-items:center;column-gap:3px;min-width:101px;overflow:visible}
-.iconCounter{width:30px;height:30px;background:#000;display:block}
-.cross{font-size:21px;line-height:1;font-weight:900;color:#fff;text-shadow:2px 2px 0 #555;text-align:center}
-.num{display:block;width:54px;font-size:34px;line-height:1;font-weight:900;color:#fff;text-shadow:2px 2px 0 #555;letter-spacing:0;text-align:left;font-variant-numeric:tabular-nums}
-.buttonPanel{height:102px;display:grid;grid-template-columns:repeat(2,100px);grid-template-rows:repeat(3,1fr);gap:6px 8px;justify-content:end;align-items:stretch}
+.topbar{position:absolute;left:0;right:0;top:0;height:128px;padding:8px 14px;display:grid;grid-template-columns:250px 150px minmax(344px,1fr) 218px;gap:12px;align-items:center;background:#000;z-index:4}
+.miniPanel{height:112px;border:4px solid #516fd6;padding:6px;background:#000;display:flex;align-items:center}
+#miniGraph{width:100%;height:100%;display:block;background:#02040a;border:2px solid #233564;cursor:pointer;image-rendering:pixelated}
+.titleTurn{height:112px;display:grid;grid-template-rows:1fr 1fr;align-items:center;justify-items:start;min-width:0}
+.titleLogo,.turnText{font-size:24px;line-height:32px;font-weight:900;white-space:nowrap;margin:0}
+.titleLogo{letter-spacing:.03em;color:#ffd45c;text-shadow:2px 0 0 #6f3200,-2px 0 0 #6f3200,0 2px 0 #6f3200,0 -2px 0 #6f3200,3px 3px 0 #2f0f00}
+.turnText{color:#fff;text-shadow:2px 2px 0 #555}
+.countGrid{height:112px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:0 12px;align-items:center}
+.hudStat{display:grid;grid-template-columns:32px 14px 56px;align-items:center;column-gap:3px;min-width:105px;height:48px}
+.iconCounter{width:32px;height:32px;background:#000;display:block;image-rendering:pixelated}
+.cross{font-size:22px;line-height:32px;font-weight:900;color:#fff;text-shadow:2px 2px 0 #555;text-align:center}
+.num{display:block;width:56px;font-size:34px;line-height:40px;font-weight:900;color:#fff;text-shadow:2px 2px 0 #555;letter-spacing:0;text-align:left;font-variant-numeric:tabular-nums}
+.buttonPanel{height:112px;display:grid;grid-template-columns:repeat(2,100px);grid-template-rows:repeat(3,1fr);gap:6px 8px;justify-content:end;align-items:stretch}
 .hudBtn{min-height:0;border:4px solid #fff;background:#1b2b66;color:#fff;box-shadow:3px 3px 0 #000;padding:3px 7px;font-weight:900;display:flex;align-items:center;justify-content:center}
 .hudBtn.run{background:#a52a43}.hudBtn.span2{grid-column:span 2}
 .hudBtn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
-.playfieldWrap{position:absolute;left:0;right:0;top:19%;bottom:18px;display:flex;align-items:center;justify-content:center;background:#000}
+.playfieldWrap{position:absolute;left:0;right:0;top:128px;bottom:18px;display:flex;align-items:center;justify-content:center;background:#000}
 #field{max-width:100%;max-height:100%;display:block;image-rendering:pixelated;background:#000}
 .copy{position:absolute;left:50%;transform:translateX(-50%);bottom:4px;z-index:8;background:#03060c;border:1px solid #5570c9;padding:2px 8px;font-size:10px;color:#d3dbff}
 .modal{position:absolute;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:14px;z-index:20}.modal.on{display:flex}
@@ -48,13 +49,13 @@ button,input{font:inherit} button{cursor:pointer}
 .help{margin:0;padding-left:1.25em;line-height:1.8;font-size:13px}.qrWrap{text-align:center}.qrWrap img{width:min(300px,80vw);height:auto;background:#fff;padding:10px;border:4px solid #000}.url{margin-top:10px;color:#9cd7ff;word-break:break-all;font-size:13px}
 @media (max-width:860px){
   .screen{width:100vw;height:100vh;aspect-ratio:auto;border:none;box-shadow:none}
-  .topbar{grid-template-columns:180px 130px 1fr;height:24%;padding:8px 10px}
+  .topbar{grid-template-columns:170px 120px 1fr;height:184px;padding:8px 10px}
   .miniPanel,.titleTurn,.countGrid{height:96px}
-  .buttonPanel{grid-column:1/4;width:100%;height:78px;grid-template-columns:repeat(5,1fr);grid-template-rows:1fr;gap:6px}
+  .buttonPanel{grid-column:1/4;width:100%;height:72px;grid-template-columns:repeat(5,1fr);grid-template-rows:1fr;gap:6px}
   .hudBtn.span2{grid-column:span 1}
-  .titleLogo{font-size:20px}.num{font-size:26px;width:42px}.turnText{font-size:14px}.hudStat{grid-template-columns:24px 11px 42px;min-width:80px}.iconCounter{width:24px;height:24px}.cross{font-size:17px}
-  .countGrid{gap:4px 6px}
-  .playfieldWrap{top:24%}
+  .titleLogo,.turnText{font-size:18px;line-height:28px}.num{font-size:26px;width:42px;line-height:30px}.hudStat{grid-template-columns:24px 11px 42px;min-width:80px;height:40px}.iconCounter{width:24px;height:24px}.cross{font-size:17px;line-height:24px}
+  .countGrid{gap:2px 6px}
+  .playfieldWrap{top:184px}
   .settingsGrid{grid-template-columns:1fr}
 }
 </style>
@@ -62,7 +63,7 @@ button,input{font:inherit} button{cursor:pointer}
 <body>
 <div class="app"><div class="screen">
   <div class="topbar">
-    <div class="miniPanel"><canvas id="miniGraph" width="270" height="120" title="クリックでグラフを拡大"></canvas></div>
+    <div class="miniPanel"><canvas id="miniGraph" width="160" height="64" title="クリックでグラフを拡大"></canvas></div>
     <div class="titleTurn">
       <div class="titleLogo" aria-label="食物連鎖">食物連鎖</div>
       <div class="turnText" id="turnText">TURN 000</div>
@@ -251,6 +252,7 @@ function boardMetrics(){
 function drawScene(progress=1){
   const M=boardMetrics(); fctx.imageSmoothingEnabled=false; px(fctx,0,0,M.w,M.h,'#000');
   const anim=S.anim, fromGrid=anim?anim.fromCells:S.cells, toGrid=anim?anim.toCells:S.cells;
+
   for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){
     const from=cellAt(fromGrid,x,y), to=cellAt(toGrid,x,y); if(!from||!to) continue;
     const X=M.ox+x*M.cell, Y=M.oy+y*M.cell;
@@ -262,20 +264,62 @@ function drawScene(progress=1){
       drawSprite(fctx,'waste',X,Y,M.cell);
       if(from.grass&&to.grass) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
       else if(!from.grass&&to.grass){
-        if(progress<.32) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'sprout');
-        else if(progress<.68) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'grow');
+        if(progress<.30) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'sprout');
+        else if(progress<.65) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'grow');
         else drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
       } else if(from.grass&&!to.grass){
-        if(progress<.22) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
-        else if(progress<.48) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'grow');
+        // keep grass visible until the eating phase, then reduce it in two bites
+        if(progress<.58) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
+        else if(progress<.80) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'grow');
       }
     }
   }
+
   if(anim){
-    for(const mv of anim.moves){
-      const xx=mv.from.x+(mv.to.x-mv.from.x)*progress, yy=mv.from.y+(mv.to.y-mv.from.y)*progress;
-      drawSprite(fctx,mv.type,M.ox+xx*M.cell,M.oy+yy*M.cell,M.cell,mv.dir,progress>.5?1:0);
+    // attacked deer remain visible until the wolf makes contact
+    for(const a of (anim.attacks||[])){
+      if(progress<.76){
+        const shake=progress>.58 ? Math.sin(progress*90)*M.cell*.04 : 0;
+        drawSprite(fctx,'deer',M.ox+a.x*M.cell+shake,M.oy+a.y*M.cell,M.cell,a.dir,progress>.58?1:0);
+      }
     }
+
+    for(const mv of anim.moves){
+      let xx,yy,pose=progress>.5?1:0;
+      if(mv.action==='munch'){
+        const travel=Math.min(1,progress/.52);
+        xx=mv.from.x+(mv.to.x-mv.from.x)*travel; yy=mv.from.y+(mv.to.y-mv.from.y)*travel;
+        if(progress>.52){
+          const bob=Math.sin((progress-.52)*42)*M.cell*.055;
+          yy+=Math.abs(bob);
+          // simple pixel "もしゃ" flecks around the mouth
+          if(progress>.60&&progress<.88){
+            const fx=M.ox+mv.to.x*M.cell+M.cell*.70, fy=M.oy+mv.to.y*M.cell+M.cell*.58;
+            px(fctx,fx,fy,M.cell*.08,M.cell*.08,'#8cff67');
+            px(fctx,fx+M.cell*.10,fy-M.cell*.10,M.cell*.06,M.cell*.06,'#4fdc43');
+          }
+        }
+      } else if(mv.action==='attack'){
+        const travel=Math.min(1,progress/.55);
+        xx=mv.from.x+(mv.to.x-mv.from.x)*travel; yy=mv.from.y+(mv.to.y-mv.from.y)*travel;
+        if(progress>.55&&progress<.88){
+          const lunge=Math.sin((progress-.55)*34)*M.cell*.10;
+          if(mv.dir==='L') xx-=Math.abs(lunge/M.cell);
+          else if(mv.dir==='R') xx+=Math.abs(lunge/M.cell);
+          else if(mv.dir==='U') yy-=Math.abs(lunge/M.cell);
+          else yy+=Math.abs(lunge/M.cell);
+          const sx=M.ox+mv.to.x*M.cell+M.cell*.54, sy=M.oy+mv.to.y*M.cell+M.cell*.42;
+          if(progress>.66){
+            px(fctx,sx,sy,M.cell*.10,M.cell*.04,'#fff1b8');
+            px(fctx,sx+M.cell*.08,sy-M.cell*.08,M.cell*.05,M.cell*.12,'#ffcc55');
+          }
+        }
+      } else {
+        xx=mv.from.x+(mv.to.x-mv.from.x)*progress; yy=mv.from.y+(mv.to.y-mv.from.y)*progress;
+      }
+      drawSprite(fctx,mv.type,M.ox+xx*M.cell,M.oy+yy*M.cell,M.cell,mv.dir,pose);
+    }
+
     for(const b of anim.births){ if(progress>.65) drawSprite(fctx,b.type,M.ox+b.to.x*M.cell,M.oy+b.to.y*M.cell,M.cell,b.dir,1); }
   } else {
     S.deer.forEach(a=>drawSprite(fctx,'deer',M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,a.dir,0));
@@ -286,28 +330,58 @@ function occupyMap(animals){ const m=new Map(); animals.forEach(a=>m.set(a.x+','
 function simulateNext(){
   const q=conf(), fromCells=cloneGrid(S.cells), fromDeer=S.deer.map(a=>({...a})), fromWolf=S.wolf.map(a=>({...a})), cells=cloneGrid(S.cells);
   for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){ const v=cellAt(cells,x,y); if(!v) continue; v.gr=q.gr; if(v.terrain==='grass'&&!v.grass){ v.gt--; if(v.gt<=0){v.grass=true;v.gt=0;} } }
-  let wolfOcc=occupyMap(fromWolf); const deerNext=[], deerMoves=[], deerBirths=[];
+
+  let wolfOcc=occupyMap(fromWolf);
+  const deerNext=[], deerMoves=[], deerBirths=[];
   for(let i=0;i<fromDeer.length;i++){
-    const d=fromDeer[i], opts=neigh(d.x,d.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!deerNext.some(a=>a.x===p.x&&a.y===p.y)&&!wolfOcc.has(p.x+','+p.y)}),
-      food=opts.filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain==='grass'&&v.grass}), dest=randPick(food.length?food:opts)||{x:d.x,y:d.y,dir:d.dir};
-    let h=d.h+1,a=d.a+1; const dv=cellAt(cells,dest.x,dest.y); if(dv&&dv.terrain==='grass'&&dv.grass){dv.grass=false;dv.gt=q.gr;h=0;} if(h>q.ds||a>q.dl) continue;
-    const nd={x:dest.x,y:dest.y,a,h,dir:dest.dir||d.dir}; deerNext.push(nd); deerMoves.push({id:'d'+i,type:'deer',from:{x:d.x,y:d.y},to:{x:nd.x,y:nd.y},dir:nd.dir});
-    if(a>q.dl/3&&Math.random()<.12){ const places=neigh(nd.x,nd.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!deerNext.some(x=>x.x===p.x&&x.y===p.y)&&!wolfOcc.has(p.x+','+p.y)}), b=randPick(places); if(b){const baby={x:b.x,y:b.y,a:0,h:0,dir:b.dir};deerNext.push(baby);deerBirths.push({type:'deer',to:{x:b.x,y:b.y},dir:b.dir});} }
+    const d=fromDeer[i];
+    const opts=neigh(d.x,d.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!deerNext.some(a=>a.x===p.x&&a.y===p.y)&&!wolfOcc.has(p.x+','+p.y)});
+    const food=opts.filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain==='grass'&&v.grass});
+    const dest=randPick(food.length?food:opts)||{x:d.x,y:d.y,dir:d.dir};
+    let h=d.h+1,a=d.a+1, ateGrass=false;
+    const dv=cellAt(cells,dest.x,dest.y);
+    if(dv&&dv.terrain==='grass'&&dv.grass){dv.grass=false;dv.gt=q.gr;h=0;ateGrass=true;}
+    if(h>q.ds||a>q.dl) continue;
+    const nd={x:dest.x,y:dest.y,a,h,dir:dest.dir||d.dir};
+    deerNext.push(nd);
+    deerMoves.push({id:'d'+i,type:'deer',ref:nd,from:{x:d.x,y:d.y},to:{x:nd.x,y:nd.y},dir:nd.dir,action:ateGrass?'munch':null});
+    if(a>q.dl/3&&Math.random()<.12){
+      const places=neigh(nd.x,nd.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!deerNext.some(x=>x.x===p.x&&x.y===p.y)&&!wolfOcc.has(p.x+','+p.y)});
+      const b=randPick(places); if(b){const baby={x:b.x,y:b.y,a:0,h:0,dir:b.dir};deerNext.push(baby);deerBirths.push({type:'deer',to:{x:b.x,y:b.y},dir:b.dir});}
+    }
   }
-  let deerOcc=occupyMap(deerNext); const wolfNext=[], wolfMoves=[], wolfBirths=[], eaten=new Set();
+
+  let deerOcc=occupyMap(deerNext);
+  const wolfNext=[], wolfMoves=[], wolfBirths=[], eaten=new Set(), attacks=[];
   for(let i=0;i<fromWolf.length;i++){
-    const w=fromWolf[i], near=neigh(w.x,w.y), prey=near.filter(p=>deerOcc.has(p.x+','+p.y)), move=near.filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!wolfNext.some(a=>a.x===p.x&&a.y===p.y)}),
-      dest=randPick(prey.length?prey:move)||{x:w.x,y:w.y,dir:w.dir}; let h=w.h+1,a=w.a+1;
-    const victim=deerOcc.get(dest.x+','+dest.y); if(victim){ eaten.add(victim); deerOcc.delete(dest.x+','+dest.y); h=0; }
-    else { const v=cellAt(cells,dest.x,dest.y); if(v&&v.terrain==='grass'&&v.grass&&Math.random()<.25){v.grass=false;v.gt=q.gr;h=Math.max(0,h-2);} }
-    if(h>q.ws||a>q.wl) continue; const nw={x:dest.x,y:dest.y,a,h,dir:dest.dir||w.dir}; wolfNext.push(nw); wolfMoves.push({id:'w'+i,type:'wolf',from:{x:w.x,y:w.y},to:{x:nw.x,y:nw.y},dir:nw.dir});
-    if(a>q.wl/3&&Math.random()<.08){ const places=neigh(nw.x,nw.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!wolfNext.some(x=>x.x===p.x&&x.y===p.y)&&!deerOcc.has(p.x+','+p.y)}), b=randPick(places); if(b){const baby={x:b.x,y:b.y,a:0,h:0,dir:b.dir};wolfNext.push(baby);wolfBirths.push({type:'wolf',to:{x:b.x,y:b.y},dir:b.dir});} }
+    const w=fromWolf[i], near=neigh(w.x,w.y);
+    const prey=near.filter(p=>deerOcc.has(p.x+','+p.y));
+    const move=near.filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!wolfNext.some(a=>a.x===p.x&&a.y===p.y)});
+    const dest=randPick(prey.length?prey:move)||{x:w.x,y:w.y,dir:w.dir};
+    let h=w.h+1,a=w.a+1, attacked=false;
+    const victim=deerOcc.get(dest.x+','+dest.y);
+    if(victim){
+      eaten.add(victim); deerOcc.delete(dest.x+','+dest.y); h=0; attacked=true;
+      attacks.push({x:victim.x,y:victim.y,dir:victim.dir||'R'});
+    } else {
+      const v=cellAt(cells,dest.x,dest.y);
+      if(v&&v.terrain==='grass'&&v.grass&&Math.random()<.25){v.grass=false;v.gt=q.gr;h=Math.max(0,h-2);}
+    }
+    if(h>q.ws||a>q.wl) continue;
+    const nw={x:dest.x,y:dest.y,a,h,dir:dest.dir||w.dir};
+    wolfNext.push(nw);
+    wolfMoves.push({id:'w'+i,type:'wolf',from:{x:w.x,y:w.y},to:{x:nw.x,y:nw.y},dir:nw.dir,action:attacked?'attack':null});
+    if(a>q.wl/3&&Math.random()<.08){
+      const places=neigh(nw.x,nw.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!wolfNext.some(x=>x.x===p.x&&x.y===p.y)&&!deerOcc.has(p.x+','+p.y)});
+      const b=randPick(places); if(b){const baby={x:b.x,y:b.y,a:0,h:0,dir:b.dir};wolfNext.push(baby);wolfBirths.push({type:'wolf',to:{x:b.x,y:b.y},dir:b.dir});}
+    }
   }
-  const survivors=deerNext.filter(d=>!eaten.has(d)), survivorMoves=deerMoves.filter((m,i)=>!eaten.has(deerNext[i]));
-  return {fromCells,toCells:cells,toDeer:survivors,toWolf:wolfNext,moves:[...survivorMoves,...wolfMoves],births:[...deerBirths,...wolfBirths]};
+  const survivors=deerNext.filter(d=>!eaten.has(d));
+  const survivorMoves=deerMoves.filter(m=>!eaten.has(m.ref)).map(({ref,...m})=>m);
+  return {fromCells,toCells:cells,toDeer:survivors,toWolf:wolfNext,moves:[...survivorMoves,...wolfMoves],births:[...deerBirths,...wolfBirths],attacks};
 }
 function animateToNext(next,done,manual=false){
-  if(S.anim) return; S.anim={...next,start:performance.now(),dur:340,done,manual,heldAt:null,frame:null};
+  if(S.anim) return; S.anim={...next,start:performance.now(),dur:460,done,manual,heldAt:null,frame:null};
   const frame=now=>{
     if(!S.anim) return;
     if(!S.anim.manual&&!S.running){ S.anim.heldAt=now; S.anim.frame=frame; return; }
@@ -336,24 +410,41 @@ function pushHistory(){
 }
 function plotGraph(c,w,h,small=false){
   px(c,0,0,w,h,'#02040a');
-  const L=small?18:62, R=small?6:18, T=small?6:18, B=small?16:48, PW=w-L-R, PH=h-T-B;
+  const L=small?8:62, R=small?3:18, T=small?3:18, B=small?7:48, PW=w-L-R, PH=h-T-B;
   const maxData=Math.max(1,...S.hg,...S.hd,...S.hw), yStep=Math.max(1,Math.ceil(maxData/5)), yMax=yStep*5;
-  const startTurn=Math.max(0,S.turn-(S.hg.length-1)); const xStep=S.turn>=50?10:5; const endTurn=Math.max(xStep,Math.ceil(Math.max(S.turn,1)/xStep)*xStep);
+  const startTurn=Math.max(0,S.turn-(S.hg.length-1)), xStep=S.turn>=50?10:5, endTurn=Math.max(xStep,Math.ceil(Math.max(S.turn,1)/xStep)*xStep);
+
   c.strokeStyle='#fff'; c.lineWidth=small?1:2; c.beginPath(); c.moveTo(L,T); c.lineTo(L,T+PH); c.lineTo(w-R,T+PH); c.stroke();
-  for(let i=1;i<=5;i++){ const y=T+PH-(i*yStep/yMax)*PH; c.strokeStyle='#24355e'; c.lineWidth=1; c.beginPath(); c.moveTo(L,y); c.lineTo(w-R,y); c.stroke(); }
-  for(let t=Math.ceil(startTurn/xStep)*xStep;t<=endTurn;t+=xStep){ const denom=Math.max(1,endTurn-startTurn); const x=L+((t-startTurn)/denom)*PW; c.strokeStyle='#24355e'; c.beginPath(); c.moveTo(x,T); c.lineTo(x,T+PH); c.stroke(); }
-  const drawLine=(arr,col)=>{ if(arr.length<2) return; c.strokeStyle=col; c.lineWidth=small?1.2:2; c.beginPath(); arr.forEach((v,i)=>{ const turn=startTurn+i; const denom=Math.max(1,endTurn-startTurn); const x=L+((turn-startTurn)/denom)*PW; const y=T+PH*(1-v/yMax); i?c.lineTo(x,y):c.moveTo(x,y); }); c.stroke(); };
+  const gridCount=small?4:5;
+  for(let i=1;i<=gridCount;i++){ const y=Math.round(T+PH*i/gridCount); c.strokeStyle='#24355e'; c.lineWidth=1; c.beginPath(); c.moveTo(L,y); c.lineTo(w-R,y); c.stroke(); }
+  if(!small){
+    for(let t=Math.ceil(startTurn/xStep)*xStep;t<=endTurn;t+=xStep){ const denom=Math.max(1,endTurn-startTurn), x=L+((t-startTurn)/denom)*PW; c.strokeStyle='#24355e'; c.beginPath(); c.moveTo(x,T); c.lineTo(x,T+PH); c.stroke(); }
+  } else {
+    for(let i=1;i<6;i++){ const x=Math.round(L+PW*i/6); c.strokeStyle='#24355e'; c.beginPath(); c.moveTo(x,T); c.lineTo(x,T+PH); c.stroke(); }
+  }
+
+  const drawLine=(arr,col)=>{
+    if(arr.length<2)return;
+    c.strokeStyle=col; c.lineWidth=small?2:2; c.beginPath();
+    arr.forEach((v,i)=>{
+      const turn=startTurn+i, denom=Math.max(1,endTurn-startTurn);
+      let x=L+((turn-startTurn)/denom)*PW, y=T+PH*(1-v/yMax);
+      if(small){ x=Math.round(x/2)*2; y=Math.round(y/2)*2; }
+      i?c.lineTo(x,y):c.moveTo(x,y);
+    }); c.stroke();
+  };
   drawLine(S.hg,'#69ff69'); drawLine(S.hd,'#ffd84a'); drawLine(S.hw,'#c796ff');
+
   if(!small){
     c.font='11px monospace'; c.fillStyle='#fff'; c.textAlign='right'; c.textBaseline='middle';
-    for(let i=0;i<=5;i++){ const val=i*yStep; const y=T+PH-(val/yMax)*PH; c.fillText(String(val),L-8,y); }
+    for(let i=0;i<=5;i++){ const val=i*yStep, y=T+PH-(val/yMax)*PH; c.fillText(String(val),L-8,y); }
     c.textAlign='center'; c.textBaseline='top';
-    for(let t=Math.ceil(startTurn/xStep)*xStep;t<=endTurn;t+=xStep){ const denom=Math.max(1,endTurn-startTurn); const x=L+((t-startTurn)/denom)*PW; c.fillText(String(t),x,T+PH+8); }
+    for(let t=Math.ceil(startTurn/xStep)*xStep;t<=endTurn;t+=xStep){ const denom=Math.max(1,endTurn-startTurn), x=L+((t-startTurn)/denom)*PW; c.fillText(String(t),x,T+PH+8); }
     c.font='12px monospace'; c.textAlign='center'; c.textBaseline='bottom'; c.fillText('ターン数',L+PW/2,h-2);
     c.save(); c.translate(16,T+PH/2); c.rotate(-Math.PI/2); c.textAlign='center'; c.textBaseline='top'; c.fillText('残数',0,0); c.restore();
   }
 }
-function drawMiniGraph(){ mini.width=270; mini.height=120; mctx.imageSmoothingEnabled=false; plotGraph(mctx,mini.width,mini.height,true); }
+function drawMiniGraph(){ mini.width=160; mini.height=64; mctx.imageSmoothingEnabled=false; plotGraph(mctx,mini.width,mini.height,true); }
 function drawBigGraph(){ const w=(bigGraph.clientWidth||900), h=290; bigGraph.width=w*DPR; bigGraph.height=h*DPR; bigGraph.style.height=h+'px'; gctx.setTransform(DPR,0,0,DPR,0,0); gctx.imageSmoothingEnabled=false; plotGraph(gctx,w,h,false); }
 
 function openM(id){ if(id==='graphModal') drawBigGraph(); $(id).classList.add('on'); }
