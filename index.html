@@ -33,41 +33,44 @@ button,input{font:inherit} button{cursor:pointer}
 .playfieldWrap{position:absolute;left:0;right:0;top:104px;bottom:18px;display:flex;align-items:center;justify-content:center;background:#000}
 #field{max-width:100%;max-height:100%;display:block;image-rendering:pixelated;background:#000}
 .copy{position:absolute;left:50%;transform:translateX(-50%);bottom:4px;z-index:8;background:#03060c;border:1px solid #5570c9;padding:2px 8px;font-size:10px;color:#d3dbff}
-.modal{position:absolute;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:14px;z-index:20}.modal.on{display:flex}
-.box{width:min(96%,1040px);max-height:calc(100% - 20px);overflow:auto;background:#081126;border:4px solid #fff;outline:4px solid #000;box-shadow:8px 8px 0 #000;padding:9px}
-.mh{display:flex;justify-content:space-between;align-items:center;gap:8px;border-bottom:3px solid #6f85d6;padding-bottom:5px;margin-bottom:7px}.mh h2{margin:0;font-size:17px;line-height:1}
-.x{background:#8d1f35;color:#fff;border:3px solid #fff;box-shadow:3px 3px 0 #000;padding:4px 8px}
-.settingSections{display:grid;grid-template-columns:.72fr 1fr 1fr;grid-template-areas:"map deer wolf" "grass deer wolf" "speed diet diet";gap:7px}
-.settingGroup{background:#07101f;border:2px solid #3b4c8f;box-shadow:inset 0 0 0 1px #02050d;padding:5px}
+.modal{position:absolute;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;padding:10px;z-index:20}.modal.on{display:flex}
+.box,.graphBox{width:min(96%,1040px);max-height:calc(100% - 14px);overflow:auto;background:#030711;border:4px solid #fff;outline:4px solid #000;box-shadow:inset 0 0 0 3px #273e86,8px 8px 0 #000;padding:8px;font-family:monospace}
+.graphBox{width:min(96%,980px)}
+.mh{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#111d42;border:3px solid #627bea;padding:4px 6px;margin-bottom:6px;box-shadow:inset 0 0 0 2px #050814}
+.mh h2{margin:0;font-size:16px;line-height:1.2;letter-spacing:.04em;color:#fff;text-shadow:2px 2px 0 #000}
+.x{background:#8d1f35;color:#fff;border:3px solid #fff;box-shadow:2px 2px 0 #000;padding:3px 8px;font-weight:900}
+.settingSections{display:grid;grid-template-columns:.72fr 1fr 1fr;grid-template-areas:"map deer wolf" "grass deer wolf" "speed diet diet";gap:6px}
+.settingGroup{background:#07101f;border:2px solid #3b4c8f;box-shadow:inset 0 0 0 1px #02050d;padding:4px}
 .settingGroup.map{grid-area:map}.settingGroup.grass{grid-area:grass}.settingGroup.deer{grid-area:deer}.settingGroup.wolf{grid-area:wolf}.settingGroup.diet{grid-area:diet}.settingGroup.speed{grid-area:speed}
-.groupTitle{display:flex;align-items:center;gap:6px;margin:-1px -1px 5px;padding:3px 5px;background:#111d42;border-bottom:2px solid #627bea;color:#fff;font-size:12px;font-weight:900}
-.groupTitle .labelIcon{width:22px;height:22px}
-.groupBody{display:grid;gap:4px}
-.f{display:grid;grid-template-columns:minmax(116px,1fr) 78px;gap:6px;align-items:center;background:#09101f;border:1px solid #263d7c;padding:3px 5px;min-height:30px}
-.f label{display:flex;align-items:center;gap:5px;font-size:11px;line-height:1.15;color:#d8e1ff;margin:0}
-.f input,.f select{width:78px;justify-self:end;background:#02040a;color:#fff;border:2px solid #88a0ff;padding:2px 5px;font-size:13px;line-height:1.2}
-.f select{width:154px;max-width:100%}
-.f .ruleNote,.ruleNote.full{grid-column:1/-1;margin:0;font-size:9.5px;line-height:1.25;color:#bfcaff}
-.diet .groupBody{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 6px}
-.diet .f{grid-template-columns:minmax(120px,1fr) 84px}
-.diet .f:first-child{grid-column:1/-1;grid-template-columns:minmax(130px,1fr) 180px}
-.diet .f select{width:180px}
-.speedBox{display:block;background:#09101f;border:1px solid #263d7c;padding:5px}
-.speedBox>label{display:flex;align-items:center;gap:6px;font-size:11px;color:#d8e1ff;margin-bottom:4px}
-.speedLine{display:grid;grid-template-columns:42px 1fr 42px;gap:5px;align-items:center}.speedWord{font-size:9px;color:#d8e1ff;text-align:center}.pixelRange{-webkit-appearance:none;appearance:none;width:100%;height:16px;background:#02040a;border:2px solid #88a0ff;box-shadow:inset 0 0 0 1px #000;padding:0}.pixelRange::-webkit-slider-runnable-track{height:5px;background:repeating-linear-gradient(90deg,#516fd6 0 10%,#1a2d66 10% 20%)}.pixelRange::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;margin-top:-5px;background:#ffd45c;border:2px solid #6f3200;box-shadow:1px 1px 0 #000}.pixelRange::-moz-range-track{height:5px;background:#516fd6}.pixelRange::-moz-range-thumb{width:12px;height:12px;background:#ffd45c;border:2px solid #6f3200;border-radius:0}.help a{color:#8fd6ff;text-decoration:underline}
-.labelIcon{width:26px;height:26px}
-.groupBody{display:grid;gap:6px}
-.f{display:grid;grid-template-columns:minmax(150px,1fr) 104px;gap:8px;align-items:center;background:#09101f;border:1px solid #263d7c;padding:5px 7px;min-height:38px}
-.f label{display:flex;align-items:center;gap:7px;font-size:12px;line-height:1.25;color:#d8e1ff;margin:0}
-.f input,.f select{width:104px;justify-self:end;background:#02040a;color:#fff;border:2px solid #88a0ff;padding:4px 6px;font-size:14px}
-.f select{width:190px;max-width:100%}
-.f .ruleNote,.ruleNote.full{grid-column:1/-1;margin:1px 0 0;font-size:10.5px;line-height:1.45;color:#bfcaff}
-.speedBox{display:block;background:#09101f;border:1px solid #263d7c;padding:7px}
-.speedBox>label{display:flex;align-items:center;gap:8px;font-size:12px;color:#d8e1ff;margin-bottom:6px}
-.speedLine{display:grid;grid-template-columns:54px 1fr 54px;gap:8px;align-items:center}.speedWord{font-size:11px;color:#d8e1ff;text-align:center}.pixelRange{-webkit-appearance:none;appearance:none;width:100%;height:18px;background:#02040a;border:3px solid #88a0ff;box-shadow:inset 0 0 0 2px #000;padding:0}.pixelRange::-webkit-slider-runnable-track{height:6px;background:repeating-linear-gradient(90deg,#516fd6 0 10%,#1a2d66 10% 20%)}.pixelRange::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;margin-top:-6px;background:#ffd45c;border:3px solid #6f3200;box-shadow:2px 2px 0 #000}.pixelRange::-moz-range-track{height:6px;background:#516fd6}.pixelRange::-moz-range-thumb{width:14px;height:14px;background:#ffd45c;border:3px solid #6f3200;border-radius:0}.help a{color:#8fd6ff;text-decoration:underline}
-.labelIcon{width:24px;height:24px;display:block;background:#000;flex:none}
-.row{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px}.btn{background:#121a34;color:#fff;border:3px solid #fff;box-shadow:2px 2px 0 #000;padding:4px 9px;min-height:30px;font-size:12px;font-weight:900}.btn.red{background:#8f2038}
-.miniInfo{margin-top:6px;font-size:10.5px;line-height:1.3;color:#d7e1ff}
+.groupTitle{display:flex;align-items:center;gap:5px;margin:0 0 4px;padding:3px 5px;background:#111d42;border:2px solid #627bea;color:#fff;font-size:11.5px;font-weight:900;letter-spacing:.04em;text-shadow:1px 1px 0 #000}
+.groupTitle .labelIcon{width:20px;height:20px}
+.groupBody{display:grid;gap:3px}
+.f{display:grid;grid-template-columns:minmax(110px,1fr) 76px;gap:5px;align-items:center;background:#09101f;border:1px solid #263d7c;padding:3px 5px;min-height:28px}
+.f label{display:flex;align-items:center;gap:5px;font-size:10.5px;line-height:1.15;color:#e5e9ff;margin:0;font-weight:900;letter-spacing:.02em}
+.f input,.f select{width:76px;justify-self:end;background:#000;color:#fff;border:2px solid #88a0ff;padding:2px 4px;font:900 12px monospace;line-height:1.15;box-shadow:inset 0 0 0 1px #111a38}
+.f select{width:150px;max-width:100%}
+.f .ruleNote,.ruleNote.full{grid-column:1/-1;margin:0;font-size:9px;line-height:1.2;color:#bfcaff}
+.diet .groupBody{grid-template-columns:repeat(2,minmax(0,1fr));gap:3px 5px}
+.diet .f{grid-template-columns:minmax(112px,1fr) 80px}
+.diet .f:first-child{grid-column:1/-1;grid-template-columns:minmax(130px,1fr) 176px}
+.diet .f select{width:176px}
+.speedBox{display:block;background:#09101f;border:1px solid #263d7c;padding:4px}
+.speedBox>label{display:flex;align-items:center;gap:5px;font-size:10.5px;font-weight:900;color:#e5e9ff;margin-bottom:3px}
+.speedLine{display:grid;grid-template-columns:38px 1fr 38px;gap:4px;align-items:center}.speedWord{font-size:8.5px;color:#d8e1ff;text-align:center;font-weight:900}.pixelRange{-webkit-appearance:none;appearance:none;width:100%;height:15px;background:#000;border:2px solid #88a0ff;box-shadow:inset 0 0 0 1px #000;padding:0}.pixelRange::-webkit-slider-runnable-track{height:5px;background:repeating-linear-gradient(90deg,#516fd6 0 7%,#1a2d66 7% 14%)}.pixelRange::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;margin-top:-5px;background:#ffd45c;border:2px solid #6f3200;box-shadow:1px 1px 0 #000}.pixelRange::-moz-range-track{height:5px;background:#516fd6}.pixelRange::-moz-range-thumb{width:11px;height:11px;background:#ffd45c;border:2px solid #6f3200;border-radius:0}
+.speedTicks{display:grid;grid-template-columns:repeat(7,1fr);margin:2px 39px 0;font-size:8px;color:#9fb2ff;text-align:center}
+.labelIcon{width:22px;height:22px;display:block;background:#000;flex:none;image-rendering:pixelated}
+.help{margin:0;padding:0;font-size:11px;line-height:1.45;color:#eef2ff}
+.helpGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.helpCard{background:#07101f;border:2px solid #3b4c8f;padding:6px}
+.helpCard.wide{grid-column:1/-1}
+.helpTitle{margin:0 0 4px;padding:3px 5px;background:#111d42;border:2px solid #627bea;color:#ffd45c;font-size:11px;font-weight:900;letter-spacing:.04em;text-shadow:1px 1px 0 #000}
+.help p{margin:3px 0}.help ul{margin:3px 0;padding-left:1.25em}.help li{margin:2px 0}.help a{color:#8fd6ff;text-decoration:underline}
+.graphHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;padding:4px 6px;background:#07101f;border:2px solid #3b4c8f;font-size:11px;font-weight:900;letter-spacing:.03em}
+.legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:5px;padding:4px 6px;background:#07101f;border:2px solid #3b4c8f;font-size:10px;font-weight:900}.legendItem{display:flex;align-items:center;gap:4px}.legendIcon{width:20px;height:20px;background:#000;border:1px solid #3650a4;image-rendering:pixelated}
+#bigGraph{width:100%;height:280px;display:block;background:#02040a;border:3px solid #465fd4;image-rendering:pixelated}
+.qrWrap{text-align:center}.qrWrap img{width:min(280px,78vw);height:auto;background:#fff;padding:8px;border:4px solid #000}.url{margin-top:8px;color:#9cd7ff;word-break:break-all;font-size:11px}
+.row{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}.btn{background:#121a34;color:#fff;border:3px solid #fff;box-shadow:2px 2px 0 #000;padding:3px 8px;min-height:28px;font:900 11px monospace}.btn.red{background:#8f2038}
+.miniInfo{margin-top:4px;font-size:9.5px;line-height:1.2;color:#d7e1ff}
 .graphBox{width:min(96%,980px);background:#081126;border:4px solid #fff;outline:4px solid #000;box-shadow:8px 8px 0 #000;padding:12px}.graphHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px}.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;font-size:12px}.legendItem{display:flex;align-items:center;gap:6px}.legendIcon{width:22px;height:22px;background:#000;border:1px solid #3650a4}
 #bigGraph{width:100%;height:290px;display:block;background:#02040a;border:3px solid #465fd4}
 .help{margin:0;padding-left:1.25em;line-height:1.8;font-size:13px}.qrWrap{text-align:center}.qrWrap img{width:min(300px,80vw);height:auto;background:#fff;padding:10px;border:4px solid #000}.url{margin-top:10px;color:#9cd7ff;word-break:break-all;font-size:13px}
@@ -81,7 +84,7 @@ button,input{font:inherit} button{cursor:pointer}
   .countGrid{grid-template-columns:120px 120px;grid-template-rows:34px 34px;gap:2px 4px}
   .hudStat{grid-template-columns:30px 86px;width:118px;height:34px;column-gap:4px}.iconCounter{width:30px;height:30px}.countPix{width:86px;height:30px}
   .playfieldWrap{top:158px}
-  .settingSections{grid-template-columns:1fr;grid-template-areas:"map" "grass" "deer" "wolf" "speed" "diet"}.diet .groupBody{grid-template-columns:1fr}.diet .f:first-child{grid-column:auto;grid-template-columns:minmax(120px,1fr) 160px}.f{grid-template-columns:minmax(120px,1fr) 82px}.f input{width:82px}.f select{width:160px}
+  .settingSections{grid-template-columns:1fr;grid-template-areas:"map" "grass" "deer" "wolf" "speed" "diet"}.diet .groupBody{grid-template-columns:1fr}.diet .f:first-child{grid-column:auto;grid-template-columns:minmax(118px,1fr) 150px}.f{grid-template-columns:minmax(116px,1fr) 78px}.f input{width:78px}.f select{width:150px}.helpGrid{grid-template-columns:1fr}.helpCard.wide{grid-column:auto}
 }
 </style>
 </head>
@@ -149,7 +152,7 @@ button,input{font:inherit} button{cursor:pointer}
 
       <section class="settingGroup speed">
         <div class="groupTitle">GAME SPEED</div>
-        <div class="speedBox"><label>TURN SPEED <span id="speedValue">3</span></label><div class="speedLine"><span class="speedWord">SLOW</span><input id="speed" class="pixelRange" type="range" min="1" max="5" step="1" value="3"><span class="speedWord">FAST</span></div></div>
+        <div class="speedBox"><label>TURN SPEED <span id="speedValue">4</span></label><div class="speedLine"><span class="speedWord">SLOW</span><input id="speed" class="pixelRange" type="range" min="1" max="7" step="1" value="4"><span class="speedWord">FAST</span></div><div class="speedTicks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></div></div>
       </section>
 
       <section class="settingGroup diet">
@@ -167,8 +170,8 @@ button,input{font:inherit} button{cursor:pointer}
   </div></div>
 
   <div id="graphModal" class="modal"><div class="graphBox">
-    <div class="mh"><h2>POPULATION GRAPH / 個体数の変化</h2><button class="x" data-close="graphModal">×</button></div>
-    <div class="graphHead"><span>草・シカ・オオカミの残数変化</span><span id="graphTurn">TURN 0</span></div>
+    <div class="mh"><h2>POPULATION / 個体数グラフ</h2><button class="x" data-close="graphModal">×</button></div>
+    <div class="graphHead"><span>のこっている数の変化</span><span id="graphTurn">TURN 0</span></div>
     <canvas id="bigGraph"></canvas>
     <div class="legend">
       <div class="legendItem"><canvas class="legendIcon icon-grass" width="22" height="22"></canvas><span>草</span></div>
@@ -180,19 +183,15 @@ button,input{font:inherit} button{cursor:pointer}
   </div></div>
 
   <div id="helpModal" class="modal"><div class="box"><div class="mh"><h2>HELP / あそびかた</h2><button class="x" data-close="helpModal">×</button></div>
-    <ol class="help">
-      <li>STARTで連続再生、PAUSEで停止します。RESETで現在の設定から初期状態に戻します。SET内の「TURN SPEED」で1〜5段階の速度を選べます。</li>
-      <li>オオカミ出現ターンは <b>0なら最初から</b>、Nなら <b>TURN Nになった時点</b>で「初期オオカミ数」の個体がフィールドに参加します。参加後に全滅しても同じ設定で再出現はしません。</li>
-      <li>シカは上下左右4マスの移動候補から草のあるマスを優先し、草を食べると空腹値が0に戻ります。</li>
-      <li><b>オオカミの植物食ルール</b>：①上下左右4マスにシカがいれば必ずシカを優先し、植物は食べません。②シカが隣接していない、③空腹値が設定した「植物食を許可する空腹ターン」以上、④移動先に草がある、の3条件を満たしたときだけ、設定した確率で草を食べます。食べた場合、空腹値は0には戻らず「植物食で回復する空腹ターン」の分だけ減ります。「食べない」を選ぶとこの判定は無効です。</li>
-      <li>オオカミが草を食べる設定は、生態系モデルを比較するための<b>簡略化した任意ルール</b>です。野生のオオカミは主に有蹄類などを捕食しますが、季節によって果実やその他の植物質も利用することが報告されています。</li>
-      <li>左上の小さなグラフをクリックすると、横長の大きな個体数グラフが開きます。</li>
-      <li><b>関連資料：</b>
-        <a href="https://www.usgs.gov/publications/weekly-summer-diet-gray-wolves-canis-lupus-northeastern-minnesota" target="_blank" rel="noopener">USGS: Weekly summer diet of gray wolves</a> ／
-        <a href="https://nsojournals.onlinelibrary.wiley.com/doi/10.1002/wlb3.01224" target="_blank" rel="noopener">Wildlife Biology (2024): Wolf diet in the Notecka Forest</a> ／
-        <a href="https://www.nps.gov/yell/learn/nature/cyclesprocesses.htm" target="_blank" rel="noopener">Yellowstone NPS: Trophic Cascade</a>
-      </li>
-    </ol>
+    <div class="help helpGrid">
+      <section class="helpCard"><h3 class="helpTitle">1. まず動かす</h3><p><b>START</b>で進み、<b>PAUSE</b>で止まります。<b>RESET</b>で最初から。速度はSETで<b>1〜7</b>。1がいちばん遅く、7がいちばん速いです。</p></section>
+      <section class="helpCard"><h3 class="helpTitle">2. シカ</h3><p>シカは近くの草を優先して移動します。草を食べると空腹は0になります。<b>寿命</b>または<b>空腹限界</b>をこえると、天使の姿になって消えます。</p></section>
+      <section class="helpCard"><h3 class="helpTitle">3. オオカミ</h3><p>近くにシカがいればシカを優先します。「出現ターン」を20にすると、TURN 20から参加します。寿命・空腹限界で死ぬと天使の姿になります。</p></section>
+      <section class="helpCard"><h3 class="helpTitle">4. オオカミの植物食</h3><ul><li>近くにシカがいる → 草は食べない</li><li>シカがいない + 設定した空腹以上 + 草のあるマス → 設定確率で草を食べる</li><li>草を食べても空腹は0にはならず、設定した分だけ回復</li></ul><p>「食べない」にすると、このルールはOFFです。</p></section>
+      <section class="helpCard"><h3 class="helpTitle">5. グラフを見る</h3><p>左上の小グラフをクリックすると拡大します。緑=草、黄=シカ、紫=オオカミ。増え方・減り方・周期に注目してください。</p></section>
+      <section class="helpCard"><h3 class="helpTitle">6. このゲームのねらい</h3><p>数値を変えて「草が少ないと？」「オオカミを途中から入れると？」などを比べ、食物連鎖の関係を考えるための簡略モデルです。</p></section>
+      <section class="helpCard wide"><h3 class="helpTitle">REFERENCE / 参考資料</h3><p><a href="https://www.usgs.gov/publications/weekly-summer-diet-gray-wolves-canis-lupus-northeastern-minnesota" target="_blank" rel="noopener">USGS: Weekly summer diet of gray wolves</a> ／ <a href="https://nsojournals.onlinelibrary.wiley.com/doi/10.1002/wlb3.01224" target="_blank" rel="noopener">Wildlife Biology (2024): Wolf diet</a> ／ <a href="https://www.nps.gov/yell/learn/nature/cyclesprocesses.htm" target="_blank" rel="noopener">Yellowstone NPS: Trophic Cascade</a></p></section>
+    </div>
   </div></div>
 
   <div id="qrModal" class="modal"><div class="box qrWrap"><div class="mh"><h2>QR CODE</h2><button class="x" data-close="qrModal">×</button></div><img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=8&data=https%3A%2F%2Fscd-ku.github.io%2Flifegame" alt="QR"><div class="url">https://scd-ku.github.io/lifegame</div></div></div>
@@ -227,12 +226,12 @@ function conf(){
     wgh:clamp(+$('wgh').value||0,0,50),
     wgp:clamp(+$('wgp').value||0,0,100),
     wgr:clamp(+$('wgr').value||0,0,50),
-    speed:clamp(+$('speed').value||3,1,5)
+    speed:clamp(+$('speed').value||4,1,7)
   };
 }
 function turnTiming(){
   const v=conf().speed;
-  return [{dur:0,gap:0},{dur:760,gap:280},{dur:560,gap:170},{dur:340,gap:70},{dur:220,gap:25},{dur:130,gap:0}][v];
+  return [{dur:0,gap:0},{dur:1400,gap:520},{dur:950,gap:340},{dur:680,gap:210},{dur:420,gap:90},{dur:260,gap:35},{dur:150,gap:5},{dur:85,gap:0}][v];
 }
 function makeGrid(n=conf().n){
   S.n=n; const q=conf(); S.cells=[];
@@ -383,6 +382,27 @@ function boardMetrics(){
   const cell=Math.floor(Math.min(w,h)/S.n); const ox=Math.floor((w-cell*S.n)/2), oy=Math.floor((h-cell*S.n)/2);
   return {w,h,cell,ox,oy};
 }
+function drawAngelDeath(ctx,type,x,y,size,dir,progress){
+  ctx.save();
+  const rise=Math.max(0,progress-.48)/.52*size*.28;
+  const flap=(progress>.62)?1:0;
+  ctx.translate(x,y-rise);
+  const u=size/24, f=(ix,iy,w,h,col)=>px(ctx,ix*u,iy*u,w*u,h*u,col);
+  const deer=type==='deer', outline=deer?'#3a1b07':'#1d2530', body=deer?'#cb6f28':'#8e99aa', face=deer?'#f6b36b':'#eef3fb', dark=deer?'#6b350d':'#4b5667', white='#fffaf0';
+  // wings behind body
+  f(flap?1:0,9,5,7,'#dff2ff'); f(flap?18:19,9,5,7,'#dff2ff');
+  f(2,11,4,3,'#fff'); f(18,11,4,3,'#fff');
+  // body/head
+  f(6,10,11,9,outline); f(8,11,8,6,body);
+  f(13,5,9,9,outline); f(15,7,6,5,face);
+  f(19,9,3,2,white); f(20,8,1,1,'#111');
+  if(deer){f(14,3,2,4,dark);f(19,3,2,4,dark);} else {f(14,3,3,4,dark);f(19,3,3,4,dark);}
+  // halo
+  f(13,1,8,1,'#ffe56b'); f(12,2,1,1,'#ffe56b'); f(21,2,1,1,'#ffe56b'); f(13,3,8,1,'#ffe56b');
+  // little feet
+  f(8,17,2,4,white); f(14,17,2,4,white);
+  ctx.restore();
+}
 function drawFeedingPicture(ctx,kind,x,y,size,dir){
   const side=dir==='L'?'L':'R';
   if(kind==='munch'){
@@ -513,6 +533,14 @@ function drawScene(progress=1){
         drawSprite(fctx,mv.type,M.ox+xx*M.cell,M.oy+yy*M.cell,M.cell,mv.dir,progress>.5?1:0);
       }
     }
+    for(const d of (anim.deaths||[])){
+      if(progress<.48){
+        const p=progress/.48, xx=d.from.x+(d.to.x-d.from.x)*p, yy=d.from.y+(d.to.y-d.from.y)*p;
+        drawSprite(fctx,d.type,M.ox+xx*M.cell,M.oy+yy*M.cell,M.cell,d.dir,p>.5?1:0);
+      } else {
+        drawAngelDeath(fctx,d.type,M.ox+d.to.x*M.cell,M.oy+d.to.y*M.cell,M.cell,d.dir,progress);
+      }
+    }
     for(const b of anim.births) if(progress>.65) drawSprite(fctx,b.type,M.ox+b.to.x*M.cell,M.oy+b.to.y*M.cell,M.cell,b.dir,1);
   } else {
     S.deer.forEach(a=>drawSprite(fctx,'deer',M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,a.dir,0));
@@ -528,7 +556,7 @@ function simulateNext(){
   }
 
   let wolfOcc=occupyMap(fromWolf);
-  const deerNext=[], deerMoves=[], deerBirths=[];
+  const deerNext=[], deerMoves=[], deerBirths=[], deaths=[];
   for(let i=0;i<fromDeer.length;i++){
     const d=fromDeer[i];
     const opts=neigh(d.x,d.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!deerNext.some(a=>a.x===p.x&&a.y===p.y)&&!wolfOcc.has(p.x+','+p.y)});
@@ -537,7 +565,10 @@ function simulateNext(){
     let h=d.h+1,a=d.a+1,ateGrass=false;
     const dv=cellAt(cells,dest.x,dest.y);
     if(dv&&dv.terrain==='grass'&&dv.grass){dv.grass=false;dv.gt=q.gr;h=0;ateGrass=true;}
-    if(h>q.ds||a>q.dl) continue;
+    if(h>q.ds||a>q.dl){
+      deaths.push({type:'deer',from:{x:d.x,y:d.y},to:{x:dest.x,y:dest.y},dir:dest.dir||d.dir,cause:a>q.dl?'age':'hunger'});
+      continue;
+    }
     const nd={x:dest.x,y:dest.y,a,h,dir:dest.dir||d.dir};
     deerNext.push(nd);
     deerMoves.push({id:'d'+i,type:'deer',ref:nd,from:{x:d.x,y:d.y},to:{x:nd.x,y:nd.y},dir:nd.dir,action:ateGrass?'munch':null});
@@ -584,7 +615,7 @@ function simulateNext(){
     newcomers.forEach(w=>wolfBirths.push({type:'wolf',to:{x:w.x,y:w.y},dir:w.dir}));
     nextWolfIntroduced=true;
   }
-  return {fromCells,toCells:cells,toDeer:survivors,toWolf:wolfNext,moves:[...survivorMoves,...wolfMoves],births:[...deerBirths,...wolfBirths],attacks,nextWolfIntroduced};
+  return {fromCells,toCells:cells,toDeer:survivors,toWolf:wolfNext,moves:[...survivorMoves,...wolfMoves],births:[...deerBirths,...wolfBirths],deaths,attacks,nextWolfIntroduced};
 }
 function animateToNext(next,done,manual=false){
   if(S.anim) return; S.anim={...next,start:performance.now(),dur:turnTiming().dur,done,manual,heldAt:null,frame:null};
@@ -642,11 +673,11 @@ function plotGraph(c,w,h,small=false){
   drawLine(S.hg,'#69ff69'); drawLine(S.hd,'#ffd84a'); drawLine(S.hw,'#c796ff');
 
   if(!small){
-    c.font='11px monospace'; c.fillStyle='#fff'; c.textAlign='right'; c.textBaseline='middle';
+    c.font='900 11px monospace'; c.fillStyle='#fff'; c.textAlign='right'; c.textBaseline='middle';
     for(let i=0;i<=5;i++){ const val=i*yStep, y=T+PH-(val/yMax)*PH; c.fillText(String(val),L-8,y); }
     c.textAlign='center'; c.textBaseline='top';
     for(let t=Math.ceil(startTurn/xStep)*xStep;t<=endTurn;t+=xStep){ const denom=Math.max(1,endTurn-startTurn), x=L+((t-startTurn)/denom)*PW; c.fillText(String(t),x,T+PH+8); }
-    c.font='12px monospace'; c.textAlign='center'; c.textBaseline='bottom'; c.fillText('ターン数',L+PW/2,h-2);
+    c.font='900 12px monospace'; c.textAlign='center'; c.textBaseline='bottom'; c.fillText('ターン数',L+PW/2,h-2);
     c.save(); c.translate(16,T+PH/2); c.rotate(-Math.PI/2); c.textAlign='center'; c.textBaseline='top'; c.fillText('残数',0,0); c.restore();
   }
 }
