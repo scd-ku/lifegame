@@ -43,13 +43,13 @@ button,input{font:inherit} button{cursor:pointer}
 .pixSettings:before,.pixSettings:after,.pixSettings i{content:"";position:absolute;left:0;width:18px;height:2px;background:#fff;box-shadow:0 1px 0 #000}
 .pixSettings:before{top:1px}.pixSettings i{top:6px}.pixSettings:after{top:11px}
 .pixSettings b{position:absolute;width:4px;height:5px;background:#ffd45c;border:1px solid #000}
-.pixSettings b:nth-child(2){left:4px;top:0}.pixSettings b:nth-child(3){left:11px;top:5px}.pixSettings b:nth-child(4){left:6px;top:10px}.buttonArt{display:block;width:100%;height:22px;image-rendering:pixelated}
-.statusSpeed{display:grid;grid-template-columns:48px 1fr 28px;align-items:center;gap:5px;background:#050a16;border:2px solid #465fae;padding:3px 5px}
-.statusSpeedLabel{font:900 9px/1 monospace;color:#d8e1ff}.statusSpeedValue{font:900 12px/1 monospace;color:#ffd45c;text-align:center}
-.statusRange{-webkit-appearance:none;appearance:none;width:100%;height:14px;background:#000;border:2px solid #88a0ff;box-shadow:inset 0 0 0 1px #000;padding:0}
-.statusRange::-webkit-slider-runnable-track{height:4px;background:repeating-linear-gradient(90deg,#516fd6 0 8%,#1a2d66 8% 16%)}
-.statusRange::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;margin-top:-5px;background:#ffd45c;border:2px solid #6f3200;box-shadow:1px 1px 0 #000}
-.statusRange::-moz-range-track{height:4px;background:#516fd6}.statusRange::-moz-range-thumb{width:10px;height:10px;background:#ffd45c;border:2px solid #6f3200;border-radius:0}
+.pixSettings b:nth-child(2){left:4px;top:0}.pixSettings b:nth-child(3){left:11px;top:5px}.pixSettings b:nth-child(4){left:6px;top:10px}.buttonArt{display:block;width:100%;height:24px;image-rendering:pixelated}
+.statusSpeed{display:grid;grid-template-columns:54px 1fr 30px;align-items:center;gap:5px;background:#071034;border:3px solid #fff;box-shadow:inset 0 0 0 2px #1f3d91,2px 2px 0 #000;padding:3px 5px}
+.speedLabelArt{width:54px;height:18px;display:block;image-rendering:pixelated}.speedValueArt{width:30px;height:18px;display:block;image-rendering:pixelated}
+.statusRange{-webkit-appearance:none;appearance:none;width:100%;height:16px;background:#02040a;border:3px solid #88a0ff;box-shadow:inset 0 0 0 2px #000;padding:0}
+.statusRange::-webkit-slider-runnable-track{height:6px;background:repeating-linear-gradient(90deg,#2d55c7 0 8%,#5f7cf0 8% 13%,#172a69 13% 18%)}
+.statusRange::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:18px;margin-top:-6px;background:#ffd45c;border:3px solid #6f3200;box-shadow:2px 2px 0 #000}
+.statusRange::-moz-range-track{height:6px;background:repeating-linear-gradient(90deg,#2d55c7 0 8%,#5f7cf0 8% 13%,#172a69 13% 18%)}.statusRange::-moz-range-thumb{width:12px;height:14px;background:#ffd45c;border:3px solid #6f3200;border-radius:0;box-shadow:2px 2px 0 #000}
 .playfieldWrap{position:absolute;left:0;right:0;top:112px;bottom:18px;display:flex;align-items:center;justify-content:center;background:#000}
 #field{max-width:100%;max-height:100%;display:block;image-rendering:pixelated;background:#000}
 .copy{position:absolute;left:50%;transform:translateX(-50%);bottom:4px;z-index:8;background:#03060c;border:1px solid #5570c9;padding:2px 8px;font-size:10px;color:#d3dbff}
@@ -148,12 +148,12 @@ button,input{font:inherit} button{cursor:pointer}
       <div class="hudStat"><canvas class="iconCounter" id="cWolf" width="36" height="36"></canvas><canvas class="countPix" id="wolfCount" width="54" height="18" aria-label="オオカミ × 000"></canvas></div>
     </div>
     <div class="controlPanel">
-      <button id="openSettings" class="settingBtn" aria-label="せってい"><canvas id="settingsArt" class="buttonArt" width="64" height="14"></canvas></button>
-      <div class="statusSpeed"><span class="statusSpeedLabel">SPEED</span><input id="speed" class="statusRange" type="range" min="1" max="11" step="1" value="6"><span id="speedValue" class="statusSpeedValue">6</span></div>
+      <button id="openSettings" class="settingBtn" aria-label="せってい"><canvas id="settingsArt" class="buttonArt" width="128" height="24"></canvas></button>
+      <div class="statusSpeed"><canvas id="speedLabelArt" class="speedLabelArt" width="54" height="18"></canvas><input id="speed" class="statusRange" type="range" min="1" max="11" step="1" value="6"><canvas id="speedValueArt" class="speedValueArt" width="30" height="18"></canvas></div>
       <div class="actionRow">
-        <button id="runBtn" class="hudAction run" aria-label="START"><canvas id="runArt" class="buttonArt" width="64" height="14"></canvas></button>
-        <button id="resetBtn" class="hudAction" aria-label="RESET"><canvas id="resetArt" class="buttonArt" width="64" height="14"></canvas></button>
-        <button id="saveBtn" class="hudAction save" aria-label="ほぞん"><canvas id="saveArt" class="buttonArt" width="64" height="14"></canvas></button>
+        <button id="runBtn" class="hudAction run" aria-label="START"><canvas id="runArt" class="buttonArt" width="96" height="24"></canvas></button>
+        <button id="resetBtn" class="hudAction" aria-label="RESET"><canvas id="resetArt" class="buttonArt" width="96" height="24"></canvas></button>
+        <button id="saveBtn" class="hudAction save" aria-label="ほぞん"><canvas id="saveArt" class="buttonArt" width="96" height="24"></canvas></button>
       </div>
     </div>
   </div>
@@ -286,7 +286,7 @@ const $=id=>document.getElementById(id);
 const S={
   n:20,cells:[],deer:[],wolf:[],turn:0,hg:[],hd:[],hw:[],wolfIntroduced:false,
   running:false,timer:null,anim:null,pendingTimeout:null,
-  timeline:[],branches:[],branchSeq:0,graphLayout:null,capacityNotice:''
+  timeline:[],branches:[],branchSeq:0,graphLayout:null,graphHoverTurn:null,graphSelectedTurn:null,capacityNotice:''
 };
 const field=$('field'), fctx=field.getContext('2d');
 const mini=$('miniGraph'), mctx=mini.getContext('2d');
@@ -578,20 +578,34 @@ function drawRetroButtonIcon(ctx,kind){
   else if(kind==='settings'){ctx.fillRect(1,3,10,1);ctx.fillRect(1,7,10,1);ctx.fillRect(1,11,10,1);ctx.fillRect(3,2,2,3);ctx.fillRect(7,6,2,3);ctx.fillRect(5,10,2,3)}
   else if(kind==='save'){ctx.fillRect(1,2,10,10);ctx.clearRect(3,3,6,3);ctx.fillRect(3,8,6,3);ctx.fillStyle='#000';ctx.fillRect(4,9,4,1);ctx.fillStyle='#fff'}
 }
+function renderRetroTextArt(canvas,text,opts={}){
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.clearRect(0,0,canvas.width,canvas.height);
+  const fontSize=opts.fontSize||12, ox=opts.x||0, oy=opts.y??Math.floor(canvas.height/2);
+  const shadow=opts.shadow||'#3d3d3d', color=opts.color||'#fff', align=opts.align||'center';
+  ctx.textAlign=align;ctx.textBaseline='middle';ctx.font='900 '+fontSize+'px sans-serif';
+  const x=align==='center'?canvas.width/2:ox;
+  ctx.fillStyle=shadow;ctx.fillText(text,x+1,oy+1);
+  ctx.fillStyle=color;ctx.fillText(text,x,oy);
+}
 function renderRetroButtonArt(canvas,label,icon){
   if(!canvas)return;
   const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.clearRect(0,0,canvas.width,canvas.height);
-  const off=document.createElement('canvas');off.width=canvas.width;off.height=canvas.height;const o=off.getContext('2d');
-  o.imageSmoothingEnabled=false;drawRetroButtonIcon(o,icon);
-  o.fillStyle='#fff';o.font='900 8px sans-serif';o.textBaseline='middle';o.fillText(label,14,7);
-  const im=o.getImageData(0,0,off.width,off.height),d=im.data;
-  ctx.fillStyle='#444';for(let y=0;y<off.height;y++)for(let x=0;x<off.width;x++){const a=d[(y*off.width+x)*4+3];if(a>55)ctx.fillRect(x+1,y+1,1,1)}
-  ctx.fillStyle='#fff';for(let y=0;y<off.height;y++)for(let x=0;x<off.width;x++){const a=d[(y*off.width+x)*4+3];if(a>55)ctx.fillRect(x,y,1,1)}
+  // pictogram at a dedicated 18x18 area
+  ctx.save();ctx.translate(4,4);ctx.scale(1.35,1.35);drawRetroButtonIcon(ctx,icon);ctx.restore();
+  ctx.textAlign='left';ctx.textBaseline='middle';ctx.font='900 12px sans-serif';
+  ctx.fillStyle='#444';ctx.fillText(label,26,13);
+  ctx.fillStyle='#fff';ctx.fillText(label,25,12);
+}
+function renderSpeedArt(){
+  renderRetroTextArt($('speedLabelArt'),'SPEED',{fontSize:11,color:'#d8e1ff'});
+  renderRetroTextArt($('speedValueArt'),String($('speed')?.value||6),{fontSize:12,color:'#ffd45c'});
 }
 function renderStaticButtonArt(){
   renderRetroButtonArt($('settingsArt'),'せってい','settings');
   renderRetroButtonArt($('resetArt'),'RESET','reset');
   renderRetroButtonArt($('saveArt'),'ほぞん','save');
+  renderSpeedArt();
 }
 function boardMetrics(){
   const wrap=field.parentElement.getBoundingClientRect();
@@ -879,7 +893,7 @@ function applySnapshotSettings(q){
   for(const [id,v] of Object.entries(vals))if($(id)&&v!==undefined)$(id).value=v;
   if($('wgMode')&&q.wgMode!==undefined)$('wgMode').value=q.wgMode;
   if($('dBreed'))$('dBreed').checked=!!q.dBreed;if($('wBreed'))$('wBreed').checked=!!q.wBreed;
-  if($('speedValue'))$('speedValue').textContent=q.speed;
+  if($('speedValueArt'))renderSpeedArt();
   syncBreedUI();
 }
 function restoreSnapshot(snap){
@@ -969,6 +983,16 @@ function plotGraph(c,w,h,small=false){
     c.textAlign='center';c.textBaseline='top';for(let t=0;t<=endTurn;t+=xStep){const x=L+(t/Math.max(1,endTurn))*PW;c.fillText(String(t),x,T+PH+6)}
     c.font='900 11px monospace';c.textBaseline='bottom';c.fillText('ターン数',L+PW/2,h-1);
     c.save();c.translate(13,T+PH/2);c.rotate(-Math.PI/2);c.textAlign='center';c.textBaseline='top';c.fillText('残数',0,0);c.restore();
+    const drawGuide=(turn,col,dash,label)=>{
+      if(turn==null)return;
+      const x=L+(turn/Math.max(1,endTurn))*PW;
+      c.save();c.strokeStyle=col;c.lineWidth=2;c.setLineDash(dash);c.beginPath();c.moveTo(x,T);c.lineTo(x,T+PH);c.stroke();
+      c.setLineDash([]);c.fillStyle=col;c.font='900 10px monospace';c.textAlign='center';c.textBaseline='top';
+      const txt=(label?label+' ':'')+'TURN '+turn,tw=c.measureText(txt).width+8,bx=Math.max(L,Math.min(w-R-tw,x-tw/2));
+      c.fillStyle='#02040a';c.fillRect(bx,T+2,tw,14);c.strokeStyle=col;c.strokeRect(bx,T+2,tw,14);c.fillStyle=col;c.fillText(txt,bx+tw/2,T+4);c.restore();
+    };
+    drawGuide(S.graphHoverTurn,'#74d7ff',[3,3],'');
+    drawGuide(S.graphSelectedTurn,'#ffd45c',[],'SELECT');
     S.graphLayout={L,R,T,B,PW,PH,startTurn,endTurn,w,h};
   }
 }
@@ -991,23 +1015,32 @@ function renderSnapshotTurn(turn){
   $('snapshotTurn').value=t;drawSnapshotState(snap);$('snapshotInfo').textContent='TURN '+t+' / 草 '+snap.counts.grass+' / シカ '+snap.counts.deer+' / オオカミ '+snap.counts.wolf+' / '+snap.n+'×'+snap.n+'マス';
 }
 function prepareGraphModal(){
-  updateSnapshotControl();const t=clamp(+$('snapshotTurn').value||S.turn,0,S.turn);$('snapshotTurn').value=t;renderSnapshotTurn(t);drawBigGraph();
+  updateSnapshotControl();const t=clamp(+$('snapshotTurn').value||S.turn,0,S.turn);$('snapshotTurn').value=t;S.graphSelectedTurn=t;S.graphHoverTurn=null;renderSnapshotTurn(t);drawBigGraph();
 }
 function rewindToSelectedTurn(){
-  const t=clamp(Math.round(+$('snapshotTurn').value||0),0,S.turn),snap=S.timeline[t];if(!snap)return;
+  const t=clamp(Math.round(S.graphSelectedTurn??(+$('snapshotTurn').value||0)),0,S.turn),snap=S.timeline[t];if(!snap)return;
   if(t<S.turn){
     const pts=S.timeline.slice(t).filter(Boolean).map(s=>({turn:s.turn,grass:s.counts.grass,deer:s.counts.deer,wolf:s.counts.wolf}));
     S.branches.push({id:++S.branchSeq,createdAt:new Date().toLocaleString('ja-JP',{hour12:false}),rewindTurn:t,endTurn:S.turn,points:pts});
   }
-  restoreSnapshot(snap);S.timeline=S.timeline.slice(0,t+1);rebuildHistoriesFromTimeline();updateCounts();updateCapacityInfo(true);drawScene(1);updateSnapshotControl();renderSnapshotTurn(t);renderBranchLegend();drawBigGraph();
+  restoreSnapshot(snap);S.timeline=S.timeline.slice(0,t+1);rebuildHistoriesFromTimeline();S.graphSelectedTurn=t;S.graphHoverTurn=null;updateCounts();updateCapacityInfo(true);drawScene(1);updateSnapshotControl();renderSnapshotTurn(t);renderBranchLegend();drawBigGraph();
   $('snapshotInfo').textContent+=' / このTURNに戻しました。画面を閉じてSTARTすると別の結果を重ねて比較できます。';
 }
 function openM(id){if(id==='graphModal')prepareGraphModal();$(id).classList.add('on')}
 function closeM(id){$(id).classList.remove('on')}
 $('openSettings').onclick=()=>openM('settingsModal');$('openHelp').onclick=()=>openM('helpModal');$('openQR').onclick=()=>openM('qrModal');$('miniGraph').onclick=()=>openM('graphModal');
-$('snapshotGo').onclick=()=>renderSnapshotTurn($('snapshotTurn').value);$('rewindBtn').onclick=rewindToSelectedTurn;
-$('snapshotTurn').addEventListener('change',()=>renderSnapshotTurn($('snapshotTurn').value));
-bigGraph.addEventListener('click',e=>{if(!S.graphLayout)return;const r=bigGraph.getBoundingClientRect(),x=(e.clientX-r.left)*(S.graphLayout.w/r.width),t=Math.round(((x-S.graphLayout.L)/Math.max(1,S.graphLayout.PW))*S.graphLayout.endTurn);renderSnapshotTurn(clamp(t,0,S.turn))});
+function graphTurnFromMouse(e){
+  if(!S.graphLayout)return null;
+  const r=bigGraph.getBoundingClientRect(),x=(e.clientX-r.left)*(S.graphLayout.w/r.width);
+  const raw=Math.round(((x-S.graphLayout.L)/Math.max(1,S.graphLayout.PW))*S.graphLayout.endTurn);
+  return clamp(raw,0,S.turn);
+}
+$('snapshotGo').onclick=()=>{const t=clamp(+$('snapshotTurn').value||0,0,S.turn);S.graphSelectedTurn=t;renderSnapshotTurn(t);drawBigGraph();};
+$('rewindBtn').onclick=rewindToSelectedTurn;
+$('snapshotTurn').addEventListener('change',()=>{const t=clamp(+$('snapshotTurn').value||0,0,S.turn);S.graphSelectedTurn=t;renderSnapshotTurn(t);drawBigGraph();});
+bigGraph.addEventListener('mousemove',e=>{const t=graphTurnFromMouse(e);if(t==null)return;if(S.graphHoverTurn!==t){S.graphHoverTurn=t;drawBigGraph();}});
+bigGraph.addEventListener('mouseleave',()=>{if(S.graphHoverTurn!==null){S.graphHoverTurn=null;drawBigGraph();}});
+bigGraph.addEventListener('click',e=>{const t=graphTurnFromMouse(e);if(t==null)return;S.graphSelectedTurn=t;S.graphHoverTurn=null;renderSnapshotTurn(t);drawBigGraph();});
 $('saveBtn').onclick=saveCSV;
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeM(b.dataset.close)); document.querySelectorAll('.modal').forEach(m=>m.onclick=e=>{ if(e.target===m) m.classList.remove('on'); });
 function syncBreedUI(){
@@ -1016,11 +1049,11 @@ function syncBreedUI(){
   updateCapacityInfo(false);
 }
 $('dBreed').addEventListener('change',syncBreedUI); $('wBreed').addEventListener('change',syncBreedUI);
-$('speed').addEventListener('input',()=>{$('speedValue').textContent=$('speed').value;});
+$('speed').addEventListener('input',()=>{renderSpeedArt();});
 ['sz','di','wi','dm','df','wm','wf','wstart'].forEach(id=>$(id).addEventListener('input',()=>updateCapacityInfo(false)));
 $('runBtn').onclick=()=>S.running?stopRun():startRun(); $('resetBtn').onclick=()=>resetAll(false); $('mapchg').onclick=()=>resetAll(true); $('stepBtn').onclick=()=>{ stopRun(); stepOnce(); };
 window.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on')); });
-window.addEventListener('resize',()=>{ drawScene(1); drawMiniGraph(); drawBigGraph(); });
+window.addEventListener('resize',()=>{ drawScene(1); drawMiniGraph(); drawBigGraph(); renderStaticButtonArt(); setRunButton(); });
 
 renderAllSmallIcons();renderStaticButtonArt();syncBreedUI();setRunButton();makeGrid();seedAnimals();updateCounts();pushHistory();updateCapacityInfo(true);drawScene(1);renderBranchLegend();
 </script>
