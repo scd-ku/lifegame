@@ -16,7 +16,7 @@ body{overflow:hidden}
 button,input{font:inherit} button{cursor:pointer}
 .app{height:100dvh;display:flex;align-items:flex-start;justify-content:center;padding:8px;background:#000}
 .screen{width:min(97vw,calc((100dvh - 16px)*4/3),1180px);aspect-ratio:4/3;position:relative;background:#000;border:4px solid #2a2a2a;box-shadow:0 0 0 3px #000,0 0 0 6px #213d89;overflow:hidden}
-.topbar{position:absolute;left:0;right:0;top:0;height:112px;padding:6px 10px;display:grid;grid-template-columns:218px 226px 300px 330px;gap:10px;align-items:center;justify-content:space-between;background:#000;z-index:4}
+.topbar{position:absolute;left:0;right:0;top:0;height:112px;padding:6px 10px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1.12fr) minmax(0,1.42fr) minmax(0,1.55fr);gap:9px;align-items:center;background:#000;z-index:4;box-sizing:border-box}
 .miniPanel{height:96px;border:3px solid #516fd6;padding:5px;background:#000;display:flex;align-items:center}
 #miniGraph{width:100%;height:100%;display:block;background:#02040a;border:1px solid #233564;cursor:pointer;image-rendering:pixelated}
 .titleTurn{height:96px;display:grid;grid-template-rows:44px 40px;align-content:center;row-gap:2px;min-width:0}
@@ -32,8 +32,8 @@ button,input{font:inherit} button{cursor:pointer}
 .hudStat{display:grid;grid-template-columns:36px 108px;align-items:center;column-gap:6px;width:150px;height:42px}
 .iconCounter{width:36px;height:36px;background:#000;display:block;image-rendering:pixelated}
 .countPix{width:108px;height:36px;display:block;background:#000;image-rendering:pixelated}
-.controlPanel{height:96px;display:grid;grid-template-rows:30px 32px 30px;gap:2px}
-.settingBtn,.hudAction{border:3px solid #fff;background:#1b2b66;color:#fff;box-shadow:2px 2px 0 #000;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:1px 4px;overflow:hidden}
+.controlPanel{height:96px;min-width:0;display:grid;grid-template-rows:30px 32px 30px;gap:2px;box-sizing:border-box}
+.settingBtn,.hudAction{min-width:0;width:100%;box-sizing:border-box;border:3px solid #fff;background:#1b2b66;color:#fff;box-shadow:2px 2px 0 #000;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:1px 4px;overflow:hidden}
 .settingBtn{width:100%}.hudAction.run{background:#a52a43}.hudAction.save{background:#245539}.settingBtn:active,.hudAction:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #000}
 .actionRow{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .pixPlay{width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:11px solid #fff;filter:drop-shadow(1px 1px 0 #000)}
@@ -44,7 +44,7 @@ button,input{font:inherit} button{cursor:pointer}
 .pixSettings:before{top:1px}.pixSettings i{top:6px}.pixSettings:after{top:11px}
 .pixSettings b{position:absolute;width:4px;height:5px;background:#ffd45c;border:1px solid #000}
 .pixSettings b:nth-child(2){left:4px;top:0}.pixSettings b:nth-child(3){left:11px;top:5px}.pixSettings b:nth-child(4){left:6px;top:10px}.buttonArt{display:block;width:100%;height:24px;image-rendering:pixelated}
-.statusSpeed{display:grid;grid-template-columns:54px 1fr 30px;align-items:center;gap:5px;background:#071034;border:3px solid #fff;box-shadow:inset 0 0 0 2px #1f3d91,2px 2px 0 #000;padding:3px 5px}
+.statusSpeed{min-width:0;box-sizing:border-box;display:grid;grid-template-columns:54px minmax(0,1fr) 30px;align-items:center;gap:5px;background:#071034;border:3px solid #fff;box-shadow:inset 0 0 0 2px #1f3d91,2px 2px 0 #000;padding:3px 5px}
 .speedLabelArt{width:54px;height:18px;display:block;image-rendering:pixelated}.speedValueArt{width:30px;height:18px;display:block;image-rendering:pixelated}
 .statusRange{-webkit-appearance:none;appearance:none;width:100%;height:16px;background:#02040a;border:3px solid #88a0ff;box-shadow:inset 0 0 0 2px #000;padding:0}
 .statusRange::-webkit-slider-runnable-track{height:6px;background:repeating-linear-gradient(90deg,#2d55c7 0 8%,#5f7cf0 8% 13%,#172a69 13% 18%)}
@@ -55,7 +55,7 @@ button,input{font:inherit} button{cursor:pointer}
 .copy{position:absolute;left:50%;transform:translateX(-50%);bottom:4px;z-index:8;background:#03060c;border:1px solid #5570c9;padding:2px 8px;font-size:10px;color:#d3dbff}
 .modal{position:absolute;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;padding:10px;z-index:20}.modal.on{display:flex}
 .box,.graphBox{width:min(96%,1040px);max-height:calc(100% - 14px);overflow:auto;background:#030711;border:4px solid #fff;outline:4px solid #000;box-shadow:inset 0 0 0 3px #273e86,8px 8px 0 #000;padding:8px;font-family:monospace}
-.graphBox{width:min(96%,980px)}
+.graphBox{width:min(98%,1120px);position:relative;padding-right:176px}
 .mh{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#111d42;border:3px solid #627bea;padding:4px 6px;margin-bottom:6px;box-shadow:inset 0 0 0 2px #050814}
 .mh h2{margin:0;font-size:16px;line-height:1.2;letter-spacing:.04em;color:#fff;text-shadow:2px 2px 0 #000}
 .x{background:#8d1f35;color:#fff;border:3px solid #fff;box-shadow:2px 2px 0 #000;padding:3px 8px;font-weight:900}
@@ -115,10 +115,20 @@ button,input{font:inherit} button{cursor:pointer}
 .snapshotTitle{width:100%;padding:3px 5px;margin-bottom:3px;background:#111d42;border:1px solid #627bea;font:900 10px monospace;color:#ffd45c;text-align:center}
 #snapshotCanvas{width:100%;height:auto;max-height:220px;background:#000;image-rendering:pixelated;border:2px solid #233564}
 .snapshotInfo{width:100%;margin-top:3px;font:900 9px/1.35 monospace;color:#d7e1ff}
+
+.graphSideControls{position:absolute;right:8px;top:52px;width:158px;display:grid;gap:7px;background:#02050d;border:3px solid #465fd4;padding:6px;box-shadow:inset 0 0 0 2px #111d42}
+.graphSideTitle{font:900 10px monospace;color:#ffd45c;text-align:center;padding:3px;background:#111d42;border:2px solid #627bea}
+.graphSideControls .graphSideBtn{height:34px;box-sizing:border-box;border:3px solid #fff;background:#1b2b66;box-shadow:2px 2px 0 #000;padding:1px 3px;overflow:hidden}
+.graphSideControls .graphSideBtn.run{background:#a52a43}.graphSideControls .graphSideBtn.save{background:#245539}
+.graphSideControls .buttonArt{height:24px}
+.graphSideSpeed{display:grid;gap:3px;padding:4px;background:#071034;border:3px solid #fff;box-shadow:inset 0 0 0 2px #1f3d91}
+.graphSideSpeedTop{display:grid;grid-template-columns:1fr 28px;gap:3px;align-items:center}
+.graphSideSpeed .speedLabelArt{width:70px;height:18px}.graphSideSpeed .speedValueArt{width:28px;height:18px}
+.graphSideSpeed .statusRange{height:16px}
 .branchLegend{margin-top:5px;display:grid;gap:3px}
 .branchItem{display:flex;align-items:center;gap:7px;padding:3px 6px;background:#050a16;border:1px solid #263d7c;font:900 9px monospace;color:#c7d1ff}
 .dashSample,.solidSample{display:inline-block;width:34px;height:0;border-top:2px dashed rgba(255,255,255,.55)}.solidSample{border-top-style:solid;border-top-color:#fff}
-@media(max-width:860px){.graphInspect{grid-template-columns:1fr}.snapshotPanel{max-width:320px;margin:auto}.actionRow{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:860px){.graphBox{padding-right:8px}.graphInspect{grid-template-columns:1fr}.snapshotPanel{max-width:320px;margin:auto}.graphSideControls{position:static;width:auto;margin-top:6px;grid-template-columns:1fr 1.6fr 1fr 1fr 1fr;align-items:stretch}.graphSideTitle{display:none}.graphSideSpeed{grid-column:auto}.actionRow{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body>
@@ -148,7 +158,7 @@ button,input{font:inherit} button{cursor:pointer}
       <div class="hudStat"><canvas class="iconCounter" id="cWolf" width="36" height="36"></canvas><canvas class="countPix" id="wolfCount" width="54" height="18" aria-label="オオカミ × 000"></canvas></div>
     </div>
     <div class="controlPanel">
-      <button id="openSettings" class="settingBtn" aria-label="せってい"><canvas id="settingsArt" class="buttonArt" width="128" height="24"></canvas></button>
+      <button id="openSettings" class="settingBtn" aria-label="せってい"><canvas id="settingsArt" class="buttonArt" width="240" height="24"></canvas></button>
       <div class="statusSpeed"><canvas id="speedLabelArt" class="speedLabelArt" width="54" height="18"></canvas><input id="speed" class="statusRange" type="range" min="1" max="11" step="1" value="6"><canvas id="speedValueArt" class="speedValueArt" width="30" height="18"></canvas></div>
       <div class="actionRow">
         <button id="runBtn" class="hudAction run" aria-label="START"><canvas id="runArt" class="buttonArt" width="96" height="24"></canvas></button>
@@ -255,6 +265,17 @@ button,input{font:inherit} button{cursor:pointer}
       <div class="legendItem"><canvas class="legendIcon icon-wolf" width="22" height="22"></canvas><span>オオカミ</span></div>
       <div class="legendItem"><span class="solidSample"></span><span>現在の結果（実線）</span></div>
     </div>
+    <aside class="graphSideControls" aria-label="グラフ画面操作">
+      <div class="graphSideTitle">CONTROL</div>
+      <button id="graphSettingsBtn" class="graphSideBtn" aria-label="せってい"><canvas id="graphSettingsArt" class="buttonArt" width="128" height="24"></canvas></button>
+      <div class="graphSideSpeed">
+        <div class="graphSideSpeedTop"><canvas id="graphSpeedLabelArt" class="speedLabelArt" width="70" height="18"></canvas><canvas id="graphSpeedValueArt" class="speedValueArt" width="28" height="18"></canvas></div>
+        <input id="graphSpeed" class="statusRange" type="range" min="1" max="11" step="1" value="6">
+      </div>
+      <button id="graphRunBtn" class="graphSideBtn run" aria-label="START"><canvas id="graphRunArt" class="buttonArt" width="128" height="24"></canvas></button>
+      <button id="graphResetBtn" class="graphSideBtn" aria-label="RESET"><canvas id="graphResetArt" class="buttonArt" width="128" height="24"></canvas></button>
+      <button id="graphSaveBtn" class="graphSideBtn save" aria-label="ほぞん"><canvas id="graphSaveArt" class="buttonArt" width="128" height="24"></canvas></button>
+    </aside>
     <div id="branchLegend" class="branchLegend"></div>
   </div></div>
 
@@ -594,17 +615,25 @@ function renderRetroButtonArt(canvas,label,icon){
   // pictogram at a dedicated 18x18 area
   ctx.save();ctx.translate(4,4);ctx.scale(1.35,1.35);drawRetroButtonIcon(ctx,icon);ctx.restore();
   ctx.textAlign='left';ctx.textBaseline='middle';ctx.font='900 12px sans-serif';
-  ctx.fillStyle='#444';ctx.fillText(label,26,13);
-  ctx.fillStyle='#fff';ctx.fillText(label,25,12);
+  const textX=25;
+  ctx.fillStyle='#444';ctx.fillText(label,textX+1,13);
+  ctx.fillStyle='#fff';ctx.fillText(label,textX,12);
 }
 function renderSpeedArt(){
+  const v=String($('speed')?.value||6);
   renderRetroTextArt($('speedLabelArt'),'SPEED',{fontSize:11,color:'#d8e1ff'});
-  renderRetroTextArt($('speedValueArt'),String($('speed')?.value||6),{fontSize:12,color:'#ffd45c'});
+  renderRetroTextArt($('speedValueArt'),v,{fontSize:12,color:'#ffd45c'});
+  if($('graphSpeed'))$('graphSpeed').value=v;
+  renderRetroTextArt($('graphSpeedLabelArt'),'SPEED',{fontSize:11,color:'#d8e1ff'});
+  renderRetroTextArt($('graphSpeedValueArt'),v,{fontSize:12,color:'#ffd45c'});
 }
 function renderStaticButtonArt(){
   renderRetroButtonArt($('settingsArt'),'せってい','settings');
   renderRetroButtonArt($('resetArt'),'RESET','reset');
   renderRetroButtonArt($('saveArt'),'ほぞん','save');
+  renderRetroButtonArt($('graphSettingsArt'),'せってい','settings');
+  renderRetroButtonArt($('graphResetArt'),'RESET','reset');
+  renderRetroButtonArt($('graphSaveArt'),'ほぞん','save');
   renderSpeedArt();
 }
 function boardMetrics(){
@@ -932,8 +961,11 @@ function animateToNext(next,done,manual=false){
 function stepOnce(after){ if(!S.anim) animateToNext(simulateNext(),after,true); }
 function scheduleRun(){ if(!S.running) return; if(S.anim&&S.anim.heldAt!=null){ requestAnimationFrame(S.anim.frame); return; } if(!S.anim) animateToNext(simulateNext(),()=>{if(S.running)S.pendingTimeout=setTimeout(scheduleRun,turnTiming().gap)},false); }
 function setRunButton(){
-  if($('runBtn'))$('runBtn').setAttribute('aria-label',S.running?'PAUSE':'START');
-  renderRetroButtonArt($('runArt'),S.running?'PAUSE':'START',S.running?'pause':'play');
+  const label=S.running?'PAUSE':'START',icon=S.running?'pause':'play';
+  if($('runBtn'))$('runBtn').setAttribute('aria-label',label);
+  if($('graphRunBtn'))$('graphRunBtn').setAttribute('aria-label',label);
+  renderRetroButtonArt($('runArt'),label,icon);
+  renderRetroButtonArt($('graphRunArt'),label,icon);
 }
 function startRun(){ if(S.running) return; S.running=true; setRunButton(); scheduleRun(); }
 function stopRun(){ S.running=false; setRunButton(); if(S.pendingTimeout)clearTimeout(S.pendingTimeout); S.pendingTimeout=null; }
@@ -1015,7 +1047,7 @@ function renderSnapshotTurn(turn){
   $('snapshotTurn').value=t;drawSnapshotState(snap);$('snapshotInfo').textContent='TURN '+t+' / 草 '+snap.counts.grass+' / シカ '+snap.counts.deer+' / オオカミ '+snap.counts.wolf+' / '+snap.n+'×'+snap.n+'マス';
 }
 function prepareGraphModal(){
-  updateSnapshotControl();const t=clamp(+$('snapshotTurn').value||S.turn,0,S.turn);$('snapshotTurn').value=t;S.graphSelectedTurn=t;S.graphHoverTurn=null;renderSnapshotTurn(t);drawBigGraph();
+  renderStaticButtonArt();setRunButton();updateSnapshotControl();const t=clamp(+$('snapshotTurn').value||S.turn,0,S.turn);$('snapshotTurn').value=t;S.graphSelectedTurn=t;S.graphHoverTurn=null;renderSnapshotTurn(t);drawBigGraph();
 }
 function rewindToSelectedTurn(){
   const t=clamp(Math.round(S.graphSelectedTurn??(+$('snapshotTurn').value||0)),0,S.turn),snap=S.timeline[t];if(!snap)return;
@@ -1042,6 +1074,10 @@ bigGraph.addEventListener('mousemove',e=>{const t=graphTurnFromMouse(e);if(t==nu
 bigGraph.addEventListener('mouseleave',()=>{if(S.graphHoverTurn!==null){S.graphHoverTurn=null;drawBigGraph();}});
 bigGraph.addEventListener('click',e=>{const t=graphTurnFromMouse(e);if(t==null)return;S.graphSelectedTurn=t;S.graphHoverTurn=null;renderSnapshotTurn(t);drawBigGraph();});
 $('saveBtn').onclick=saveCSV;
+$('graphRunBtn').onclick=()=>S.running?stopRun():startRun();
+$('graphResetBtn').onclick=()=>{resetAll(false);S.graphSelectedTurn=0;S.graphHoverTurn=null;updateSnapshotControl();renderSnapshotTurn(0);drawBigGraph();};
+$('graphSaveBtn').onclick=saveCSV;
+$('graphSettingsBtn').onclick=()=>{closeM('graphModal');openM('settingsModal');};
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeM(b.dataset.close)); document.querySelectorAll('.modal').forEach(m=>m.onclick=e=>{ if(e.target===m) m.classList.remove('on'); });
 function syncBreedUI(){
   $('dBreedFields').hidden=!$('dBreed').checked; $('dTotalRow').hidden=$('dBreed').checked;
@@ -1050,6 +1086,7 @@ function syncBreedUI(){
 }
 $('dBreed').addEventListener('change',syncBreedUI); $('wBreed').addEventListener('change',syncBreedUI);
 $('speed').addEventListener('input',()=>{renderSpeedArt();});
+$('graphSpeed').addEventListener('input',()=>{$('speed').value=$('graphSpeed').value;renderSpeedArt();});
 ['sz','di','wi','dm','df','wm','wf','wstart'].forEach(id=>$(id).addEventListener('input',()=>updateCapacityInfo(false)));
 $('runBtn').onclick=()=>S.running?stopRun():startRun(); $('resetBtn').onclick=()=>resetAll(false); $('mapchg').onclick=()=>resetAll(true); $('stepBtn').onclick=()=>{ stopRun(); stepOnce(); };
 window.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on')); });
