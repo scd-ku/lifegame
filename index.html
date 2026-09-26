@@ -64,7 +64,7 @@ button,input{font:inherit} button{cursor:pointer}
 .settingGroup.map{grid-area:map}.settingGroup.grass{grid-area:grass}.settingGroup.deer{grid-area:deer}.settingGroup.wolf{grid-area:wolf}.settingGroup.diet{grid-area:diet}
 .groupTitle{display:flex;align-items:center;gap:5px;margin:0 0 4px;padding:3px 5px;background:#111d42;border:2px solid #627bea;color:#fff;font-size:11.5px;font-weight:900;letter-spacing:.04em;text-shadow:1px 1px 0 #000}
 .groupTitle .labelIcon{width:20px;height:20px}
-.groupBody{display:grid;gap:3px}.breedToggle{background:#050a16;border:2px solid #465fae;padding:4px 6px;color:#fff;font-size:10.5px;font-weight:900}.breedToggle label{display:flex;align-items:center;gap:6px}.breedToggle input{width:16px;height:16px;accent-color:#ffd45c}.breedFields{display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:4px;background:#040914;border:1px solid #263d7c}.breedFields[hidden]{display:none!important}.breedFields .f{grid-template-columns:minmax(98px,1fr) 68px}.breedFields .f input{width:68px}.breedStatus{grid-column:1/-1;padding:4px 6px;background:#050a16;border:1px solid #465fae;color:#ffd45c;font:900 9px/1.35 monospace}
+.groupBody{display:grid;gap:3px}.breedToggle{background:#050a16;border:2px solid #465fae;padding:4px 6px;color:#fff;font-size:10.5px;font-weight:900}.breedToggle label{display:flex;align-items:center;gap:6px}.breedToggle input{width:16px;height:16px;accent-color:#ffd45c}.breedFields{display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:4px;background:#040914;border:1px solid #263d7c}.breedFields[hidden]{display:none!important}.breedFields .f{grid-template-columns:minmax(98px,1fr) 68px}.breedFields .f input{width:68px}.sexSettingIcon{width:28px;height:28px;display:block;background:#000;border:1px solid #263d7c;image-rendering:pixelated;flex:none}.breedStatus{grid-column:1/-1;padding:4px 6px;background:#050a16;border:1px solid #465fae;color:#ffd45c;font:900 9px/1.35 monospace}
 .f{display:grid;grid-template-columns:minmax(110px,1fr) 76px;gap:5px;align-items:center;background:#09101f;border:1px solid #263d7c;padding:3px 5px;min-height:28px}
 .f label{display:flex;align-items:center;gap:5px;font-size:10.5px;line-height:1.15;color:#e5e9ff;margin:0;font-weight:900;letter-spacing:.02em}
 .f input,.f select{width:76px;justify-self:end;background:#000;color:#fff;border:2px solid #88a0ff;padding:2px 4px;font:900 12px monospace;line-height:1.15;box-shadow:inset 0 0 0 1px #111a38}
@@ -84,7 +84,7 @@ button,input{font:inherit} button{cursor:pointer}
 .helpCard{background:#07101f;border:2px solid #3b4c8f;padding:6px}
 .helpCard.wide{grid-column:1/-1}
 .helpTitle{margin:0 0 4px;padding:3px 5px;background:#111d42;border:2px solid #627bea;color:#ffd45c;font-size:11px;font-weight:900;letter-spacing:.04em;text-shadow:1px 1px 0 #000}
-.help p{margin:3px 0}.help ul{margin:3px 0;padding-left:1.25em}.help li{margin:2px 0}.help a{color:#8fd6ff;text-decoration:underline}
+.help p{margin:3px 0}.help ul{margin:3px 0;padding-left:1.25em}.help li{margin:2px 0}.help a{color:#8fd6ff;text-decoration:underline}#causalCanvas{width:100%;height:auto;max-height:300px;background:#02040a;border:3px solid #465fd4;image-rendering:pixelated}.causalSummary{margin-top:5px;padding:5px 7px;background:#050a16;border:1px solid #263d7c;color:#d7e1ff;font:900 10px/1.45 monospace}
 .graphHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;padding:4px 6px;background:#07101f;border:2px solid #3b4c8f;font-size:11px;font-weight:900;letter-spacing:.03em}
 .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:5px;padding:4px 6px;background:#07101f;border:2px solid #3b4c8f;font-size:10px;font-weight:900}.legendItem{display:flex;align-items:center;gap:4px}.legendIcon{width:20px;height:20px;background:#000;border:1px solid #3650a4;image-rendering:pixelated}
 #bigGraph{width:100%;height:280px;display:block;background:#02040a;border:3px solid #465fd4;image-rendering:pixelated}
@@ -198,8 +198,8 @@ button,input{font:inherit} button{cursor:pointer}
           <div class="f" id="dTotalRow"><label>初期個体数</label><input id="di" type="number" min="0" value="12"></div>
           <div class="breedToggle"><label><input id="dBreed" type="checkbox"> 交配・出産を有効にする</label></div>
           <div id="dBreedFields" class="breedFields" hidden>
-            <div class="f"><label>初期オス</label><input id="dm" type="number" min="0" value="6"></div>
-            <div class="f"><label>初期メス</label><input id="df" type="number" min="0" value="6"></div>
+            <div class="f"><label><canvas id="dMaleSprite" class="sexSettingIcon" width="28" height="28"></canvas>初期オス</label><input id="dm" type="number" min="0" value="6"></div>
+            <div class="f"><label><canvas id="dFemaleSprite" class="sexSettingIcon" width="28" height="28"></canvas>初期メス</label><input id="df" type="number" min="0" value="6"></div>
             <div class="f"><label>1回の出産数</label><input id="dbirth" type="number" min="1" max="10" value="1"></div>
             <div class="f"><label>子どものメス割合 (%)</label><input id="dfemale" type="number" min="0" max="100" step="0.1" value="50"></div>
             <div class="f"><label>成熟まで (TURN)</label><input id="dmat" type="number" min="1" max="100" value="4"></div>
@@ -219,8 +219,8 @@ button,input{font:inherit} button{cursor:pointer}
           <div class="f"><label>出現ターン</label><input id="wstart" type="number" min="0" max="999" value="0"><div class="ruleNote">0=最初から / 20=TURN 20から</div></div>
           <div class="breedToggle"><label><input id="wBreed" type="checkbox"> 交配・出産を有効にする</label></div>
           <div id="wBreedFields" class="breedFields" hidden>
-            <div class="f"><label>初期オス</label><input id="wm" type="number" min="0" value="2"></div>
-            <div class="f"><label>初期メス</label><input id="wf" type="number" min="0" value="3"></div>
+            <div class="f"><label><canvas id="wMaleSprite" class="sexSettingIcon" width="28" height="28"></canvas>初期オス</label><input id="wm" type="number" min="0" value="2"></div>
+            <div class="f"><label><canvas id="wFemaleSprite" class="sexSettingIcon" width="28" height="28"></canvas>初期メス</label><input id="wf" type="number" min="0" value="3"></div>
             <div class="f"><label>1回の出産数</label><input id="wbirth" type="number" min="1" max="14" value="6"></div>
             <div class="f"><label>子どものメス割合 (%)</label><input id="wfemale" type="number" min="0" max="100" step="0.1" value="50"></div>
             <div class="f"><label>成熟まで (TURN)</label><input id="wmat" type="number" min="1" max="100" value="8"></div>
@@ -290,12 +290,16 @@ button,input{font:inherit} button{cursor:pointer}
   <div id="helpModal" class="modal"><div class="box"><div class="mh"><h2>HELP / あそびかた</h2><button class="x" data-close="helpModal">×</button></div>
     <div class="help helpGrid">
       <section class="helpCard"><h3 class="helpTitle">1. まず動かす</h3><p><b>かいし</b>で進み、<b>ていし</b>で止まります。<b>リセット</b>で最初から。速度は画面右上の<b>はやさバー</b>で1〜11。1がいちばん遅く、11がいちばん速いです。マップは<b>2×2〜40×40</b>です。</p></section>
-      <section class="helpCard"><h3 class="helpTitle">2. シカ</h3><p>シカは近くの草を優先して移動します。草を食べると空腹は0になります。食べられた草地は荒地表示になり、シカがそのマスに居続けたり踏み通ったりすると再生までの時間がリセットされます。そのためシカが増えすぎると荒地が広がります。<b>寿命</b>または<b>空腹限界</b>をこえると、天使の姿になって消えます。</p></section>
+      <section class="helpCard"><h3 class="helpTitle">2. シカ</h3><p>シカは近くの草を優先して移動します。草を食べたときだけ草が減り、空腹は0になります。シカがそのマスにいるだけでは草の再生時間は変わりません。食べられた草は、設定した「草の再生ターン」がたつと再び生えます。<b>寿命</b>または<b>空腹限界</b>をこえると、天使の姿になって消えます。</p></section>
       <section class="helpCard"><h3 class="helpTitle">3. オオカミ</h3><p>近くにシカがいればシカを優先します。「出現ターン」を20にすると、TURN 20から参加します。寿命・空腹限界で死ぬと天使の姿になります。</p></section>
       <section class="helpCard"><h3 class="helpTitle">4. オオカミの植物食</h3><ul><li>近くにシカがいる → 草は食べない</li><li>シカがいない + 設定した空腹以上 + 草のあるマス → 設定確率で草を食べる</li><li>草を食べても空腹は0にはならず、設定した分だけ回復</li></ul><p>「食べない」にすると、このルールはOFFです。</p></section>
       <section class="helpCard"><h3 class="helpTitle">5. グラフ・巻き戻し</h3><p>左上の小グラフをクリックすると拡大します。グラフをクリックするかTURNを入力すると、そのTURNの全マス情報からフィールドを再現します。「ここからやりなおし」でそのTURNへ戻れます。前の結果は半透明の波線で残り、新しい結果を実線で重ねて比較できます。何度でもやりなおせます。</p><p>右上の<b>ほぞん</b>では、設定・各TURNの個体数・各マスの状態・動物状態・巻き戻し履歴をCSVで保存します。</p></section>
-      <section class="helpCard"><h3 class="helpTitle">6. 交配・出産</h3><p><b>初期状態では交配・出産はOFF</b>です。チェックを入れた種だけ繁殖します。チェックした時点で、現在いる個体にも設定比率をもとにオス・メスを割り当てます。成体のオスが周囲8マスのどこかにいて、出産間隔を満たしたメスが子を産みます。生まれた子は設定したTURN数だけ子どもスプライトで表示されます。</p><p>ニホンジカ：通常は1仔で、五葉山の1,946単胎子ではオス49.8%・メス50.2%、双胎は0.29%。北海道足寄では多くのメスが1歳齢で性成熟に達したと報告されています。</p><p>灰色オオカミ：ADWでは1産1〜14仔、平均6〜7仔、性成熟2〜3歳。Yellowstoneでは巣穴から出る時点の平均仔数4.4。仔の性比は研究地域で変動するため、ゲーム初期値はメス50%です。</p><p><b>注意：</b>「成熟までTURN」「次の出産までTURN」は実時間ではなく授業用シミュレーションの調整値です。</p></section>
+      <section class="helpCard"><h3 class="helpTitle">6. 交配・出産</h3><p><b>初期状態では交配・出産はOFF</b>です。チェックを入れた種だけ繁殖します。チェックした時点で、現在いる個体にも設定比率をもとにオス・メスを割り当てます。成体のオスが周囲8マスのどこかにいて、出産間隔を満たしたメスがいると交配成立です。そのターンの交配・出産場面だけオスとメスが同じマスに重なり、そのマスに子どもが生まれる表示になります。通常の移動では同じ種類の動物どうしは同じマスに入りません。子どもは誕生表示のあと空いているマスへ配置され、設定したTURN数だけ子どもスプライトで表示されます。</p><p>ニホンジカ：通常は1仔で、五葉山の1,946単胎子ではオス49.8%・メス50.2%、双胎は0.29%。北海道足寄では多くのメスが1歳齢で性成熟に達したと報告されています。</p><p>灰色オオカミ：ADWでは1産1〜14仔、平均6〜7仔、性成熟2〜3歳。Yellowstoneでは巣穴から出る時点の平均仔数4.4。仔の性比は研究地域で変動するため、ゲーム初期値はメス50%です。</p><p><b>注意：</b>「成熟までTURN」「次の出産までTURN」は実時間ではなく授業用シミュレーションの調整値です。</p></section>
       <section class="helpCard"><h3 class="helpTitle">7. このゲームのねらい</h3><p>数値を変えて「草が少ないと？」「オオカミを途中から入れると？」「繁殖をONにすると？」などを比べ、食物連鎖と個体群変化を考えるための簡略モデルです。</p></section>
+      <section class="helpCard wide"><h3 class="helpTitle">現在の設定からみた因果関係</h3>
+        <canvas id="causalCanvas" width="760" height="300"></canvas>
+        <div id="causalSummary" class="causalSummary"></div>
+      </section>
       <section class="helpCard wide"><h3 class="helpTitle">REFERENCE / 参考資料</h3><p>
 <a href="https://www.jstage.jst.go.jp/article/mammalstudy/23/2/23_2_103/_article" target="_blank" rel="noopener">Takatsuki 1998：ニホンジカの双胎率・胎子性比</a> ／
 <a href="https://www.jstage.jst.go.jp/article/jvms1991/55/5/55_5_833/_article" target="_blank" rel="noopener">Suzuki & Ohtaishi 1993：エゾシカの繁殖</a> ／
@@ -483,9 +487,9 @@ function drawSprite(ctx,type,x,y,size,dir='R',pose=0,mode='normal',sex=null){
       fill(3,10,13,8,outline); fill(5,11,10,5,body);
       if(!deer&&sex==='M'){
         // male wolf: slightly larger head in proportion to the body
-        fill(12,3,11,12,outline); fill(14,5,8,8,face);
-        fill(18,9,5,3,white); fill(19,7,1,1,'#111'); fill(22,10,1,1,'#111');
-        fill(13,1,3,5,dark); fill(19,1,3,5,dark); fill(11,7,3,3,dark);
+        fill(11,2,13,13,outline); fill(13,4,10,9,face);
+        fill(18,9,6,3,white); fill(19,6,1,1,'#111'); fill(23,10,1,1,'#111');
+        fill(12,0,4,6,dark); fill(20,0,4,6,dark); fill(10,7,4,4,dark);
       }else{
         fill(13,4,10,11,outline); fill(15,6,7,7,face);
         fill(19,9,4,3,white); fill(20,8,1,1,'#111'); fill(22,10,1,1,deer?'#4a2208':'#111');
@@ -494,8 +498,8 @@ function drawSprite(ctx,type,x,y,size,dir='R',pose=0,mode='normal',sex=null){
             // female deer: ears, but no antlers
             fill(14,2,2,3,dark); fill(19,2,2,3,dark);
           }else{
-            fill(14,2,2,4,dark); fill(19,2,2,4,dark); fill(13,1,1,4,dark); fill(20,0,1,5,dark);
-            fill(12,1,2,1,dark); fill(20,1,2,1,dark);
+            fill(14,1,2,5,dark); fill(19,1,2,5,dark); fill(13,0,1,5,dark); fill(20,0,1,6,dark);
+            fill(11,0,3,1,dark); fill(20,0,3,1,dark);
           }
           [[6,12],[9,14],[12,11]].forEach(p=>fill(p[0],p[1],1,1,'#fff'));
         } else {
@@ -520,9 +524,9 @@ function drawSprite(ctx,type,x,y,size,dir='R',pose=0,mode='normal',sex=null){
           fill(5,2,3,2,dark); fill(16,2,3,2,dark);
         }else{
           // male deer: visible antlers
-          fill(7,0,2,5,dark); fill(15,0,2,5,dark);
-          fill(5,1,3,2,dark); fill(16,1,3,2,dark);
-          fill(6,3,3,2,dark); fill(15,3,3,2,dark);
+          fill(7,0,2,6,dark); fill(15,0,2,6,dark);
+          fill(4,0,4,2,dark); fill(16,0,4,2,dark);
+          fill(5,2,3,2,dark); fill(16,2,3,2,dark);
         }
         // head outline / brown crown
         fill(5,4,14,9,outline);
@@ -606,7 +610,7 @@ function drawAnimalEntity(ctx,type,a,x,y,size,pose=0){
   if(type==='wolf'&&a&&a.sex){
     // Requested visual distinction: females are a little larger overall,
     // males a little smaller but with a proportionally larger head.
-    const factor=a.sex==='F'?1.08:.96, s=size*factor, ox=x+(size-s)/2, oy=y+(size-s);
+    const factor=a.sex==='F'?1.13:.88, s=size*factor, ox=x+(size-s)/2, oy=y+(size-s);
     drawSprite(ctx,type,ox,oy,s,a.dir||'R',pose,'normal',a.sex);
   }else{
     drawSprite(ctx,type,x,y,size,a?.dir||'R',pose,'normal',a?.sex||null);
@@ -620,6 +624,13 @@ function renderAllSmallIcons(){
   document.querySelectorAll('.icon-wolf').forEach(c=>renderSmallIconCanvas(c,'wolf'));
   document.querySelectorAll('.icon-sea').forEach(c=>renderSmallIconCanvas(c,'sea'));
   document.querySelectorAll('.icon-waste').forEach(c=>renderSmallIconCanvas(c,'waste'));
+}
+function renderSexSettingIcons(){
+  const specs=[['dMaleSprite','deer','M'],['dFemaleSprite','deer','F'],['wMaleSprite','wolf','M'],['wFemaleSprite','wolf','F']];
+  for(const [id,type,sex] of specs){
+    const cv=$(id);if(!cv)continue;const ctx=cv.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.clearRect(0,0,cv.width,cv.height);
+    drawAnimalEntity(ctx,type,{sex,stage:'adult',dir:'R'},1,1,cv.width-2,0);
+  }
 }
 
 const PIX_FONT={
@@ -895,7 +906,22 @@ function drawScene(progress=1){
         drawSprite(fctx,d.type,M.ox+xx*M.cell,M.oy+yy*M.cell,M.cell,d.dir,p>.5?1:0);
       }else drawAngelDeath(fctx,d.type,M.ox+d.to.x*M.cell,M.oy+d.to.y*M.cell,M.cell,d.dir,progress);
     }
-    for(const b of anim.births) if(progress>.65) drawAnimalEntity(fctx,b.type,{dir:b.dir,stage:b.stage,sex:b.sex},M.ox+b.to.x*M.cell,M.oy+b.to.y*M.cell,M.cell,1);
+    for(const m of (anim.matingEvents||[])) if(progress>.56&&progress<.86){
+      const X=M.ox+m.x*M.cell,Y=M.oy+m.y*M.cell;
+      drawAnimalEntity(fctx,m.type,{dir:'R',stage:'adult',sex:'F'},X-M.cell*.07,Y,M.cell,1);
+      drawAnimalEntity(fctx,m.type,{dir:'L',stage:'adult',sex:'M'},X+M.cell*.07,Y,M.cell,1);
+      if(progress>.70&&m.babies.length) drawChildSprite(fctx,m.type,m.babies[0].sex,X,Y,M.cell,'D',1);
+    }
+    for(const b of anim.births) if(progress>.70){
+      if(b.bornAt&&progress<.86){
+        drawChildSprite(fctx,b.type,b.sex,M.ox+b.bornAt.x*M.cell,M.oy+b.bornAt.y*M.cell,M.cell,'D',1);
+      }else{
+        const p=b.bornAt?Math.min(1,(progress-.86)/.14):1;
+        const sx=b.bornAt?b.bornAt.x:b.to.x,sy=b.bornAt?b.bornAt.y:b.to.y;
+        const xx=sx+(b.to.x-sx)*p,yy=sy+(b.to.y-sy)*p;
+        drawAnimalEntity(fctx,b.type,{dir:b.dir,stage:b.stage,sex:b.sex},M.ox+xx*M.cell,M.oy+yy*M.cell,M.cell,1);
+      }
+    }
   }else{
     S.deer.forEach(a=>drawAnimalEntity(fctx,'deer',a,M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,0));
     S.wolf.forEach(a=>drawAnimalEntity(fctx,'wolf',a,M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,0));
@@ -907,17 +933,13 @@ function birthSpots(cx,cy,cells,deer,wolf){
 }
 function simulateNext(){
   const q=conf(), fromCells=cloneGrid(S.cells), fromDeer=S.deer.map(a=>({...a})), fromWolf=S.wolf.map(a=>({...a})), cells=cloneGrid(S.cells);
-  const deerPressure=new Set(fromDeer.map(a=>a.x+','+a.y));
   for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){
     const v=cellAt(cells,x,y); if(!v) continue; v.gr=q.gr;
-    if(v.terrain==='grass'&&!v.grass){
-      if(deerPressure.has(x+','+y)) v.gt=q.gr; // occupied bare ground cannot recover
-      else {v.gt--;if(v.gt<=0){v.grass=true;v.gt=0;}}
-    }
+    if(v.terrain==='grass'&&!v.grass){v.gt--;if(v.gt<=0){v.grass=true;v.gt=0;}}
   }
 
   let wolfOcc=occupyMap(fromWolf);
-  const deerNext=[], deerMoves=[], deerBirths=[], deaths=[];
+  const deerNext=[], deerMoves=[], deerBirths=[], deaths=[], matingEvents=[];
   for(let i=0;i<fromDeer.length;i++){
     const d=fromDeer[i], opts=neigh(d.x,d.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!deerNext.some(a=>a.x===p.x&&a.y===p.y)&&!wolfOcc.has(p.x+','+p.y)});
     const food=opts.filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain==='grass'&&v.grass});
@@ -925,7 +947,6 @@ function simulateNext(){
     let h=d.h+1,a=d.a+1,ateGrass=false;
     const dv=cellAt(cells,dest.x,dest.y);
     if(dv&&dv.terrain==='grass'&&dv.grass){dv.grass=false;dv.gt=q.gr;h=0;ateGrass=true;}
-    else if(dv&&dv.terrain==='grass'&&!dv.grass){dv.gt=q.gr;} // trampling delays regrowth
     if(h>q.ds||a>q.dl){
       deaths.push({type:'deer',from:{x:d.x,y:d.y},to:{x:dest.x,y:dest.y},dir:dest.dir||d.dir,cause:a>q.dl?'age':'hunger'});
       continue;
@@ -967,32 +988,44 @@ function simulateNext(){
   const survivorMoves=deerMoves.filter(m=>!eaten.has(m.ref)).map(({ref,...m})=>m);
 
   if(q.dBreed){
+    const usedMales=new Set();
     for(const mother of survivors.filter(a=>a.sex==='F'&&a.stage==='adult')){
-      const hasMale=survivors.some(m=>m.sex==='M'&&m.stage==='adult'&&near8(m,mother));
-      if(!hasMale||(S.turn+1-(mother.lastBirthTurn??-9999))<q.dinterval) continue;
-      const spots=birthSpots(mother.x,mother.y,cells,survivors,wolfNext); let born=0;
+      const male=survivors.find(m=>m.sex==='M'&&m.stage==='adult'&&near8(m,mother)&&!usedMales.has(m));
+      if(!male||(S.turn+1-(mother.lastBirthTurn??-9999))<q.dinterval) continue;
+      const spots=birthSpots(mother.x,mother.y,cells,survivors,wolfNext),bornBabies=[];
       for(let k=0;k<q.dbirth&&spots.length;k++){
         const p=spots.shift(),sex=Math.random()*100<q.dfemale?'F':'M';
         const baby={x:p.x,y:p.y,a:0,h:0,dir:'D',sex,stage:'child',lastBirthTurn:-9999};
-        survivors.push(baby); deerBirths.push({type:'deer',to:{x:p.x,y:p.y},dir:'D',sex,stage:'child'}); born++;
+        survivors.push(baby);
+        deerBirths.push({type:'deer',to:{x:p.x,y:p.y},bornAt:{x:mother.x,y:mother.y},dir:'D',sex,stage:'child'});
+        bornBabies.push({sex,to:{x:p.x,y:p.y}});
       }
-      if(born>0) mother.lastBirthTurn=S.turn+1;
-      if(born<q.dbirth) S.capacityNotice='シカの出産：空きマス不足で '+born+'/'+q.dbirth+'頭';
+      if(bornBabies.length){
+        usedMales.add(male); mother.lastBirthTurn=S.turn+1;
+        matingEvents.push({type:'deer',x:mother.x,y:mother.y,mother:{sex:'F',dir:mother.dir},father:{sex:'M',dir:male.dir},babies:bornBabies});
+      }
+      if(bornBabies.length<q.dbirth) S.capacityNotice='シカの出産：空きマス不足で '+bornBabies.length+'/'+q.dbirth+'頭';
     }
   }
 
   if(q.wBreed){
+    const usedMales=new Set();
     for(const mother of wolfNext.filter(a=>a.sex==='F'&&a.stage==='adult')){
-      const hasMale=wolfNext.some(m=>m.sex==='M'&&m.stage==='adult'&&near8(m,mother));
-      if(!hasMale||(S.turn+1-(mother.lastBirthTurn??-9999))<q.winterval) continue;
-      const spots=birthSpots(mother.x,mother.y,cells,survivors,wolfNext); let born=0;
+      const male=wolfNext.find(m=>m.sex==='M'&&m.stage==='adult'&&near8(m,mother)&&!usedMales.has(m));
+      if(!male||(S.turn+1-(mother.lastBirthTurn??-9999))<q.winterval) continue;
+      const spots=birthSpots(mother.x,mother.y,cells,survivors,wolfNext),bornBabies=[];
       for(let k=0;k<q.wbirth&&spots.length;k++){
         const p=spots.shift(),sex=Math.random()*100<q.wfemale?'F':'M';
         const baby={x:p.x,y:p.y,a:0,h:0,dir:'D',sex,stage:'child',lastBirthTurn:-9999};
-        wolfNext.push(baby); wolfBirths.push({type:'wolf',to:{x:p.x,y:p.y},dir:'D',sex,stage:'child'}); born++;
+        wolfNext.push(baby);
+        wolfBirths.push({type:'wolf',to:{x:p.x,y:p.y},bornAt:{x:mother.x,y:mother.y},dir:'D',sex,stage:'child'});
+        bornBabies.push({sex,to:{x:p.x,y:p.y}});
       }
-      if(born>0) mother.lastBirthTurn=S.turn+1;
-      if(born<q.wbirth) S.capacityNotice='オオカミの出産：空きマス不足で '+born+'/'+q.wbirth+'頭';
+      if(bornBabies.length){
+        usedMales.add(male); mother.lastBirthTurn=S.turn+1;
+        matingEvents.push({type:'wolf',x:mother.x,y:mother.y,mother:{sex:'F',dir:mother.dir},father:{sex:'M',dir:male.dir},babies:bornBabies});
+      }
+      if(bornBabies.length<q.wbirth) S.capacityNotice='オオカミの出産：空きマス不足で '+bornBabies.length+'/'+q.wbirth+'頭';
     }
   }
 
@@ -1005,7 +1038,7 @@ function simulateNext(){
     if(newcomers.length<q.wi) S.capacityNotice='TURN '+(S.turn+1)+'：オオカミ '+q.wi+'頭のうち '+newcomers.length+'頭だけ配置可能';
     nextWolfIntroduced=true;
   }
-  return {fromCells,toCells:cells,toDeer:survivors,toWolf:wolfNext,moves:[...survivorMoves,...wolfMoves],births:[...deerBirths,...wolfBirths],deaths,attacks,nextWolfIntroduced};
+  return {fromCells,toCells:cells,toDeer:survivors,toWolf:wolfNext,moves:[...survivorMoves,...wolfMoves],births:[...deerBirths,...wolfBirths],matingEvents,deaths,attacks,nextWolfIntroduced};
 }
 function stateCounts(cells=S.cells,deer=S.deer,wolf=S.wolf){
   let grass=0,waste=0;
@@ -1163,7 +1196,49 @@ function rewindToSelectedTurn(){
   restoreSnapshot(snap);S.timeline=S.timeline.slice(0,t+1);rebuildHistoriesFromTimeline();S.graphSelectedTurn=t;S.graphHoverTurn=null;updateCounts();updateCapacityInfo(true);drawScene(1);updateSnapshotControl();renderSnapshotTurn(t);renderBranchLegend();drawBigGraph();
   $('snapshotInfo').textContent+=' / このTURNに戻しました。画面を閉じてSTARTすると別の結果を重ねて比較できます。';
 }
-function openM(id){if(id==='graphModal')prepareGraphModal();$(id).classList.add('on')}
+function drawArrow(ctx,x1,y1,x2,y2,color,label,dashed=false){
+  ctx.save();ctx.strokeStyle=color;ctx.fillStyle=color;ctx.lineWidth=3;if(dashed)ctx.setLineDash([7,5]);
+  ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);ctx.stroke();ctx.setLineDash([]);
+  const a=Math.atan2(y2-y1,x2-x1);ctx.beginPath();ctx.moveTo(x2,y2);ctx.lineTo(x2-10*Math.cos(a-.45),y2-10*Math.sin(a-.45));ctx.lineTo(x2-10*Math.cos(a+.45),y2-10*Math.sin(a+.45));ctx.closePath();ctx.fill();
+  if(label){ctx.font='900 13px monospace';ctx.textAlign='center';ctx.textBaseline='bottom';const mx=(x1+x2)/2,my=(y1+y2)/2;ctx.fillStyle='#02040a';const w=ctx.measureText(label).width+8;ctx.fillRect(mx-w/2,my-17,w,17);ctx.fillStyle=color;ctx.fillText(label,mx,my-3)}
+  ctx.restore();
+}
+function drawCausalDiagram(){
+  const cv=$('causalCanvas');if(!cv)return;const ctx=cv.getContext('2d'),q=conf();ctx.imageSmoothingEnabled=false;
+  ctx.clearRect(0,0,cv.width,cv.height);ctx.fillStyle='#02040a';ctx.fillRect(0,0,cv.width,cv.height);
+  const node=(x,y,w,h,title,sub,col)=>{
+    ctx.fillStyle='#07101f';ctx.fillRect(x,y,w,h);ctx.strokeStyle=col;ctx.lineWidth=3;ctx.strokeRect(x,y,w,h);
+    ctx.fillStyle=col;ctx.font='900 19px monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(title,x+w/2,y+21);
+    ctx.fillStyle='#fff';ctx.font='900 11px monospace';ctx.fillText(sub,x+w/2,y+45);
+  };
+  node(40,105,160,66,'草','再生 '+q.gr+' TURN','#69ff69');
+  node(300,105,160,66,'シカ','寿命 '+q.dl+' / 空腹 '+q.ds,'#ffd84a');
+  node(560,105,160,66,'オオカミ','寿命 '+q.wl+' / 空腹 '+q.ws,'#c796ff');
+  drawArrow(ctx,300,120,202,120,'#ffd84a','食べる → 草 -1');
+  drawArrow(ctx,202,157,300,157,'#69ff69','草 → 空腹 0');
+  drawArrow(ctx,560,138,462,138,'#c796ff','捕食 → シカ -1');
+  if(q.wgMode==='opportunistic'){
+    drawArrow(ctx,590,181,180,181,'#8fd6ff','草食 '+q.wgp+'% / 空腹≥'+q.wgh,true);
+  }else{
+    ctx.fillStyle='#777';ctx.font='900 12px monospace';ctx.textAlign='center';ctx.fillText('オオカミの植物食：OFF',380,198);
+  }
+  const loop=(x,y,col,on,text)=>{
+    ctx.strokeStyle=on?col:'#555';ctx.lineWidth=3;ctx.setLineDash(on?[]:[5,5]);ctx.strokeRect(x,y,160,45);ctx.setLineDash([]);
+    ctx.fillStyle=on?col:'#777';ctx.font='900 11px monospace';ctx.textAlign='center';ctx.fillText(text,x+80,y+18);ctx.fillText(on?'交配ON':'交配OFF',x+80,y+34);
+  };
+  loop(300,225,'#ffd84a',q.dBreed,q.dBreed?'出産 '+q.dbirth+' / 間隔 '+q.dinterval:'シカの出生なし');
+  loop(560,225,'#c796ff',q.wBreed,q.wBreed?'出産 '+q.wbirth+' / 間隔 '+q.winterval:'オオカミの出生なし');
+  ctx.fillStyle='#9fb2ff';ctx.font='900 11px monospace';ctx.textAlign='left';
+  ctx.fillText('※ 動物は通常1マス1頭。捕食時のオオカミ×シカ、交配成立時の同種ペアだけ一時的に同じマスへ重なります。',20,286);
+  const parts=[
+    '草: 食べられたときだけ減少 / '+q.gr+' TURNで再生',
+    'シカ: '+(q.dBreed?'交配ON ♂'+q.dm+' ♀'+q.df+'・出産'+q.dbirth+'頭・成熟'+q.dmat+'TURN':'交配OFF（出生なし）'),
+    'オオカミ: '+(q.wBreed?'交配ON ♂'+q.wm+' ♀'+q.wf+'・出産'+q.wbirth+'頭・成熟'+q.wmat+'TURN':'交配OFF（出生なし）'),
+    q.wgMode==='opportunistic'?'植物食: シカ不在・空腹'+q.wgh+'以上で'+q.wgp+'% / 回復'+q.wgr:'植物食: OFF'
+  ];
+  $('causalSummary').textContent=parts.join(' ｜ ');
+}
+function openM(id){if(id==='graphModal')prepareGraphModal();if(id==='helpModal')drawCausalDiagram();$(id).classList.add('on')}
 function closeM(id){$(id).classList.remove('on')}
 $('openSettings').onclick=()=>openM('settingsModal');$('openHelp').onclick=()=>openM('helpModal');$('openQR').onclick=()=>openM('qrModal');$('miniGraph').onclick=()=>openM('graphModal');
 function graphTurnFromMouse(e){
@@ -1187,7 +1262,7 @@ document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeM(b.data
 function syncBreedUI(){
   $('dBreedFields').hidden=!$('dBreed').checked; $('dTotalRow').hidden=$('dBreed').checked;
   $('wBreedFields').hidden=!$('wBreed').checked; $('wTotalRow').hidden=$('wBreed').checked;
-  updateCapacityInfo(false);updateBreedStatus();
+  updateCapacityInfo(false);updateBreedStatus();renderSexSettingIcons();if($('helpModal')?.classList.contains('on'))drawCausalDiagram();
 }
 $('dBreed').addEventListener('change',()=>{
   if($('dBreed').checked)assignSexesToExisting('deer');
@@ -1199,7 +1274,7 @@ $('wBreed').addEventListener('change',()=>{
 });
 $('speed').addEventListener('input',()=>{renderSpeedArt();});
 $('graphSpeed').addEventListener('input',()=>{$('speed').value=$('graphSpeed').value;renderSpeedArt();});
-['sz','di','wi','dm','df','wm','wf','wstart'].forEach(id=>$(id).addEventListener('input',()=>{updateCapacityInfo(false);updateBreedStatus();}));
+['sz','gr','dl','ds','wl','ws','di','wi','dm','df','wm','wf','dbirth','dfemale','dmat','dinterval','wbirth','wfemale','wmat','winterval','wstart','wgh','wgp','wgr'].forEach(id=>$(id).addEventListener('input',()=>{updateCapacityInfo(false);updateBreedStatus();renderSexSettingIcons();if($('helpModal')?.classList.contains('on'))drawCausalDiagram();}));$('wgMode').addEventListener('change',()=>{if($('helpModal')?.classList.contains('on'))drawCausalDiagram();});
 $('runBtn').onclick=()=>S.running?stopRun():startRun(); $('resetBtn').onclick=()=>resetAll(false); $('mapchg').onclick=()=>resetAll(true); $('stepBtn').onclick=()=>{ stopRun(); stepOnce(); };
 window.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on')); });
 window.addEventListener('resize',()=>{ drawScene(1); drawMiniGraph(); drawBigGraph(); renderStaticButtonArt(); setRunButton(); });
