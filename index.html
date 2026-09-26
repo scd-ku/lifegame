@@ -49,7 +49,7 @@ button,input{font:inherit} button{cursor:pointer}
 .f label{display:flex;align-items:center;gap:5px;font-size:10.5px;line-height:1.15;color:#e5e9ff;margin:0;font-weight:900;letter-spacing:.02em}
 .f input,.f select{width:76px;justify-self:end;background:#000;color:#fff;border:2px solid #88a0ff;padding:2px 4px;font:900 12px monospace;line-height:1.15;box-shadow:inset 0 0 0 1px #111a38}
 .f select{width:150px;max-width:100%}
-.f .ruleNote,.ruleNote.full{grid-column:1/-1;margin:0;font-size:9px;line-height:1.2;color:#bfcaff}
+.f .ruleNote,.ruleNote.full{grid-column:1/-1;margin:0;font-size:9px;line-height:1.2;color:#bfcaff}.capacityInfo{margin-top:2px;padding:3px 5px;background:#050a16;border:1px solid #263d7c;color:#a8c6ff;font-size:9px;line-height:1.25}.capacityInfo.warn{color:#ffd45c;border-color:#b8862a;background:#171008}
 .diet .groupBody{grid-template-columns:repeat(2,minmax(0,1fr));gap:3px 5px}
 .diet .f{grid-template-columns:minmax(112px,1fr) 80px}
 .diet .f:first-child{grid-column:1/-1;grid-template-columns:minmax(130px,1fr) 176px}
@@ -57,7 +57,7 @@ button,input{font:inherit} button{cursor:pointer}
 .speedBox{display:block;background:#09101f;border:1px solid #263d7c;padding:4px}
 .speedBox>label{display:flex;align-items:center;gap:5px;font-size:10.5px;font-weight:900;color:#e5e9ff;margin-bottom:3px}
 .speedLine{display:grid;grid-template-columns:38px 1fr 38px;gap:4px;align-items:center}.speedWord{font-size:8.5px;color:#d8e1ff;text-align:center;font-weight:900}.pixelRange{-webkit-appearance:none;appearance:none;width:100%;height:15px;background:#000;border:2px solid #88a0ff;box-shadow:inset 0 0 0 1px #000;padding:0}.pixelRange::-webkit-slider-runnable-track{height:5px;background:repeating-linear-gradient(90deg,#516fd6 0 7%,#1a2d66 7% 14%)}.pixelRange::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;margin-top:-5px;background:#ffd45c;border:2px solid #6f3200;box-shadow:1px 1px 0 #000}.pixelRange::-moz-range-track{height:5px;background:#516fd6}.pixelRange::-moz-range-thumb{width:11px;height:11px;background:#ffd45c;border:2px solid #6f3200;border-radius:0}
-.speedTicks{display:grid;grid-template-columns:repeat(9,1fr);margin:2px 39px 0;font-size:8px;color:#9fb2ff;text-align:center}
+.speedTicks{display:grid;grid-template-columns:repeat(11,1fr);margin:2px 39px 0;font-size:8px;color:#9fb2ff;text-align:center}
 .labelIcon{width:22px;height:22px;display:block;background:#000;flex:none;image-rendering:pixelated}
 .help{margin:0;padding:0;font-size:11px;line-height:1.45;color:#eef2ff}
 .helpGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
@@ -120,7 +120,7 @@ button,input{font:inherit} button{cursor:pointer}
       <section class="settingGroup map">
         <div class="groupTitle"><canvas class="labelIcon icon-waste" width="22" height="22"></canvas>MAP</div>
         <div class="groupBody">
-          <div class="f"><label>マップサイズ</label><input id="sz" type="number" min="8" max="40" value="20"></div>
+          <div class="f"><label>マップサイズ</label><input id="sz" type="number" min="2" max="40" value="20"></div><div id="capacityInfo" class="capacityInfo">20×20：シカ＋オオカミは合計400頭まで設定できます。</div>
         </div>
       </section>
 
@@ -152,7 +152,7 @@ button,input{font:inherit} button{cursor:pointer}
 
       <section class="settingGroup speed">
         <div class="groupTitle">GAME SPEED</div>
-        <div class="speedBox"><label>TURN SPEED <span id="speedValue">5</span></label><div class="speedLine"><span class="speedWord">SLOW</span><input id="speed" class="pixelRange" type="range" min="1" max="9" step="1" value="5"><span class="speedWord">FAST</span></div><div class="speedTicks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div></div>
+        <div class="speedBox"><label>TURN SPEED <span id="speedValue">6</span></label><div class="speedLine"><span class="speedWord">SLOW</span><input id="speed" class="pixelRange" type="range" min="1" max="11" step="1" value="6"><span class="speedWord">FAST</span></div><div class="speedTicks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span></div></div>
       </section>
 
       <section class="settingGroup diet">
@@ -184,7 +184,7 @@ button,input{font:inherit} button{cursor:pointer}
 
   <div id="helpModal" class="modal"><div class="box"><div class="mh"><h2>HELP / あそびかた</h2><button class="x" data-close="helpModal">×</button></div>
     <div class="help helpGrid">
-      <section class="helpCard"><h3 class="helpTitle">1. まず動かす</h3><p><b>START</b>で進み、<b>PAUSE</b>で止まります。<b>RESET</b>で最初から。速度はSETで<b>1〜9</b>。1がいちばん遅く、9がいちばん速いです。</p></section>
+      <section class="helpCard"><h3 class="helpTitle">1. まず動かす</h3><p><b>START</b>で進み、<b>PAUSE</b>で止まります。<b>RESET</b>で最初から。速度はSETで<b>1〜11</b>。1がいちばん遅く、11がいちばん速いです。マップは<b>2×2〜40×40</b>です。</p></section>
       <section class="helpCard"><h3 class="helpTitle">2. シカ</h3><p>シカは近くの草を優先して移動します。草を食べると空腹は0になります。<b>寿命</b>または<b>空腹限界</b>をこえると、天使の姿になって消えます。</p></section>
       <section class="helpCard"><h3 class="helpTitle">3. オオカミ</h3><p>近くにシカがいればシカを優先します。「出現ターン」を20にすると、TURN 20から参加します。寿命・空腹限界で死ぬと天使の姿になります。</p></section>
       <section class="helpCard"><h3 class="helpTitle">4. オオカミの植物食</h3><ul><li>近くにシカがいる → 草は食べない</li><li>シカがいない + 設定した空腹以上 + 草のあるマス → 設定確率で草を食べる</li><li>草を食べても空腹は0にはならず、設定した分だけ回復</li></ul><p>「食べない」にすると、このルールはOFFです。</p></section>
@@ -217,7 +217,7 @@ const px=(c,x,y,w,h,col)=>{c.fillStyle=col;c.fillRect(Math.round(x),Math.round(y
 
 function conf(){
   return {
-    n:clamp(+$('sz').value||20,8,40),gr:clamp(+$('gr').value||6,1,50),
+    n:clamp(+$('sz').value||20,2,40),gr:clamp(+$('gr').value||6,1,50),
     dl:clamp(+$('dl').value||35,1,200),ds:clamp(+$('ds').value||7,1,50),
     wl:clamp(+$('wl').value||45,1,200),ws:clamp(+$('ws').value||9,1,50),
     di:Math.max(0,+$('di').value||0),wi:Math.max(0,+$('wi').value||0),
@@ -226,12 +226,12 @@ function conf(){
     wgh:clamp(+$('wgh').value||0,0,50),
     wgp:clamp(+$('wgp').value||0,0,100),
     wgr:clamp(+$('wgr').value||0,0,50),
-    speed:clamp(+$('speed').value||5,1,9)
+    speed:clamp(+$('speed').value||6,1,11)
   };
 }
 function turnTiming(){
   const v=conf().speed;
-  return [{dur:0,gap:0},{dur:2100,gap:850},{dur:1400,gap:520},{dur:950,gap:340},{dur:680,gap:210},{dur:420,gap:90},{dur:260,gap:35},{dur:150,gap:5},{dur:85,gap:0},{dur:52,gap:0}][v];
+  return [{dur:0,gap:0},{dur:3200,gap:1300},{dur:2100,gap:850},{dur:1400,gap:520},{dur:950,gap:340},{dur:680,gap:210},{dur:420,gap:90},{dur:260,gap:35},{dur:150,gap:5},{dur:85,gap:0},{dur:52,gap:0},{dur:32,gap:0}][v];
 }
 function makeGrid(n=conf().n){
   S.n=n; const q=conf(); S.cells=[];
@@ -255,11 +255,36 @@ function makeWolfBatch(count,cells,deer,wolf){
   }
   return made;
 }
+function countLand(cells=S.cells){
+  let n=0; for(const row of cells) for(const v of row) if(v.terrain!=='sea') n++; return n;
+}
+function updateCapacityInfo(useActual=false){
+  const n=clamp(+$('sz').value||20,2,40), theoretical=n*n;
+  const di=Math.max(0,+$('di').value||0), wi=Math.max(0,+$('wi').value||0);
+  $('di').max=theoretical; $('wi').max=theoretical;
+  const total=di+wi, parts=[n+'×'+n+'：マップ上限 '+theoretical+'頭（シカ＋オオカミ合計）'];
+  let warn=total>theoretical;
+  if(warn) parts.push('設定は'+total+'頭なので '+(total-theoretical)+'頭多すぎます');
+  if(useActual && S.cells.length===n){
+    const land=countLand(S.cells);
+    parts.push('現在の陸地 '+land+'マス');
+    const immediate=di+(+$('wstart').value===0?wi:0);
+    if(immediate>land){ warn=true; parts.push('開始時は最大'+land+'頭までしか配置できません'); }
+    if(S.capacityNotice) parts.push(S.capacityNotice);
+  }
+  const el=$('capacityInfo'); if(el){el.textContent=parts.join(' / '); el.classList.toggle('warn',warn);}
+}
 function seedAnimals(){
-  S.deer=[]; S.wolf=[]; const q=conf(); let spots=landSpots(S.cells,S.deer,S.wolf);
-  for(let i=0;i<q.di&&spots.length;i++){ const p=spots.splice((Math.random()*spots.length)|0,1)[0]; S.deer.push({x:p.x,y:p.y,a:0,h:0,dir:'R'}); }
+  S.deer=[]; S.wolf=[]; S.capacityNotice=''; const q=conf(); let spots=landSpots(S.cells,S.deer,S.wolf);
+  const requestedDeer=q.di;
+  for(let i=0;i<requestedDeer&&spots.length;i++){ const p=spots.splice((Math.random()*spots.length)|0,1)[0]; S.deer.push({x:p.x,y:p.y,a:0,h:0,dir:'R'}); }
+  if(S.deer.length<requestedDeer) S.capacityNotice='シカ '+requestedDeer+'頭のうち '+S.deer.length+'頭を配置';
   S.wolfIntroduced=q.wstart===0;
-  if(S.wolfIntroduced) makeWolfBatch(q.wi,S.cells,S.deer,S.wolf);
+  if(S.wolfIntroduced){
+    const made=makeWolfBatch(q.wi,S.cells,S.deer,S.wolf);
+    if(made.length<q.wi) S.capacityNotice+=(S.capacityNotice?' / ':'')+'オオカミ '+q.wi+'頭のうち '+made.length+'頭を配置';
+  }
+  updateCapacityInfo(true);
 }
 /* sprite drawing: SNES-ish 16x16 pixel art scaled */
 function drawSprite(ctx,type,x,y,size,dir='R',pose=0,mode='normal'){
@@ -313,26 +338,45 @@ function drawSprite(ctx,type,x,y,size,dir='R',pose=0,mode='normal'){
         fill(8,16,2,6,outline); fill(9,17,1,4,white);
       }
     } else if(dir==='D'){
-      // downward movement = clear front-facing face
-      fill(7,8,10,10,outline); fill(9,9,6,8,body);
-      fill(5,2,14,10,outline); fill(7,4,10,6,face);
-      fill(8,5,2,2,white); fill(14,5,2,2,white);
-      fill(9,6,1,1,'#111'); fill(15,6,1,1,'#111');
-      fill(10,8,4,2,white); fill(11,9,2,1,deer?'#4a2208':'#111');
+      // proposal 03: coarse current-resolution front view
       if(deer){
-        fill(6,2,2,4,dark); fill(16,2,2,4,dark);
-        fill(5,0,1,4,dark); fill(18,0,1,4,dark);
-        fill(4,1,2,1,dark); fill(18,1,2,1,dark);
+        // tall symmetrical antlers + compact rectangular face
+        fill(7,0,2,5,dark); fill(15,0,2,5,dark);
+        fill(5,1,3,2,dark); fill(16,1,3,2,dark);
+        fill(6,3,3,2,dark); fill(15,3,3,2,dark);
+        // head outline / brown crown
+        fill(5,4,14,9,outline);
+        fill(7,5,10,4,body);
+        // cream front mask and muzzle
+        fill(7,8,10,5,face);
+        fill(9,10,6,3,white);
+        fill(8,8,1,2,'#111'); fill(15,8,1,2,'#111');
+        fill(11,11,2,1,'#4a2208');
+        // narrow front body
+        fill(8,13,8,6,outline); fill(10,13,4,5,body);
+        fill(9,17,6,2,face);
       } else {
-        fill(5,1,3,5,dark); fill(16,1,3,5,dark);
-        fill(6,7,2,4,dark); fill(16,7,2,4,dark);
+        // proposal 03 wolf: pointed ears, gray crown, white angular facial mask
+        fill(5,1,4,5,outline); fill(15,1,4,5,outline);
+        fill(6,2,3,4,dark); fill(15,2,3,4,dark);
+        fill(5,5,14,9,outline);
+        fill(7,5,10,5,body);
+        // white cheek mask and broad muzzle
+        fill(6,9,4,4,white); fill(14,9,4,4,white);
+        fill(9,8,6,6,face);
+        fill(8,8,2,2,'#111'); fill(14,8,2,2,'#111');
+        fill(10,11,4,2,white); fill(11,12,2,1,'#111');
+        // compact chest
+        fill(8,14,8,5,outline); fill(10,14,4,4,body);
+        fill(9,17,6,2,white);
       }
+      // A/B walking frames: left and right legs swap one coarse step
       if(pose===0){
-        fill(7,17,4,6,outline); fill(13,19,4,4,outline);
-        fill(8,18,2,4,white); fill(14,20,2,2,white);
+        fill(7,18,4,5,outline); fill(13,19,4,4,outline);
+        fill(8,19,2,3,white); fill(14,20,2,2,white);
       } else {
-        fill(7,19,4,4,outline); fill(13,17,4,6,outline);
-        fill(8,20,2,2,white); fill(14,18,2,4,white);
+        fill(7,19,4,4,outline); fill(13,18,4,5,outline);
+        fill(8,20,2,2,white); fill(14,19,2,3,white);
       }
     } else {
       // upward movement = back view, also alternating steps
@@ -644,6 +688,7 @@ function simulateNext(){
   if(!nextWolfIntroduced && (S.turn+1)>=q.wstart){
     const newcomers=makeWolfBatch(q.wi,cells,survivors,wolfNext);
     newcomers.forEach(w=>wolfBirths.push({type:'wolf',to:{x:w.x,y:w.y},dir:w.dir}));
+    if(newcomers.length<q.wi) S.capacityNotice='TURN '+(S.turn+1)+'：オオカミ '+q.wi+'頭のうち '+newcomers.length+'頭だけ配置可能';
     nextWolfIntroduced=true;
   }
   return {fromCells,toCells:cells,toDeer:survivors,toWolf:wolfNext,moves:[...survivorMoves,...wolfMoves],births:[...deerBirths,...wolfBirths],deaths,attacks,nextWolfIntroduced};
@@ -664,7 +709,7 @@ function stepOnce(after){ if(!S.anim) animateToNext(simulateNext(),after,true); 
 function scheduleRun(){ if(!S.running) return; if(S.anim&&S.anim.heldAt!=null){ requestAnimationFrame(S.anim.frame); return; } if(!S.anim) animateToNext(simulateNext(),()=>{if(S.running)S.pendingTimeout=setTimeout(scheduleRun,turnTiming().gap)},false); }
 function startRun(){ if(S.running) return; S.running=true; $('runBtn').textContent='PAUSE'; scheduleRun(); }
 function stopRun(){ S.running=false; $('runBtn').textContent='START'; if(S.pendingTimeout)clearTimeout(S.pendingTimeout); S.pendingTimeout=null; }
-function resetAll(newMap=false){ stopRun(); S.anim=null; const q=conf(); if(newMap||!S.cells.length||q.n!==S.n) makeGrid(q.n); S.turn=0; seedAnimals(); S.hg=[]; S.hd=[]; S.hw=[]; updateCounts(); pushHistory(); drawScene(1); }
+function resetAll(newMap=false){ stopRun(); S.anim=null; const q=conf(); if(newMap||!S.cells.length||q.n!==S.n) makeGrid(q.n); S.turn=0; seedAnimals(); S.hg=[]; S.hd=[]; S.hw=[]; updateCounts(); pushHistory(); updateCapacityInfo(true); drawScene(1); }
 function pad3(n){return String(Math.max(0,n)).padStart(3,'0')}
 function updateCounts(){
   let grass=0,waste=0; for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){const v=S.cells[y][x]; if(v.terrain==='grass'&&v.grass) grass++; if(v.terrain==='waste'||(v.terrain==='grass'&&!v.grass)) waste++;}
@@ -721,11 +766,12 @@ function closeM(id){ $(id).classList.remove('on'); }
 $('openSettings').onclick=()=>openM('settingsModal'); $('openHelp').onclick=()=>openM('helpModal'); $('openQR').onclick=()=>openM('qrModal'); $('miniGraph').onclick=()=>openM('graphModal');
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeM(b.dataset.close)); document.querySelectorAll('.modal').forEach(m=>m.onclick=e=>{ if(e.target===m) m.classList.remove('on'); });
 $('speed').addEventListener('input',()=>{$('speedValue').textContent=$('speed').value;});
+['sz','di','wi','wstart'].forEach(id=>$(id).addEventListener('input',()=>updateCapacityInfo(false)));
 $('runBtn').onclick=()=>S.running?stopRun():startRun(); $('resetBtn').onclick=()=>resetAll(false); $('mapchg').onclick=()=>resetAll(true); $('stepBtn').onclick=()=>{ stopRun(); stepOnce(); };
 window.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on')); });
 window.addEventListener('resize',()=>{ drawScene(1); drawMiniGraph(); drawBigGraph(); });
 
-renderAllSmallIcons(); makeGrid(); seedAnimals(); updateCounts(); pushHistory(); drawScene(1);
+renderAllSmallIcons(); makeGrid(); seedAnimals(); updateCounts(); pushHistory(); updateCapacityInfo(true); drawScene(1);
 </script>
 </body>
 </html>
