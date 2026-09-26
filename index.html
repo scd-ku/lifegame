@@ -290,7 +290,7 @@ button,input{font:inherit} button{cursor:pointer}
   <div id="helpModal" class="modal"><div class="box"><div class="mh"><h2>HELP / あそびかた</h2><button class="x" data-close="helpModal">×</button></div>
     <div class="help helpGrid">
       <section class="helpCard"><h3 class="helpTitle">1. まず動かす</h3><p><b>かいし</b>で進み、<b>ていし</b>で止まります。<b>リセット</b>で最初から。速度は画面右上の<b>はやさバー</b>で1〜11。1がいちばん遅く、11がいちばん速いです。マップは<b>2×2〜40×40</b>です。</p></section>
-      <section class="helpCard"><h3 class="helpTitle">2. シカ</h3><p>シカは近くの草を優先して移動します。草を食べると空腹は0になります。<b>寿命</b>または<b>空腹限界</b>をこえると、天使の姿になって消えます。</p></section>
+      <section class="helpCard"><h3 class="helpTitle">2. シカ</h3><p>シカは近くの草を優先して移動します。草を食べると空腹は0になります。食べられた草地は荒地表示になり、シカがそのマスに居続けたり踏み通ったりすると再生までの時間がリセットされます。そのためシカが増えすぎると荒地が広がります。<b>寿命</b>または<b>空腹限界</b>をこえると、天使の姿になって消えます。</p></section>
       <section class="helpCard"><h3 class="helpTitle">3. オオカミ</h3><p>近くにシカがいればシカを優先します。「出現ターン」を20にすると、TURN 20から参加します。寿命・空腹限界で死ぬと天使の姿になります。</p></section>
       <section class="helpCard"><h3 class="helpTitle">4. オオカミの植物食</h3><ul><li>近くにシカがいる → 草は食べない</li><li>シカがいない + 設定した空腹以上 + 草のあるマス → 設定確率で草を食べる</li><li>草を食べても空腹は0にはならず、設定した分だけ回復</li></ul><p>「食べない」にすると、このルールはOFFです。</p></section>
       <section class="helpCard"><h3 class="helpTitle">5. グラフ・巻き戻し</h3><p>左上の小グラフをクリックすると拡大します。グラフをクリックするかTURNを入力すると、そのTURNの全マス情報からフィールドを再現します。「ここからやりなおし」でそのTURNへ戻れます。前の結果は半透明の波線で残り、新しい結果を実線で重ねて比較できます。何度でもやりなおせます。</p><p>右上の<b>ほぞん</b>では、設定・各TURNの個体数・各マスの状態・動物状態・巻き戻し履歴をCSVで保存します。</p></section>
@@ -450,7 +450,7 @@ function seedAnimals(){
   updateCapacityInfo(true);
 }
 /* sprite drawing: SNES-ish 16x16 pixel art scaled */
-function drawSprite(ctx,type,x,y,size,dir='R',pose=0,mode='normal'){
+function drawSprite(ctx,type,x,y,size,dir='R',pose=0,mode='normal',sex=null){
   ctx.save(); ctx.translate(x,y); const u=size/24;
   const fill=(ix,iy,w,h,col)=>px(ctx,ix*u,iy*u,w*u,h*u,col);
 
@@ -481,14 +481,26 @@ function drawSprite(ctx,type,x,y,size,dir='R',pose=0,mode='normal'){
     if(dir==='L'||dir==='R'){
       if(dir==='L'){ctx.translate(size,0);ctx.scale(-1,1);}
       fill(3,10,13,8,outline); fill(5,11,10,5,body);
-      fill(13,4,10,11,outline); fill(15,6,7,7,face);
-      fill(19,9,4,3,white); fill(20,8,1,1,'#111'); fill(22,10,1,1,deer?'#4a2208':'#111');
-      if(deer){
-        fill(14,2,2,4,dark); fill(19,2,2,4,dark); fill(13,1,1,4,dark); fill(20,0,1,5,dark);
-        fill(12,1,2,1,dark); fill(20,1,2,1,dark);
-        [[6,12],[9,14],[12,11]].forEach(p=>fill(p[0],p[1],1,1,'#fff'));
-      } else {
-        fill(14,2,3,5,dark); fill(19,2,3,5,dark); fill(12,7,3,3,dark);
+      if(!deer&&sex==='M'){
+        // male wolf: slightly larger head in proportion to the body
+        fill(12,3,11,12,outline); fill(14,5,8,8,face);
+        fill(18,9,5,3,white); fill(19,7,1,1,'#111'); fill(22,10,1,1,'#111');
+        fill(13,1,3,5,dark); fill(19,1,3,5,dark); fill(11,7,3,3,dark);
+      }else{
+        fill(13,4,10,11,outline); fill(15,6,7,7,face);
+        fill(19,9,4,3,white); fill(20,8,1,1,'#111'); fill(22,10,1,1,deer?'#4a2208':'#111');
+        if(deer){
+          if(sex==='F'){
+            // female deer: ears, but no antlers
+            fill(14,2,2,3,dark); fill(19,2,2,3,dark);
+          }else{
+            fill(14,2,2,4,dark); fill(19,2,2,4,dark); fill(13,1,1,4,dark); fill(20,0,1,5,dark);
+            fill(12,1,2,1,dark); fill(20,1,2,1,dark);
+          }
+          [[6,12],[9,14],[12,11]].forEach(p=>fill(p[0],p[1],1,1,'#fff'));
+        } else {
+          fill(14,2,3,5,dark); fill(19,2,3,5,dark); fill(12,7,3,3,dark);
+        }
       }
       fill(1,12,4,4,outline); fill(2,12,3,2,deer?white:dark);
       if(pose===0){
@@ -503,10 +515,15 @@ function drawSprite(ctx,type,x,y,size,dir='R',pose=0,mode='normal'){
     } else if(dir==='D'){
       // proposal 03: coarse current-resolution front view
       if(deer){
-        // tall symmetrical antlers + compact rectangular face
-        fill(7,0,2,5,dark); fill(15,0,2,5,dark);
-        fill(5,1,3,2,dark); fill(16,1,3,2,dark);
-        fill(6,3,3,2,dark); fill(15,3,3,2,dark);
+        if(sex==='F'){
+          // female deer: broad ears, no antlers
+          fill(5,2,3,2,dark); fill(16,2,3,2,dark);
+        }else{
+          // male deer: visible antlers
+          fill(7,0,2,5,dark); fill(15,0,2,5,dark);
+          fill(5,1,3,2,dark); fill(16,1,3,2,dark);
+          fill(6,3,3,2,dark); fill(15,3,3,2,dark);
+        }
         // head outline / brown crown
         fill(5,4,14,9,outline);
         fill(7,5,10,4,body);
@@ -519,19 +536,22 @@ function drawSprite(ctx,type,x,y,size,dir='R',pose=0,mode='normal'){
         fill(8,13,8,6,outline); fill(10,13,4,5,body);
         fill(9,17,6,2,face);
       } else {
-        // proposal 03 wolf: pointed ears, gray crown, white angular facial mask
-        fill(5,1,4,5,outline); fill(15,1,4,5,outline);
-        fill(6,2,3,4,dark); fill(15,2,3,4,dark);
-        fill(5,5,14,9,outline);
-        fill(7,5,10,5,body);
-        // white cheek mask and broad muzzle
-        fill(6,9,4,4,white); fill(14,9,4,4,white);
-        fill(9,8,6,6,face);
-        fill(8,8,2,2,'#111'); fill(14,8,2,2,'#111');
-        fill(10,11,4,2,white); fill(11,12,2,1,'#111');
-        // compact chest
-        fill(8,14,8,5,outline); fill(10,14,4,4,body);
-        fill(9,17,6,2,white);
+        const male=sex==='M';
+        // male wolf: larger head ratio; female: slightly smaller head ratio
+        if(male){
+          fill(4,0,5,6,outline); fill(15,0,5,6,outline);
+          fill(5,1,4,4,dark); fill(16,1,4,4,dark);
+          fill(4,4,16,11,outline); fill(6,5,12,5,body);
+          fill(5,9,5,5,white); fill(14,9,5,5,white); fill(8,8,8,7,face);
+          fill(7,8,2,2,'#111'); fill(15,8,2,2,'#111'); fill(10,12,4,2,white); fill(11,13,2,1,'#111');
+        }else{
+          fill(5,1,4,5,outline); fill(15,1,4,5,outline);
+          fill(6,2,3,4,dark); fill(15,2,3,4,dark);
+          fill(5,5,14,9,outline); fill(7,5,10,5,body);
+          fill(6,9,4,4,white); fill(14,9,4,4,white); fill(9,8,6,6,face);
+          fill(8,8,2,2,'#111'); fill(14,8,2,2,'#111'); fill(10,11,4,2,white); fill(11,12,2,1,'#111');
+        }
+        fill(8,14,8,5,outline); fill(10,14,4,4,body); fill(9,17,6,2,white);
       }
       // A/B walking frames: left and right legs swap one coarse step
       if(pose===0){
@@ -547,7 +567,7 @@ function drawSprite(ctx,type,x,y,size,dir='R',pose=0,mode='normal'){
       fill(5,2,14,9,outline); fill(7,4,10,6,face);
       if(deer){
         fill(6,1,2,4,dark); fill(16,1,2,4,dark);
-        fill(5,0,1,3,dark); fill(18,0,1,3,dark);
+        if(sex!=='F'){fill(5,0,1,3,dark); fill(18,0,1,3,dark);}
       } else {
         fill(6,1,3,4,dark); fill(15,1,3,4,dark);
       }
@@ -582,10 +602,17 @@ function drawChildSprite(ctx,type,sex,x,y,size,dir='R',pose=0){
   ctx.restore();
 }
 function drawAnimalEntity(ctx,type,a,x,y,size,pose=0){
-  if(a&&a.stage==='child') drawChildSprite(ctx,type,a.sex,x,y,size,a.dir||'R',pose);
-  else drawSprite(ctx,type,x,y,size,a?.dir||'R',pose);
+  if(a&&a.stage==='child'){drawChildSprite(ctx,type,a.sex,x,y,size,a.dir||'R',pose);return;}
+  if(type==='wolf'&&a&&a.sex){
+    // Requested visual distinction: females are a little larger overall,
+    // males a little smaller but with a proportionally larger head.
+    const factor=a.sex==='F'?1.08:.96, s=size*factor, ox=x+(size-s)/2, oy=y+(size-s);
+    drawSprite(ctx,type,ox,oy,s,a.dir||'R',pose,'normal',a.sex);
+  }else{
+    drawSprite(ctx,type,x,y,size,a?.dir||'R',pose,'normal',a?.sex||null);
+  }
 }
-function renderSmallIconCanvas(canvas,type){ const c=canvas.getContext('2d'); c.imageSmoothingEnabled=false; c.clearRect(0,0,canvas.width,canvas.height); drawSprite(c,type,0,0,canvas.width,'R',0); }
+function renderSmallIconCanvas(canvas,type){ const c=canvas.getContext('2d'); c.imageSmoothingEnabled=false; c.clearRect(0,0,canvas.width,canvas.height); drawSprite(c,type,0,0,canvas.width,'R',0,'normal',null); }
 function renderAllSmallIcons(){
   renderSmallIconCanvas($('cGrass'),'grass'); renderSmallIconCanvas($('cWaste'),'waste'); renderSmallIconCanvas($('cDeer'),'deer'); renderSmallIconCanvas($('cWolf'),'wolf');
   document.querySelectorAll('.icon-grass').forEach(c=>renderSmallIconCanvas(c,'grass'));
@@ -880,9 +907,13 @@ function birthSpots(cx,cy,cells,deer,wolf){
 }
 function simulateNext(){
   const q=conf(), fromCells=cloneGrid(S.cells), fromDeer=S.deer.map(a=>({...a})), fromWolf=S.wolf.map(a=>({...a})), cells=cloneGrid(S.cells);
+  const deerPressure=new Set(fromDeer.map(a=>a.x+','+a.y));
   for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){
     const v=cellAt(cells,x,y); if(!v) continue; v.gr=q.gr;
-    if(v.terrain==='grass'&&!v.grass){v.gt--;if(v.gt<=0){v.grass=true;v.gt=0;}}
+    if(v.terrain==='grass'&&!v.grass){
+      if(deerPressure.has(x+','+y)) v.gt=q.gr; // occupied bare ground cannot recover
+      else {v.gt--;if(v.gt<=0){v.grass=true;v.gt=0;}}
+    }
   }
 
   let wolfOcc=occupyMap(fromWolf);
@@ -894,6 +925,7 @@ function simulateNext(){
     let h=d.h+1,a=d.a+1,ateGrass=false;
     const dv=cellAt(cells,dest.x,dest.y);
     if(dv&&dv.terrain==='grass'&&dv.grass){dv.grass=false;dv.gt=q.gr;h=0;ateGrass=true;}
+    else if(dv&&dv.terrain==='grass'&&!dv.grass){dv.gt=q.gr;} // trampling delays regrowth
     if(h>q.ds||a>q.dl){
       deaths.push({type:'deer',from:{x:d.x,y:d.y},to:{x:dest.x,y:dest.y},dir:dest.dir||d.dir,cause:a>q.dl?'age':'hunger'});
       continue;
