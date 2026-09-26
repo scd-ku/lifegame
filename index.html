@@ -281,42 +281,49 @@ function landSpots(cells,deer,wolf){
   for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){ const v=cellAt(cells,x,y); if(v&&v.terrain!=='sea'&&!occ.has(x+','+y)) out.push({x,y}); }
   return out;
 }
-function makeWolfBatch(count,cells,deer,wolf){
-  let spots=landSpots(cells,deer,wolf), made=[];
+function makeAnimalBatch(type,count,sex,cells,deer,wolf){
+  const spots=landSpots(cells,deer,wolf), made=[], target=type==='deer'?deer:wolf;
   for(let i=0;i<count&&spots.length;i++){
     const p=spots.splice((Math.random()*spots.length)|0,1)[0];
-    const a={x:p.x,y:p.y,a:0,h:0,dir:'L'}; wolf.push(a); made.push(a);
+    const a={x:p.x,y:p.y,a:0,h:0,dir:type==='deer'?'R':'L',sex:sex||null,stage:'adult',lastBirthTurn:-9999};
+    target.push(a); made.push(a);
   }
   return made;
 }
+function makeWolfBatch(count,cells,deer,wolf,sex=null){return makeAnimalBatch('wolf',count,sex,cells,deer,wolf)}
+function makeDeerBatch(count,cells,deer,wolf,sex=null){return makeAnimalBatch('deer',count,sex,cells,deer,wolf)}
 function countLand(cells=S.cells){
   let n=0; for(const row of cells) for(const v of row) if(v.terrain!=='sea') n++; return n;
 }
 function updateCapacityInfo(useActual=false){
   const n=clamp(+$('sz').value||20,2,40), theoretical=n*n;
-  const di=Math.max(0,+$('di').value||0), wi=Math.max(0,+$('wi').value||0);
-  $('di').max=theoretical; $('wi').max=theoretical;
+  const dBreed=$('dBreed').checked,wBreed=$('wBreed').checked;
+  const di=dBreed?(Math.max(0,+$('dm').value||0)+Math.max(0,+$('df').value||0)):Math.max(0,+$('di').value||0);
+  const wi=wBreed?(Math.max(0,+$('wm').value||0)+Math.max(0,+$('wf').value||0)):Math.max(0,+$('wi').value||0);
+  ['di','wi','dm','df','wm','wf'].forEach(id=>{$(id).max=theoretical});
   const total=di+wi, parts=[n+'×'+n+'：マップ上限 '+theoretical+'頭（シカ＋オオカミ合計）'];
   let warn=total>theoretical;
   if(warn) parts.push('設定は'+total+'頭なので '+(total-theoretical)+'頭多すぎます');
   if(useActual && S.cells.length===n){
-    const land=countLand(S.cells);
-    parts.push('現在の陸地 '+land+'マス');
+    const land=countLand(S.cells); parts.push('現在の陸地 '+land+'マス');
     const immediate=di+(+$('wstart').value===0?wi:0);
-    if(immediate>land){ warn=true; parts.push('開始時は最大'+land+'頭までしか配置できません'); }
+    if(immediate>land){warn=true;parts.push('開始時は最大'+land+'頭までしか配置できません')}
     if(S.capacityNotice) parts.push(S.capacityNotice);
   }
-  const el=$('capacityInfo'); if(el){el.textContent=parts.join(' / '); el.classList.toggle('warn',warn);}
+  const el=$('capacityInfo'); if(el){el.textContent=parts.join(' / ');el.classList.toggle('warn',warn)}
 }
 function seedAnimals(){
-  S.deer=[]; S.wolf=[]; S.capacityNotice=''; const q=conf(); let spots=landSpots(S.cells,S.deer,S.wolf);
-  const requestedDeer=q.di;
-  for(let i=0;i<requestedDeer&&spots.length;i++){ const p=spots.splice((Math.random()*spots.length)|0,1)[0]; S.deer.push({x:p.x,y:p.y,a:0,h:0,dir:'R'}); }
-  if(S.deer.length<requestedDeer) S.capacityNotice='シカ '+requestedDeer+'頭のうち '+S.deer.length+'頭を配置';
+  S.deer=[]; S.wolf=[]; S.capacityNotice=''; const q=conf();
+  let madeD=[];
+  if(q.dBreed) madeD=[...makeDeerBatch(q.dm,S.cells,S.deer,S.wolf,'M'),...makeDeerBatch(q.df,S.cells,S.deer,S.wolf,'F')];
+  else madeD=makeDeerBatch(q.di,S.cells,S.deer,S.wolf,null);
+  if(madeD.length<q.di) S.capacityNotice='シカ '+q.di+'頭のうち '+madeD.length+'頭を配置';
   S.wolfIntroduced=q.wstart===0;
   if(S.wolfIntroduced){
-    const made=makeWolfBatch(q.wi,S.cells,S.deer,S.wolf);
-    if(made.length<q.wi) S.capacityNotice+=(S.capacityNotice?' / ':'')+'オオカミ '+q.wi+'頭のうち '+made.length+'頭を配置';
+    let madeW=[];
+    if(q.wBreed) madeW=[...makeWolfBatch(q.wm,S.cells,S.deer,S.wolf,'M'),...makeWolfBatch(q.wf,S.cells,S.deer,S.wolf,'F')];
+    else madeW=makeWolfBatch(q.wi,S.cells,S.deer,S.wolf,null);
+    if(madeW.length<q.wi) S.capacityNotice+=(S.capacityNotice?' / ':'')+'オオカミ '+q.wi+'頭のうち '+madeW.length+'頭を配置';
   }
   updateCapacityInfo(true);
 }
@@ -432,6 +439,29 @@ function drawSprite(ctx,type,x,y,size,dir='R',pose=0,mode='normal'){
     }
   }
   ctx.restore();
+}
+function drawChildSprite(ctx,type,sex,x,y,size,dir='R',pose=0){
+  ctx.save(); const s=size*.72,ox=x+(size-s)/2,oy=y+size*.20; ctx.translate(ox,oy); const u=s/16;
+  const f=(ix,iy,w,h,col)=>px(ctx,ix*u,iy*u,w*u,h*u,col);
+  const deer=type==='deer', outline=deer?'#3a1b07':'#1d2530', body=deer?'#d9863a':'#9aa6b7', face=deer?'#ffd09a':'#f2f5fb', dark=deer?'#6b350d':'#4b5667', white='#fff';
+  f(2,14,12,1,'rgba(0,0,0,.5)');
+  if(dir==='L'||dir==='R'){
+    if(dir==='L'){ctx.translate(s,0);ctx.scale(-1,1);}
+    f(2,7,8,5,outline); f(3,8,7,3,body); f(9,4,6,6,outline); f(10,5,5,4,face);
+    f(13,6,1,1,'#111'); f(14,7,1,1,'#111'); f(2,9,2,2,dark);
+    if(sex==='M') f(10,3,2,2,dark); else f(12,4,1,1,white);
+    if(pose){f(4,11,2,4,white);f(8,12,2,3,white)}else{f(4,12,2,3,white);f(8,11,2,4,white)}
+  } else {
+    f(4,3,8,7,outline); f(5,4,6,5,face); f(6,5,1,1,'#111'); f(9,5,1,1,'#111');
+    f(5,9,6,4,outline); f(6,9,4,3,body);
+    if(sex==='M'){f(5,2,2,2,dark);f(9,2,2,2,dark)}else{f(7,3,2,1,white)}
+    if(pose){f(5,12,2,4,white);f(9,13,2,3,white)}else{f(5,13,2,3,white);f(9,12,2,4,white)}
+  }
+  ctx.restore();
+}
+function drawAnimalEntity(ctx,type,a,x,y,size,pose=0){
+  if(a&&a.stage==='child') drawChildSprite(ctx,type,a.sex,x,y,size,a.dir||'R',pose);
+  else drawSprite(ctx,type,x,y,size,a?.dir||'R',pose);
 }
 function renderSmallIconCanvas(canvas,type){ const c=canvas.getContext('2d'); c.imageSmoothingEnabled=false; c.clearRect(0,0,canvas.width,canvas.height); drawSprite(c,type,0,0,canvas.width,'R',0); }
 function renderAllSmallIcons(){
@@ -604,20 +634,19 @@ function drawFeedingPicture(ctx,kind,x,y,size,dir){
 function drawScene(progress=1){
   const M=boardMetrics(); fctx.imageSmoothingEnabled=false; px(fctx,0,0,M.w,M.h,'#000');
   const anim=S.anim, fromGrid=anim?anim.fromCells:S.cells, toGrid=anim?anim.toCells:S.cells;
-
   for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){
-    const from=cellAt(fromGrid,x,y), to=cellAt(toGrid,x,y); if(!from||!to) continue;
-    const X=M.ox+x*M.cell, Y=M.oy+y*M.cell;
+    const from=cellAt(fromGrid,x,y),to=cellAt(toGrid,x,y); if(!from||!to) continue;
+    const X=M.ox+x*M.cell,Y=M.oy+y*M.cell;
     if(to.terrain==='sea') drawSprite(fctx,'sea',X,Y,M.cell,'R',progress>.5?1:0);
     else if(to.terrain==='waste') drawSprite(fctx,'waste',X,Y,M.cell);
-    else {
+    else{
       drawSprite(fctx,'waste',X,Y,M.cell);
       if(from.grass&&to.grass) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
       else if(!from.grass&&to.grass){
         if(progress<.30) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'sprout');
         else if(progress<.65) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'grow');
         else drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
-      } else if(from.grass&&!to.grass){
+      }else if(from.grass&&!to.grass){
         if(progress<.55) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'normal');
         else if(progress<.80) drawSprite(fctx,'grass',X,Y,M.cell,'R',0,'grow');
       }
@@ -625,38 +654,34 @@ function drawScene(progress=1){
   }
 
   if(anim){
-    // attacked deer remain in place until the overlap-picture phase
-    for(const a of (anim.attacks||[])) if(progress<.55) drawSprite(fctx,'deer',M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,a.dir,0);
-
+    for(const a of (anim.attacks||[])) if(progress<.55) drawAnimalEntity(fctx,'deer',{dir:a.dir,stage:a.stage,sex:a.sex},M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,0);
     for(const mv of anim.moves){
       if(mv.action==='munch'||mv.action==='attack'||mv.action==='wolfgrass'){
         if(progress<.55){
-          const p=progress/.55;
-          const xx=mv.from.x+(mv.to.x-mv.from.x)*p, yy=mv.from.y+(mv.to.y-mv.from.y)*p;
-          drawSprite(fctx,mv.type,M.ox+xx*M.cell,M.oy+yy*M.cell,M.cell,mv.dir,p>.5?1:0);
-        } else {
-          drawFeedingPicture(fctx,mv.action,M.ox+mv.to.x*M.cell,M.oy+mv.to.y*M.cell,M.cell,mv.dir);
-        }
-      } else {
-        const xx=mv.from.x+(mv.to.x-mv.from.x)*progress, yy=mv.from.y+(mv.to.y-mv.from.y)*progress;
-        drawSprite(fctx,mv.type,M.ox+xx*M.cell,M.oy+yy*M.cell,M.cell,mv.dir,progress>.5?1:0);
+          const p=progress/.55,xx=mv.from.x+(mv.to.x-mv.from.x)*p,yy=mv.from.y+(mv.to.y-mv.from.y)*p;
+          drawAnimalEntity(fctx,mv.type,{dir:mv.dir,stage:mv.stage,sex:mv.sex},M.ox+xx*M.cell,M.oy+yy*M.cell,M.cell,p>.5?1:0);
+        }else drawFeedingPicture(fctx,mv.action,M.ox+mv.to.x*M.cell,M.oy+mv.to.y*M.cell,M.cell,mv.dir);
+      }else{
+        const xx=mv.from.x+(mv.to.x-mv.from.x)*progress,yy=mv.from.y+(mv.to.y-mv.from.y)*progress;
+        drawAnimalEntity(fctx,mv.type,{dir:mv.dir,stage:mv.stage,sex:mv.sex},M.ox+xx*M.cell,M.oy+yy*M.cell,M.cell,progress>.5?1:0);
       }
     }
     for(const d of (anim.deaths||[])){
       if(progress<.48){
-        const p=progress/.48, xx=d.from.x+(d.to.x-d.from.x)*p, yy=d.from.y+(d.to.y-d.from.y)*p;
+        const p=progress/.48,xx=d.from.x+(d.to.x-d.from.x)*p,yy=d.from.y+(d.to.y-d.from.y)*p;
         drawSprite(fctx,d.type,M.ox+xx*M.cell,M.oy+yy*M.cell,M.cell,d.dir,p>.5?1:0);
-      } else {
-        drawAngelDeath(fctx,d.type,M.ox+d.to.x*M.cell,M.oy+d.to.y*M.cell,M.cell,d.dir,progress);
-      }
+      }else drawAngelDeath(fctx,d.type,M.ox+d.to.x*M.cell,M.oy+d.to.y*M.cell,M.cell,d.dir,progress);
     }
-    for(const b of anim.births) if(progress>.65) drawSprite(fctx,b.type,M.ox+b.to.x*M.cell,M.oy+b.to.y*M.cell,M.cell,b.dir,1);
-  } else {
-    S.deer.forEach(a=>drawSprite(fctx,'deer',M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,a.dir,0));
-    S.wolf.forEach(a=>drawSprite(fctx,'wolf',M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,a.dir,0));
+    for(const b of anim.births) if(progress>.65) drawAnimalEntity(fctx,b.type,{dir:b.dir,stage:b.stage,sex:b.sex},M.ox+b.to.x*M.cell,M.oy+b.to.y*M.cell,M.cell,1);
+  }else{
+    S.deer.forEach(a=>drawAnimalEntity(fctx,'deer',a,M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,0));
+    S.wolf.forEach(a=>drawAnimalEntity(fctx,'wolf',a,M.ox+a.x*M.cell,M.oy+a.y*M.cell,M.cell,0));
   }
 }
 function occupyMap(animals){ const m=new Map(); animals.forEach(a=>m.set(a.x+','+a.y,a)); return m; }
+function birthSpots(cx,cy,cells,deer,wolf){
+  return landSpots(cells,deer,wolf).sort((a,b)=>(Math.abs(a.x-cx)+Math.abs(a.y-cy))-(Math.abs(b.x-cx)+Math.abs(b.y-cy)));
+}
 function simulateNext(){
   const q=conf(), fromCells=cloneGrid(S.cells), fromDeer=S.deer.map(a=>({...a})), fromWolf=S.wolf.map(a=>({...a})), cells=cloneGrid(S.cells);
   for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){
@@ -667,8 +692,7 @@ function simulateNext(){
   let wolfOcc=occupyMap(fromWolf);
   const deerNext=[], deerMoves=[], deerBirths=[], deaths=[];
   for(let i=0;i<fromDeer.length;i++){
-    const d=fromDeer[i];
-    const opts=neigh(d.x,d.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!deerNext.some(a=>a.x===p.x&&a.y===p.y)&&!wolfOcc.has(p.x+','+p.y)});
+    const d=fromDeer[i], opts=neigh(d.x,d.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!deerNext.some(a=>a.x===p.x&&a.y===p.y)&&!wolfOcc.has(p.x+','+p.y)});
     const food=opts.filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain==='grass'&&v.grass});
     const dest=randPick(food.length?food:opts)||{x:d.x,y:d.y,dir:d.dir};
     let h=d.h+1,a=d.a+1,ateGrass=false;
@@ -678,13 +702,10 @@ function simulateNext(){
       deaths.push({type:'deer',from:{x:d.x,y:d.y},to:{x:dest.x,y:dest.y},dir:dest.dir||d.dir,cause:a>q.dl?'age':'hunger'});
       continue;
     }
-    const nd={x:dest.x,y:dest.y,a,h,dir:dest.dir||d.dir};
+    const stage=d.stage==='child'&&a<q.dmat?'child':'adult';
+    const nd={...d,x:dest.x,y:dest.y,a,h,dir:dest.dir||d.dir,stage};
     deerNext.push(nd);
-    deerMoves.push({id:'d'+i,type:'deer',ref:nd,from:{x:d.x,y:d.y},to:{x:nd.x,y:nd.y},dir:nd.dir,action:ateGrass?'munch':null});
-    if(a>q.dl/3&&Math.random()<.12){
-      const places=neigh(nd.x,nd.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!deerNext.some(x=>x.x===p.x&&x.y===p.y)&&!wolfOcc.has(p.x+','+p.y)});
-      const b=randPick(places); if(b){const baby={x:b.x,y:b.y,a:0,h:0,dir:b.dir};deerNext.push(baby);deerBirths.push({type:'deer',to:{x:b.x,y:b.y},dir:b.dir});}
-    }
+    deerMoves.push({id:'d'+i,type:'deer',ref:nd,sex:nd.sex,stage:nd.stage,from:{x:d.x,y:d.y},to:{x:nd.x,y:nd.y},dir:nd.dir,action:ateGrass?'munch':null});
   }
 
   let deerOcc=occupyMap(deerNext);
@@ -698,30 +719,61 @@ function simulateNext(){
     const victim=deerOcc.get(dest.x+','+dest.y);
     if(victim){
       eaten.add(victim); deerOcc.delete(dest.x+','+dest.y); h=0; action='attack';
-      attacks.push({x:victim.x,y:victim.y,dir:victim.dir||'R'});
+      attacks.push({x:victim.x,y:victim.y,dir:victim.dir||'R',stage:victim.stage,sex:victim.sex});
     } else {
       const v=cellAt(cells,dest.x,dest.y);
-      const canPlant=q.wgMode==='opportunistic' && prey.length===0 && h>=q.wgh && v && v.terrain==='grass' && v.grass;
-      if(canPlant && Math.random()*100<q.wgp){
-        v.grass=false; v.gt=q.gr; h=Math.max(0,h-q.wgr); action='wolfgrass';
-      }
+      const canPlant=q.wgMode==='opportunistic'&&prey.length===0&&h>=q.wgh&&v&&v.terrain==='grass'&&v.grass;
+      if(canPlant&&Math.random()*100<q.wgp){v.grass=false;v.gt=q.gr;h=Math.max(0,h-q.wgr);action='wolfgrass';}
     }
-    if(h>q.ws||a>q.wl) continue;
-    const nw={x:dest.x,y:dest.y,a,h,dir:dest.dir||w.dir};
+    if(h>q.ws||a>q.wl){
+      deaths.push({type:'wolf',from:{x:w.x,y:w.y},to:{x:dest.x,y:dest.y},dir:dest.dir||w.dir,cause:a>q.wl?'age':'hunger'});
+      continue;
+    }
+    const stage=w.stage==='child'&&a<q.wmat?'child':'adult';
+    const nw={...w,x:dest.x,y:dest.y,a,h,dir:dest.dir||w.dir,stage};
     wolfNext.push(nw);
-    wolfMoves.push({id:'w'+i,type:'wolf',from:{x:w.x,y:w.y},to:{x:nw.x,y:nw.y},dir:nw.dir,action});
-    if(a>q.wl/3&&Math.random()<.08){
-      const places=neigh(nw.x,nw.y).filter(p=>{const v=cellAt(cells,p.x,p.y);return v&&v.terrain!=='sea'&&!wolfNext.some(x=>x.x===p.x&&x.y===p.y)&&!deerOcc.has(p.x+','+p.y)});
-      const b=randPick(places); if(b){const baby={x:b.x,y:b.y,a:0,h:0,dir:b.dir};wolfNext.push(baby);wolfBirths.push({type:'wolf',to:{x:b.x,y:b.y},dir:b.dir});}
-    }
+    wolfMoves.push({id:'w'+i,type:'wolf',ref:nw,sex:nw.sex,stage:nw.stage,from:{x:w.x,y:w.y},to:{x:nw.x,y:nw.y},dir:nw.dir,action});
   }
 
   const survivors=deerNext.filter(d=>!eaten.has(d));
   const survivorMoves=deerMoves.filter(m=>!eaten.has(m.ref)).map(({ref,...m})=>m);
+
+  if(q.dBreed){
+    for(const mother of survivors.filter(a=>a.sex==='F'&&a.stage==='adult')){
+      const hasMale=survivors.some(m=>m.sex==='M'&&m.stage==='adult'&&Math.abs(m.x-mother.x)+Math.abs(m.y-mother.y)===1);
+      if(!hasMale||(S.turn+1-(mother.lastBirthTurn??-9999))<q.dinterval) continue;
+      const spots=birthSpots(mother.x,mother.y,cells,survivors,wolfNext); let born=0;
+      for(let k=0;k<q.dbirth&&spots.length;k++){
+        const p=spots.shift(),sex=Math.random()*100<q.dfemale?'F':'M';
+        const baby={x:p.x,y:p.y,a:0,h:0,dir:'D',sex,stage:'child',lastBirthTurn:-9999};
+        survivors.push(baby); deerBirths.push({type:'deer',to:{x:p.x,y:p.y},dir:'D',sex,stage:'child'}); born++;
+      }
+      if(born>0) mother.lastBirthTurn=S.turn+1;
+      if(born<q.dbirth) S.capacityNotice='シカの出産：空きマス不足で '+born+'/'+q.dbirth+'頭';
+    }
+  }
+
+  if(q.wBreed){
+    for(const mother of wolfNext.filter(a=>a.sex==='F'&&a.stage==='adult')){
+      const hasMale=wolfNext.some(m=>m.sex==='M'&&m.stage==='adult'&&Math.abs(m.x-mother.x)+Math.abs(m.y-mother.y)===1);
+      if(!hasMale||(S.turn+1-(mother.lastBirthTurn??-9999))<q.winterval) continue;
+      const spots=birthSpots(mother.x,mother.y,cells,survivors,wolfNext); let born=0;
+      for(let k=0;k<q.wbirth&&spots.length;k++){
+        const p=spots.shift(),sex=Math.random()*100<q.wfemale?'F':'M';
+        const baby={x:p.x,y:p.y,a:0,h:0,dir:'D',sex,stage:'child',lastBirthTurn:-9999};
+        wolfNext.push(baby); wolfBirths.push({type:'wolf',to:{x:p.x,y:p.y},dir:'D',sex,stage:'child'}); born++;
+      }
+      if(born>0) mother.lastBirthTurn=S.turn+1;
+      if(born<q.wbirth) S.capacityNotice='オオカミの出産：空きマス不足で '+born+'/'+q.wbirth+'頭';
+    }
+  }
+
   let nextWolfIntroduced=S.wolfIntroduced;
-  if(!nextWolfIntroduced && (S.turn+1)>=q.wstart){
-    const newcomers=makeWolfBatch(q.wi,cells,survivors,wolfNext);
-    newcomers.forEach(w=>wolfBirths.push({type:'wolf',to:{x:w.x,y:w.y},dir:w.dir}));
+  if(!nextWolfIntroduced&&(S.turn+1)>=q.wstart){
+    let newcomers=[];
+    if(q.wBreed) newcomers=[...makeWolfBatch(q.wm,cells,survivors,wolfNext,'M'),...makeWolfBatch(q.wf,cells,survivors,wolfNext,'F')];
+    else newcomers=makeWolfBatch(q.wi,cells,survivors,wolfNext,null);
+    newcomers.forEach(w=>wolfBirths.push({type:'wolf',to:{x:w.x,y:w.y},dir:w.dir,sex:w.sex,stage:'adult'}));
     if(newcomers.length<q.wi) S.capacityNotice='TURN '+(S.turn+1)+'：オオカミ '+q.wi+'頭のうち '+newcomers.length+'頭だけ配置可能';
     nextWolfIntroduced=true;
   }
@@ -799,13 +851,19 @@ function closeM(id){ $(id).classList.remove('on'); }
 
 $('openSettings').onclick=()=>openM('settingsModal'); $('openHelp').onclick=()=>openM('helpModal'); $('openQR').onclick=()=>openM('qrModal'); $('miniGraph').onclick=()=>openM('graphModal');
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeM(b.dataset.close)); document.querySelectorAll('.modal').forEach(m=>m.onclick=e=>{ if(e.target===m) m.classList.remove('on'); });
+function syncBreedUI(){
+  $('dBreedFields').hidden=!$('dBreed').checked; $('dTotalRow').hidden=$('dBreed').checked;
+  $('wBreedFields').hidden=!$('wBreed').checked; $('wTotalRow').hidden=$('wBreed').checked;
+  updateCapacityInfo(false);
+}
+$('dBreed').addEventListener('change',syncBreedUI); $('wBreed').addEventListener('change',syncBreedUI);
 $('speed').addEventListener('input',()=>{$('speedValue').textContent=$('speed').value;});
-['sz','di','wi','wstart'].forEach(id=>$(id).addEventListener('input',()=>updateCapacityInfo(false)));
+['sz','di','wi','dm','df','wm','wf','wstart'].forEach(id=>$(id).addEventListener('input',()=>updateCapacityInfo(false)));
 $('runBtn').onclick=()=>S.running?stopRun():startRun(); $('resetBtn').onclick=()=>resetAll(false); $('mapchg').onclick=()=>resetAll(true); $('stepBtn').onclick=()=>{ stopRun(); stepOnce(); };
 window.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on')); });
 window.addEventListener('resize',()=>{ drawScene(1); drawMiniGraph(); drawBigGraph(); });
 
-renderAllSmallIcons(); makeGrid(); seedAnimals(); updateCounts(); pushHistory(); updateCapacityInfo(true); drawScene(1);
+renderAllSmallIcons(); syncBreedUI(); makeGrid(); seedAnimals(); updateCounts(); pushHistory(); updateCapacityInfo(true); drawScene(1);
 </script>
 </body>
 </html>
