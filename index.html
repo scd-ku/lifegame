@@ -292,34 +292,65 @@ function drawSprite(ctx,type,x,y,size,dir='R',pose=0,mode='normal'){
     fill(4,20,16,2,'rgba(0,0,0,.58)');
     if(dir==='L'||dir==='R'){
       if(dir==='L'){ctx.translate(size,0);ctx.scale(-1,1);}
-      // compact body, deliberately oversized head for RPG readability
-      fill(3,10,13,9,outline); fill(5,11,10,6,body);
+      fill(3,10,13,8,outline); fill(5,11,10,5,body);
       fill(13,4,10,11,outline); fill(15,6,7,7,face);
-      // muzzle, eye and nose
       fill(19,9,4,3,white); fill(20,8,1,1,'#111'); fill(22,10,1,1,deer?'#4a2208':'#111');
-      // ears/horns make deer and wolf silhouettes distinct
       if(deer){
         fill(14,2,2,4,dark); fill(19,2,2,4,dark); fill(13,1,1,4,dark); fill(20,0,1,5,dark);
         fill(12,1,2,1,dark); fill(20,1,2,1,dark);
         [[6,12],[9,14],[12,11]].forEach(p=>fill(p[0],p[1],1,1,'#fff'));
       } else {
-        fill(14,2,3,5,dark); fill(19,2,3,5,dark);
-        fill(12,7,3,3,dark); // mane/neck
+        fill(14,2,3,5,dark); fill(19,2,3,5,dark); fill(12,7,3,3,dark);
       }
-      // legs and tail
-      fill(5,17,3,5,outline); fill(12,17,3,5,outline); fill(6,17,1,4,white); fill(13,17,1,4,white);
       fill(1,12,4,4,outline); fill(2,12,3,2,deer?white:dark);
-      if(pose){ fill(8,18,2,3,white); fill(13,17,2,4,white); }
+      if(pose===0){
+        fill(5,16,3,6,outline); fill(12,18,3,4,outline);
+        fill(6,17,1,4,white); fill(13,19,1,2,white);
+        fill(9,17,2,5,outline); fill(10,18,1,3,white);
+      } else {
+        fill(5,18,3,4,outline); fill(12,16,3,6,outline);
+        fill(6,19,1,2,white); fill(13,17,1,4,white);
+        fill(8,16,2,6,outline); fill(9,17,1,4,white);
+      }
+    } else if(dir==='D'){
+      // downward movement = clear front-facing face
+      fill(7,8,10,10,outline); fill(9,9,6,8,body);
+      fill(5,2,14,10,outline); fill(7,4,10,6,face);
+      fill(8,5,2,2,white); fill(14,5,2,2,white);
+      fill(9,6,1,1,'#111'); fill(15,6,1,1,'#111');
+      fill(10,8,4,2,white); fill(11,9,2,1,deer?'#4a2208':'#111');
+      if(deer){
+        fill(6,2,2,4,dark); fill(16,2,2,4,dark);
+        fill(5,0,1,4,dark); fill(18,0,1,4,dark);
+        fill(4,1,2,1,dark); fill(18,1,2,1,dark);
+      } else {
+        fill(5,1,3,5,dark); fill(16,1,3,5,dark);
+        fill(6,7,2,4,dark); fill(16,7,2,4,dark);
+      }
+      if(pose===0){
+        fill(7,17,4,6,outline); fill(13,19,4,4,outline);
+        fill(8,18,2,4,white); fill(14,20,2,2,white);
+      } else {
+        fill(7,19,4,4,outline); fill(13,17,4,6,outline);
+        fill(8,20,2,2,white); fill(14,18,2,4,white);
+      }
     } else {
-      const up=dir==='U';
-      fill(7,8,10,12,outline); fill(9,9,6,9,body);
-      // oversized frontal/rear head
-      fill(5,up?2:13,14,9,outline); fill(7,up?4:15,10,6,face);
-      fill(9,up?5:17,2,2,white); fill(14,up?5:17,2,2,white);
-      if(!up){ fill(11,19,3,2,white); fill(12,19,1,1,'#111'); }
-      if(deer){ fill(6,up?1:12,2,4,dark); fill(16,up?1:12,2,4,dark); }
-      else { fill(6,up?1:12,3,4,dark); fill(15,up?1:12,3,4,dark); }
-      fill(8,18,3,4,outline); fill(13,18,3,4,outline); fill(9,18,1,3,white); fill(14,18,1,3,white);
+      // upward movement = back view, also alternating steps
+      fill(7,7,10,11,outline); fill(9,8,6,9,body);
+      fill(5,2,14,9,outline); fill(7,4,10,6,face);
+      if(deer){
+        fill(6,1,2,4,dark); fill(16,1,2,4,dark);
+        fill(5,0,1,3,dark); fill(18,0,1,3,dark);
+      } else {
+        fill(6,1,3,4,dark); fill(15,1,3,4,dark);
+      }
+      if(pose===0){
+        fill(7,17,4,6,outline); fill(13,19,4,4,outline);
+        fill(8,18,2,4,white); fill(14,20,2,2,white);
+      } else {
+        fill(7,19,4,4,outline); fill(13,17,4,6,outline);
+        fill(8,20,2,2,white); fill(14,18,2,4,white);
+      }
     }
   }
   ctx.restore();
