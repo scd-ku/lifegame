@@ -16,7 +16,7 @@ body{overflow:hidden}
 button,input{font:inherit} button{cursor:pointer}
 .app{height:100dvh;display:flex;align-items:flex-start;justify-content:center;padding:8px;background:#000}
 .screen{width:min(97vw,calc((100dvh - 16px)*4/3),1180px);aspect-ratio:4/3;position:relative;background:#000;border:4px solid #2a2a2a;box-shadow:0 0 0 3px #000,0 0 0 6px #213d89;overflow:hidden}
-.topbar{position:absolute;left:0;right:0;top:0;height:112px;padding:6px 10px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1.12fr) minmax(0,1.42fr) minmax(0,1.55fr);gap:9px;align-items:center;background:#000;z-index:4;box-sizing:border-box}
+.topbar{position:absolute;left:0;right:0;top:0;height:112px;padding:6px 6px;display:grid;grid-template-columns:minmax(185px,1fr) minmax(210px,1.06fr) 306px minmax(276px,1.12fr);gap:6px;align-items:center;background:#000;z-index:4;box-sizing:border-box}
 .miniPanel{height:96px;border:3px solid #516fd6;padding:5px;background:#000;display:flex;align-items:center}
 #miniGraph{width:100%;height:100%;display:block;background:#02040a;border:1px solid #233564;cursor:pointer;image-rendering:pixelated}
 .titleTurn{height:96px;display:grid;grid-template-rows:44px 40px;align-content:center;row-gap:2px;min-width:0}
@@ -28,14 +28,14 @@ button,input{font:inherit} button{cursor:pointer}
 .qrPix{width:22px;height:22px;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(5,1fr);gap:1px}
 .qrPix i{display:block;background:transparent}.qrPix i.on{background:#fff}
 .helpPix{font:900 26px/1 monospace;color:#fff;text-shadow:2px 2px 0 #000}
-.countGrid{height:96px;display:grid;grid-template-columns:148px 148px;grid-template-rows:42px 42px;gap:2px 10px;align-content:center}
+.countGrid{height:96px;min-width:306px;display:grid;grid-template-columns:148px 148px;grid-template-rows:42px 42px;gap:2px 10px;align-content:center}
 .hudStat{display:grid;grid-template-columns:36px 108px;align-items:center;column-gap:6px;width:150px;height:42px}
 .iconCounter{width:36px;height:36px;background:#000;display:block;image-rendering:pixelated}
 .countPix{width:108px;height:36px;display:block;background:#000;image-rendering:pixelated}
-.controlPanel{height:96px;min-width:0;display:grid;grid-template-rows:30px 32px 30px;gap:2px;box-sizing:border-box}
-.settingBtn,.hudAction{min-width:0;width:100%;box-sizing:border-box;border:3px solid #fff;background:#1b2b66;color:#fff;box-shadow:2px 2px 0 #000;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:1px 4px;overflow:hidden}
+.controlPanel{height:96px;min-width:0;display:grid;grid-template-rows:30px 32px 30px;gap:2px;box-sizing:border-box;padding-right:1px}
+.settingBtn,.hudAction{min-width:0;width:100%;box-sizing:border-box;border:2px solid #fff;background:#1b2b66;color:#fff;box-shadow:1px 1px 0 #000;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:1px 2px;overflow:hidden}
 .settingBtn{width:100%}.hudAction.run{background:#a52a43}.hudAction.save{background:#245539}.settingBtn:active,.hudAction:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #000}
-.actionRow{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.actionRow{min-width:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px}
 .pixPlay{width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:11px solid #fff;filter:drop-shadow(1px 1px 0 #000)}
 .pixPause{width:12px;height:14px;background:linear-gradient(90deg,#fff 0 4px,transparent 4px 8px,#fff 8px 12px)}
 .pixReset{font:900 18px/1 monospace;color:#fff}
@@ -43,7 +43,7 @@ button,input{font:inherit} button{cursor:pointer}
 .pixSettings:before,.pixSettings:after,.pixSettings i{content:"";position:absolute;left:0;width:18px;height:2px;background:#fff;box-shadow:0 1px 0 #000}
 .pixSettings:before{top:1px}.pixSettings i{top:6px}.pixSettings:after{top:11px}
 .pixSettings b{position:absolute;width:4px;height:5px;background:#ffd45c;border:1px solid #000}
-.pixSettings b:nth-child(2){left:4px;top:0}.pixSettings b:nth-child(3){left:11px;top:5px}.pixSettings b:nth-child(4){left:6px;top:10px}.buttonArt{display:block;width:100%;height:24px;image-rendering:pixelated}
+.pixSettings b:nth-child(2){left:4px;top:0}.pixSettings b:nth-child(3){left:11px;top:5px}.pixSettings b:nth-child(4){left:6px;top:10px}.buttonArt{display:block;width:auto;max-width:100%;height:24px;image-rendering:pixelated}
 .statusSpeed{min-width:0;box-sizing:border-box;display:grid;grid-template-columns:54px minmax(0,1fr) 30px;align-items:center;gap:5px;background:#071034;border:3px solid #fff;box-shadow:inset 0 0 0 2px #1f3d91,2px 2px 0 #000;padding:3px 5px}
 .speedLabelArt{width:54px;height:18px;display:block;image-rendering:pixelated}.speedValueArt{width:30px;height:18px;display:block;image-rendering:pixelated}
 .statusRange{-webkit-appearance:none;appearance:none;width:100%;height:16px;background:#02040a;border:3px solid #88a0ff;box-shadow:inset 0 0 0 2px #000;padding:0}
@@ -55,7 +55,7 @@ button,input{font:inherit} button{cursor:pointer}
 .copy{position:absolute;left:50%;transform:translateX(-50%);bottom:4px;z-index:8;background:#03060c;border:1px solid #5570c9;padding:2px 8px;font-size:10px;color:#d3dbff}
 .modal{position:absolute;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;padding:10px;z-index:20}.modal.on{display:flex}
 .box,.graphBox{width:min(96%,1040px);max-height:calc(100% - 14px);overflow:auto;background:#030711;border:4px solid #fff;outline:4px solid #000;box-shadow:inset 0 0 0 3px #273e86,8px 8px 0 #000;padding:8px;font-family:monospace}
-.graphBox{width:min(98%,1120px);position:relative;padding-right:176px}
+.graphBox{width:min(99.5%,1260px);box-sizing:border-box;position:relative;padding-right:184px}
 .mh{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#111d42;border:3px solid #627bea;padding:4px 6px;margin-bottom:6px;box-shadow:inset 0 0 0 2px #050814}
 .mh h2{margin:0;font-size:16px;line-height:1.2;letter-spacing:.04em;color:#fff;text-shadow:2px 2px 0 #000}
 .x{background:#8d1f35;color:#fff;border:3px solid #fff;box-shadow:2px 2px 0 #000;padding:3px 8px;font-weight:900}
@@ -116,7 +116,7 @@ button,input{font:inherit} button{cursor:pointer}
 #snapshotCanvas{width:100%;height:auto;max-height:220px;background:#000;image-rendering:pixelated;border:2px solid #233564}
 .snapshotInfo{width:100%;margin-top:3px;font:900 9px/1.35 monospace;color:#d7e1ff}
 
-.graphSideControls{position:absolute;right:8px;top:52px;width:158px;display:grid;gap:7px;background:#02050d;border:3px solid #465fd4;padding:6px;box-shadow:inset 0 0 0 2px #111d42}
+.graphSideControls{position:absolute;right:8px;top:52px;width:164px;box-sizing:border-box;display:grid;gap:6px;background:#02050d;border:3px solid #465fd4;padding:6px;box-shadow:inset 0 0 0 2px #111d42}
 .graphSideTitle{font:900 10px monospace;color:#ffd45c;text-align:center;padding:3px;background:#111d42;border:2px solid #627bea}
 .graphSideControls .graphSideBtn{height:34px;box-sizing:border-box;border:3px solid #fff;background:#1b2b66;box-shadow:2px 2px 0 #000;padding:1px 3px;overflow:hidden}
 .graphSideControls .graphSideBtn.run{background:#a52a43}.graphSideControls .graphSideBtn.save{background:#245539}
@@ -158,12 +158,12 @@ button,input{font:inherit} button{cursor:pointer}
       <div class="hudStat"><canvas class="iconCounter" id="cWolf" width="36" height="36"></canvas><canvas class="countPix" id="wolfCount" width="54" height="18" aria-label="オオカミ × 000"></canvas></div>
     </div>
     <div class="controlPanel">
-      <button id="openSettings" class="settingBtn" aria-label="せってい"><canvas id="settingsArt" class="buttonArt" width="240" height="24"></canvas></button>
+      <button id="openSettings" class="settingBtn" aria-label="せってい"><canvas id="settingsArt" class="buttonArt" width="112" height="24"></canvas></button>
       <div class="statusSpeed"><canvas id="speedLabelArt" class="speedLabelArt" width="54" height="18"></canvas><input id="speed" class="statusRange" type="range" min="1" max="11" step="1" value="6"><canvas id="speedValueArt" class="speedValueArt" width="30" height="18"></canvas></div>
       <div class="actionRow">
-        <button id="runBtn" class="hudAction run" aria-label="START"><canvas id="runArt" class="buttonArt" width="96" height="24"></canvas></button>
-        <button id="resetBtn" class="hudAction" aria-label="RESET"><canvas id="resetArt" class="buttonArt" width="96" height="24"></canvas></button>
-        <button id="saveBtn" class="hudAction save" aria-label="ほぞん"><canvas id="saveArt" class="buttonArt" width="96" height="24"></canvas></button>
+        <button id="runBtn" class="hudAction run" aria-label="START"><canvas id="runArt" class="buttonArt" width="92" height="24"></canvas></button>
+        <button id="resetBtn" class="hudAction" aria-label="RESET"><canvas id="resetArt" class="buttonArt" width="92" height="24"></canvas></button>
+        <button id="saveBtn" class="hudAction save" aria-label="ほぞん"><canvas id="saveArt" class="buttonArt" width="92" height="24"></canvas></button>
       </div>
     </div>
   </div>
@@ -267,21 +267,21 @@ button,input{font:inherit} button{cursor:pointer}
     </div>
     <aside class="graphSideControls" aria-label="グラフ画面操作">
       <div class="graphSideTitle">CONTROL</div>
-      <button id="graphSettingsBtn" class="graphSideBtn" aria-label="せってい"><canvas id="graphSettingsArt" class="buttonArt" width="128" height="24"></canvas></button>
+      <button id="graphSettingsBtn" class="graphSideBtn" aria-label="せってい"><canvas id="graphSettingsArt" class="buttonArt" width="136" height="24"></canvas></button>
       <div class="graphSideSpeed">
         <div class="graphSideSpeedTop"><canvas id="graphSpeedLabelArt" class="speedLabelArt" width="70" height="18"></canvas><canvas id="graphSpeedValueArt" class="speedValueArt" width="28" height="18"></canvas></div>
         <input id="graphSpeed" class="statusRange" type="range" min="1" max="11" step="1" value="6">
       </div>
-      <button id="graphRunBtn" class="graphSideBtn run" aria-label="START"><canvas id="graphRunArt" class="buttonArt" width="128" height="24"></canvas></button>
-      <button id="graphResetBtn" class="graphSideBtn" aria-label="RESET"><canvas id="graphResetArt" class="buttonArt" width="128" height="24"></canvas></button>
-      <button id="graphSaveBtn" class="graphSideBtn save" aria-label="ほぞん"><canvas id="graphSaveArt" class="buttonArt" width="128" height="24"></canvas></button>
+      <button id="graphRunBtn" class="graphSideBtn run" aria-label="START"><canvas id="graphRunArt" class="buttonArt" width="136" height="24"></canvas></button>
+      <button id="graphResetBtn" class="graphSideBtn" aria-label="RESET"><canvas id="graphResetArt" class="buttonArt" width="136" height="24"></canvas></button>
+      <button id="graphSaveBtn" class="graphSideBtn save" aria-label="ほぞん"><canvas id="graphSaveArt" class="buttonArt" width="136" height="24"></canvas></button>
     </aside>
     <div id="branchLegend" class="branchLegend"></div>
   </div></div>
 
   <div id="helpModal" class="modal"><div class="box"><div class="mh"><h2>HELP / あそびかた</h2><button class="x" data-close="helpModal">×</button></div>
     <div class="help helpGrid">
-      <section class="helpCard"><h3 class="helpTitle">1. まず動かす</h3><p><b>START</b>で進み、<b>PAUSE</b>で止まります。<b>RESET</b>で最初から。速度は画面右上の<b>SPEEDバー</b>で1〜11。1がいちばん遅く、11がいちばん速いです。マップは<b>2×2〜40×40</b>です。</p></section>
+      <section class="helpCard"><h3 class="helpTitle">1. まず動かす</h3><p><b>かいし</b>で進み、<b>ていし</b>で止まります。<b>リセット</b>で最初から。速度は画面右上の<b>はやさバー</b>で1〜11。1がいちばん遅く、11がいちばん速いです。マップは<b>2×2〜40×40</b>です。</p></section>
       <section class="helpCard"><h3 class="helpTitle">2. シカ</h3><p>シカは近くの草を優先して移動します。草を食べると空腹は0になります。<b>寿命</b>または<b>空腹限界</b>をこえると、天使の姿になって消えます。</p></section>
       <section class="helpCard"><h3 class="helpTitle">3. オオカミ</h3><p>近くにシカがいればシカを優先します。「出現ターン」を20にすると、TURN 20から参加します。寿命・空腹限界で死ぬと天使の姿になります。</p></section>
       <section class="helpCard"><h3 class="helpTitle">4. オオカミの植物食</h3><ul><li>近くにシカがいる → 草は食べない</li><li>シカがいない + 設定した空腹以上 + 草のあるマス → 設定確率で草を食べる</li><li>草を食べても空腹は0にはならず、設定した分だけ回復</li></ul><p>「食べない」にすると、このルールはOFFです。</p></section>
@@ -569,6 +569,24 @@ const PIX_FONT={
   'N':['10001','11001','11001','10101','10011','10011','10001'],
   ' ':['00000','00000','00000','00000','00000','00000','00000']
 };
+const JP_FONT={
+  'か':['0010000','1111100','0010010','0111110','1010010','1010010','0101100'],
+  'い':['0000000','1000100','1000100','1000100','1000100','1001000','0110000'],
+  'し':['1000000','1000000','1000000','1000000','1000010','0100100','0011000'],
+  'て':['1111110','0010000','0010000','0010000','0010000','0011000','0001100'],
+  'は':['1000100','1000100','1111110','1000100','1010100','1101100','1000100'],
+  'や':['0100000','1111000','0100100','0111100','0100100','0100000','0100000'],
+  'さ':['0100000','1111100','0100000','1111110','0010000','0001000','1110000'],
+  'せ':['0100100','1111110','0100100','1111100','0100100','0100100','0011000'],
+  'っ':['0000000','0000000','0010100','0000100','0000100','0011000','0000000'],
+  'ほ':['1000100','1111110','1000100','1011100','1010100','1101100','1000100'],
+  'ぞ':['1111101','0001010','0010000','0111110','0010000','0100000','0010000'],
+  'ん':['0100000','0100000','0010000','0011000','0100100','1000100','0001000'],
+  'リ':['1000100','1000100','1000100','1000100','0100100','0011000','0000000'],
+  'セ':['0010000','0010000','1111110','0010010','0010100','0011000','0000000'],
+  'ッ':['0000000','0000000','1010100','0010100','0001000','0010000','0000000'],
+  'ト':['1000000','1000000','1110000','1001000','1000100','1000000','1000000']
+};
 function drawPixelGlyph(ctx,glyph,x,y,scale,col='#fff'){
   const rows=PIX_FONT[glyph]||PIX_FONT['0'];
   ctx.fillStyle=col;
@@ -599,40 +617,51 @@ function drawRetroButtonIcon(ctx,kind){
   else if(kind==='settings'){ctx.fillRect(1,3,10,1);ctx.fillRect(1,7,10,1);ctx.fillRect(1,11,10,1);ctx.fillRect(3,2,2,3);ctx.fillRect(7,6,2,3);ctx.fillRect(5,10,2,3)}
   else if(kind==='save'){ctx.fillRect(1,2,10,10);ctx.clearRect(3,3,6,3);ctx.fillRect(3,8,6,3);ctx.fillStyle='#000';ctx.fillRect(4,9,4,1);ctx.fillStyle='#fff'}
 }
+function bitmapRows(ch){
+  return JP_FONT[ch]||PIX_FONT[ch]||PIX_FONT['0'];
+}
+function bitmapTextWidth(text,scale=2,gap=2){
+  let w=0;for(const ch of text){const rows=bitmapRows(ch),cols=rows[0].length;w+=cols*scale+gap}return Math.max(0,w-gap);
+}
+function drawBitmapString(ctx,text,x,y,scale=2,color='#fff',shadow='#444',gap=2){
+  let cx=x;
+  for(const ch of text){
+    const rows=bitmapRows(ch),cols=rows[0].length;
+    for(let r=0;r<rows.length;r++)for(let k=0;k<cols;k++)if(rows[r][k]==='1'){
+      if(shadow){ctx.fillStyle=shadow;ctx.fillRect(cx+k*scale+1,y+r*scale+1,scale,scale)}
+      ctx.fillStyle=color;ctx.fillRect(cx+k*scale,y+r*scale,scale,scale);
+    }
+    cx+=cols*scale+gap;
+  }
+}
 function renderRetroTextArt(canvas,text,opts={}){
   if(!canvas)return;
   const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.clearRect(0,0,canvas.width,canvas.height);
-  const fontSize=opts.fontSize||12, ox=opts.x||0, oy=opts.y??Math.floor(canvas.height/2);
-  const shadow=opts.shadow||'#3d3d3d', color=opts.color||'#fff', align=opts.align||'center';
-  ctx.textAlign=align;ctx.textBaseline='middle';ctx.font='900 '+fontSize+'px sans-serif';
-  const x=align==='center'?canvas.width/2:ox;
-  ctx.fillStyle=shadow;ctx.fillText(text,x+1,oy+1);
-  ctx.fillStyle=color;ctx.fillText(text,x,oy);
+  const scale=opts.scale||2,gap=opts.gap??2,color=opts.color||'#fff',shadow=opts.shadow??'#444';
+  const w=bitmapTextWidth(text,scale,gap),x=Math.floor((canvas.width-w)/2),y=Math.floor((canvas.height-7*scale)/2);
+  drawBitmapString(ctx,text,x,y,scale,color,shadow,gap);
 }
 function renderRetroButtonArt(canvas,label,icon){
   if(!canvas)return;
   const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.clearRect(0,0,canvas.width,canvas.height);
-  // pictogram at a dedicated 18x18 area
-  ctx.save();ctx.translate(4,4);ctx.scale(1.35,1.35);drawRetroButtonIcon(ctx,icon);ctx.restore();
-  ctx.textAlign='left';ctx.textBaseline='middle';ctx.font='900 12px sans-serif';
-  const textX=25;
-  ctx.fillStyle='#444';ctx.fillText(label,textX+1,13);
-  ctx.fillStyle='#fff';ctx.fillText(label,textX,12);
+  const scale=2,gap=2,textW=bitmapTextWidth(label,scale,gap),iconW=18,total=iconW+4+textW,start=Math.max(1,Math.floor((canvas.width-total)/2));
+  ctx.save();ctx.translate(start+1,4);ctx.scale(1.25,1.25);drawRetroButtonIcon(ctx,icon);ctx.restore();
+  drawBitmapString(ctx,label,start+iconW+4,5,scale,'#fff','#444',gap);
 }
 function renderSpeedArt(){
   const v=String($('speed')?.value||6);
-  renderRetroTextArt($('speedLabelArt'),'SPEED',{fontSize:11,color:'#d8e1ff'});
-  renderRetroTextArt($('speedValueArt'),v,{fontSize:12,color:'#ffd45c'});
+  renderRetroTextArt($('speedLabelArt'),'はやさ',{scale:2,color:'#d8e1ff'});
+  renderRetroTextArt($('speedValueArt'),v,{scale:2,color:'#ffd45c'});
   if($('graphSpeed'))$('graphSpeed').value=v;
-  renderRetroTextArt($('graphSpeedLabelArt'),'SPEED',{fontSize:11,color:'#d8e1ff'});
-  renderRetroTextArt($('graphSpeedValueArt'),v,{fontSize:12,color:'#ffd45c'});
+  renderRetroTextArt($('graphSpeedLabelArt'),'はやさ',{scale:2,color:'#d8e1ff'});
+  renderRetroTextArt($('graphSpeedValueArt'),v,{scale:2,color:'#ffd45c'});
 }
 function renderStaticButtonArt(){
   renderRetroButtonArt($('settingsArt'),'せってい','settings');
-  renderRetroButtonArt($('resetArt'),'RESET','reset');
+  renderRetroButtonArt($('resetArt'),'リセット','reset');
   renderRetroButtonArt($('saveArt'),'ほぞん','save');
   renderRetroButtonArt($('graphSettingsArt'),'せってい','settings');
-  renderRetroButtonArt($('graphResetArt'),'RESET','reset');
+  renderRetroButtonArt($('graphResetArt'),'リセット','reset');
   renderRetroButtonArt($('graphSaveArt'),'ほぞん','save');
   renderSpeedArt();
 }
@@ -961,7 +990,7 @@ function animateToNext(next,done,manual=false){
 function stepOnce(after){ if(!S.anim) animateToNext(simulateNext(),after,true); }
 function scheduleRun(){ if(!S.running) return; if(S.anim&&S.anim.heldAt!=null){ requestAnimationFrame(S.anim.frame); return; } if(!S.anim) animateToNext(simulateNext(),()=>{if(S.running)S.pendingTimeout=setTimeout(scheduleRun,turnTiming().gap)},false); }
 function setRunButton(){
-  const label=S.running?'PAUSE':'START',icon=S.running?'pause':'play';
+  const label=S.running?'ていし':'かいし',icon=S.running?'pause':'play';
   if($('runBtn'))$('runBtn').setAttribute('aria-label',label);
   if($('graphRunBtn'))$('graphRunBtn').setAttribute('aria-label',label);
   renderRetroButtonArt($('runArt'),label,icon);
