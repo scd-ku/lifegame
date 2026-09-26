@@ -64,7 +64,7 @@ button,input{font:inherit} button{cursor:pointer}
 .settingGroup.map{grid-area:map}.settingGroup.grass{grid-area:grass}.settingGroup.deer{grid-area:deer}.settingGroup.wolf{grid-area:wolf}.settingGroup.diet{grid-area:diet}
 .groupTitle{display:flex;align-items:center;gap:5px;margin:0 0 4px;padding:3px 5px;background:#111d42;border:2px solid #627bea;color:#fff;font-size:11.5px;font-weight:900;letter-spacing:.04em;text-shadow:1px 1px 0 #000}
 .groupTitle .labelIcon{width:20px;height:20px}
-.groupBody{display:grid;gap:3px}.breedToggle{background:#050a16;border:2px solid #465fae;padding:4px 6px;color:#fff;font-size:10.5px;font-weight:900}.breedToggle label{display:flex;align-items:center;gap:6px}.breedToggle input{width:16px;height:16px;accent-color:#ffd45c}.breedFields{display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:4px;background:#040914;border:1px solid #263d7c}.breedFields[hidden]{display:none!important}.breedFields .f{grid-template-columns:minmax(98px,1fr) 68px}.breedFields .f input{width:68px}
+.groupBody{display:grid;gap:3px}.breedToggle{background:#050a16;border:2px solid #465fae;padding:4px 6px;color:#fff;font-size:10.5px;font-weight:900}.breedToggle label{display:flex;align-items:center;gap:6px}.breedToggle input{width:16px;height:16px;accent-color:#ffd45c}.breedFields{display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:4px;background:#040914;border:1px solid #263d7c}.breedFields[hidden]{display:none!important}.breedFields .f{grid-template-columns:minmax(98px,1fr) 68px}.breedFields .f input{width:68px}.breedStatus{grid-column:1/-1;padding:4px 6px;background:#050a16;border:1px solid #465fae;color:#ffd45c;font:900 9px/1.35 monospace}
 .f{display:grid;grid-template-columns:minmax(110px,1fr) 76px;gap:5px;align-items:center;background:#09101f;border:1px solid #263d7c;padding:3px 5px;min-height:28px}
 .f label{display:flex;align-items:center;gap:5px;font-size:10.5px;line-height:1.15;color:#e5e9ff;margin:0;font-weight:900;letter-spacing:.02em}
 .f input,.f select{width:76px;justify-self:end;background:#000;color:#fff;border:2px solid #88a0ff;padding:2px 4px;font:900 12px monospace;line-height:1.15;box-shadow:inset 0 0 0 1px #111a38}
@@ -205,6 +205,7 @@ button,input{font:inherit} button{cursor:pointer}
             <div class="f"><label>成熟まで (TURN)</label><input id="dmat" type="number" min="1" max="100" value="4"></div>
             <div class="f"><label>次の出産まで (TURN)</label><input id="dinterval" type="number" min="1" max="200" value="12"></div>
             <div class="ruleNote full">実データ：ニホンジカは通常1仔、胎子の性比はほぼ1:1。TURN換算はゲーム用です。</div>
+            <div id="dBreedStatus" class="breedStatus">現在：交配OFF</div>
           </div>
         </div>
       </section>
@@ -225,6 +226,7 @@ button,input{font:inherit} button{cursor:pointer}
             <div class="f"><label>成熟まで (TURN)</label><input id="wmat" type="number" min="1" max="100" value="8"></div>
             <div class="f"><label>次の出産まで (TURN)</label><input id="winterval" type="number" min="1" max="200" value="12"></div>
             <div class="ruleNote full">実データ：灰色オオカミは1産平均6〜7仔という資料があります。性比は地域差があるため50%を基準にします。</div>
+            <div id="wBreedStatus" class="breedStatus">現在：交配OFF</div>
           </div>
         </div>
       </section>
@@ -292,7 +294,7 @@ button,input{font:inherit} button{cursor:pointer}
       <section class="helpCard"><h3 class="helpTitle">3. オオカミ</h3><p>近くにシカがいればシカを優先します。「出現ターン」を20にすると、TURN 20から参加します。寿命・空腹限界で死ぬと天使の姿になります。</p></section>
       <section class="helpCard"><h3 class="helpTitle">4. オオカミの植物食</h3><ul><li>近くにシカがいる → 草は食べない</li><li>シカがいない + 設定した空腹以上 + 草のあるマス → 設定確率で草を食べる</li><li>草を食べても空腹は0にはならず、設定した分だけ回復</li></ul><p>「食べない」にすると、このルールはOFFです。</p></section>
       <section class="helpCard"><h3 class="helpTitle">5. グラフ・巻き戻し</h3><p>左上の小グラフをクリックすると拡大します。グラフをクリックするかTURNを入力すると、そのTURNの全マス情報からフィールドを再現します。「ここからやりなおし」でそのTURNへ戻れます。前の結果は半透明の波線で残り、新しい結果を実線で重ねて比較できます。何度でもやりなおせます。</p><p>右上の<b>ほぞん</b>では、設定・各TURNの個体数・各マスの状態・動物状態・巻き戻し履歴をCSVで保存します。</p></section>
-      <section class="helpCard"><h3 class="helpTitle">6. 交配・出産</h3><p><b>初期状態では交配・出産はOFF</b>です。チェックを入れた種だけ、成体のオスとメスが上下左右で隣り合い、出産間隔を満たしたメスが子を産みます。生まれた子は設定したTURN数だけ子どもスプライトで表示されます。</p><p>ニホンジカ：通常は1仔で、五葉山の1,946単胎子ではオス49.8%・メス50.2%、双胎は0.29%。北海道足寄では多くのメスが1歳齢で性成熟に達したと報告されています。</p><p>灰色オオカミ：ADWでは1産1〜14仔、平均6〜7仔、性成熟2〜3歳。Yellowstoneでは巣穴から出る時点の平均仔数4.4。仔の性比は研究地域で変動するため、ゲーム初期値はメス50%です。</p><p><b>注意：</b>「成熟までTURN」「次の出産までTURN」は実時間ではなく授業用シミュレーションの調整値です。</p></section>
+      <section class="helpCard"><h3 class="helpTitle">6. 交配・出産</h3><p><b>初期状態では交配・出産はOFF</b>です。チェックを入れた種だけ繁殖します。チェックした時点で、現在いる個体にも設定比率をもとにオス・メスを割り当てます。成体のオスが周囲8マスのどこかにいて、出産間隔を満たしたメスが子を産みます。生まれた子は設定したTURN数だけ子どもスプライトで表示されます。</p><p>ニホンジカ：通常は1仔で、五葉山の1,946単胎子ではオス49.8%・メス50.2%、双胎は0.29%。北海道足寄では多くのメスが1歳齢で性成熟に達したと報告されています。</p><p>灰色オオカミ：ADWでは1産1〜14仔、平均6〜7仔、性成熟2〜3歳。Yellowstoneでは巣穴から出る時点の平均仔数4.4。仔の性比は研究地域で変動するため、ゲーム初期値はメス50%です。</p><p><b>注意：</b>「成熟までTURN」「次の出産までTURN」は実時間ではなく授業用シミュレーションの調整値です。</p></section>
       <section class="helpCard"><h3 class="helpTitle">7. このゲームのねらい</h3><p>数値を変えて「草が少ないと？」「オオカミを途中から入れると？」「繁殖をONにすると？」などを比べ、食物連鎖と個体群変化を考えるための簡略モデルです。</p></section>
       <section class="helpCard wide"><h3 class="helpTitle">REFERENCE / 参考資料</h3><p>
 <a href="https://www.jstage.jst.go.jp/article/mammalstudy/23/2/23_2_103/_article" target="_blank" rel="noopener">Takatsuki 1998：ニホンジカの双胎率・胎子性比</a> ／
@@ -327,6 +329,42 @@ const dirKeys=['L','R','U','D'];
 const neigh=(x,y)=>{const a=[]; if(x>0)a.push({x:x-1,y,dir:'L'}); if(x<S.n-1)a.push({x:x+1,y,dir:'R'}); if(y>0)a.push({x,y:y-1,dir:'U'}); if(y<S.n-1)a.push({x,y:y+1,dir:'D'}); return a;};
 const px=(c,x,y,w,h,col)=>{c.fillStyle=col;c.fillRect(Math.round(x),Math.round(y),Math.ceil(w),Math.ceil(h));};
 
+function near8(a,b){
+  const dx=Math.abs(a.x-b.x),dy=Math.abs(a.y-b.y);
+  return dx<=1&&dy<=1&&(dx+dy)>0;
+}
+function assignSexesToExisting(type){
+  const arr=type==='deer'?S.deer:S.wolf;
+  if(!arr.length)return;
+  const mId=type==='deer'?'dm':'wm',fId=type==='deer'?'df':'wf';
+  const m=Math.max(0,+$(mId).value||0),f=Math.max(0,+$(fId).value||0),total=m+f;
+  const maleTarget=total>0?Math.round(arr.length*m/total):Math.floor(arr.length/2);
+  const shuffled=[...arr].sort(()=>Math.random()-.5);
+  shuffled.forEach((a,i)=>{
+    if(!a.sex)a.sex=i<maleTarget?'M':'F';
+    if(!a.stage)a.stage='adult';
+    if(a.lastBirthTurn==null)a.lastBirthTurn=-9999;
+  });
+}
+function breedingPairCount(type){
+  const arr=type==='deer'?S.deer:S.wolf;
+  const females=arr.filter(a=>a.sex==='F'&&a.stage==='adult');
+  const males=arr.filter(a=>a.sex==='M'&&a.stage==='adult');
+  let pairs=0;
+  for(const f of females)if(males.some(m=>near8(f,m)))pairs++;
+  return {males:males.length,females:females.length,pairs};
+}
+function updateBreedStatus(){
+  const dOn=$('dBreed')?.checked,wOn=$('wBreed')?.checked;
+  if($('dBreedStatus')){
+    if(!dOn)$('dBreedStatus').textContent='現在：交配OFF';
+    else{const s=breedingPairCount('deer');$('dBreedStatus').textContent='現在：オス '+s.males+' / メス '+s.females+' / 交配可能メス '+s.pairs;}
+  }
+  if($('wBreedStatus')){
+    if(!wOn)$('wBreedStatus').textContent='現在：交配OFF';
+    else{const s=breedingPairCount('wolf');$('wBreedStatus').textContent='現在：オス '+s.males+' / メス '+s.females+' / 交配可能メス '+s.pairs;}
+  }
+}
 function conf(){
   const dBreed=$('dBreed').checked, wBreed=$('wBreed').checked;
   const dm=Math.max(0,+$('dm').value||0), df=Math.max(0,+$('df').value||0);
@@ -898,7 +936,7 @@ function simulateNext(){
 
   if(q.dBreed){
     for(const mother of survivors.filter(a=>a.sex==='F'&&a.stage==='adult')){
-      const hasMale=survivors.some(m=>m.sex==='M'&&m.stage==='adult'&&Math.abs(m.x-mother.x)+Math.abs(m.y-mother.y)===1);
+      const hasMale=survivors.some(m=>m.sex==='M'&&m.stage==='adult'&&near8(m,mother));
       if(!hasMale||(S.turn+1-(mother.lastBirthTurn??-9999))<q.dinterval) continue;
       const spots=birthSpots(mother.x,mother.y,cells,survivors,wolfNext); let born=0;
       for(let k=0;k<q.dbirth&&spots.length;k++){
@@ -913,7 +951,7 @@ function simulateNext(){
 
   if(q.wBreed){
     for(const mother of wolfNext.filter(a=>a.sex==='F'&&a.stage==='adult')){
-      const hasMale=wolfNext.some(m=>m.sex==='M'&&m.stage==='adult'&&Math.abs(m.x-mother.x)+Math.abs(m.y-mother.y)===1);
+      const hasMale=wolfNext.some(m=>m.sex==='M'&&m.stage==='adult'&&near8(m,mother));
       if(!hasMale||(S.turn+1-(mother.lastBirthTurn??-9999))<q.winterval) continue;
       const spots=birthSpots(mother.x,mother.y,cells,survivors,wolfNext); let born=0;
       for(let k=0;k<q.wbirth&&spots.length;k++){
@@ -1006,13 +1044,13 @@ function startRun(){ if(S.running) return; S.running=true; setRunButton(); sched
 function stopRun(){ S.running=false; setRunButton(); if(S.pendingTimeout)clearTimeout(S.pendingTimeout); S.pendingTimeout=null; }
 function resetAll(newMap=false){
   stopRun();S.anim=null;const q=conf();if(newMap||!S.cells.length||q.n!==S.n)makeGrid(q.n);
-  S.turn=0;S.timeline=[];S.branches=[];S.branchSeq=0;seedAnimals();S.hg=[];S.hd=[];S.hw=[];updateCounts();pushHistory();updateCapacityInfo(true);drawScene(1);renderBranchLegend();
+  S.turn=0;S.timeline=[];S.branches=[];S.branchSeq=0;seedAnimals();S.hg=[];S.hd=[];S.hw=[];updateCounts();pushHistory();updateCapacityInfo(true);updateBreedStatus();drawScene(1);renderBranchLegend();
 }
 function pad3(n){return String(Math.max(0,n)).padStart(3,'0')}
 function updateCounts(){
   let grass=0,waste=0; for(let y=0;y<S.n;y++) for(let x=0;x<S.n;x++){const v=S.cells[y][x]; if(v.terrain==='grass'&&v.grass) grass++; if(v.terrain==='waste'||(v.terrain==='grass'&&!v.grass)) waste++;}
   drawPixelCounter($('grassCount'),grass); drawPixelCounter($('wasteCount'),waste); drawPixelCounter($('deerCount'),S.deer.length); drawPixelCounter($('wolfCount'),S.wolf.length); drawPixelText($('turnText'),'TURN '+pad3(S.turn)); $('graphTurn').textContent='TURN '+S.turn;
-  drawMiniGraph(); drawBigGraph();
+  drawMiniGraph(); drawBigGraph(); updateBreedStatus();
 }
 function pushHistory(){
   const counts=stateCounts();
@@ -1117,12 +1155,19 @@ document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeM(b.data
 function syncBreedUI(){
   $('dBreedFields').hidden=!$('dBreed').checked; $('dTotalRow').hidden=$('dBreed').checked;
   $('wBreedFields').hidden=!$('wBreed').checked; $('wTotalRow').hidden=$('wBreed').checked;
-  updateCapacityInfo(false);
+  updateCapacityInfo(false);updateBreedStatus();
 }
-$('dBreed').addEventListener('change',syncBreedUI); $('wBreed').addEventListener('change',syncBreedUI);
+$('dBreed').addEventListener('change',()=>{
+  if($('dBreed').checked)assignSexesToExisting('deer');
+  syncBreedUI();if(S.timeline.length){S.timeline[S.turn]=captureSnapshot();}drawScene(1);
+});
+$('wBreed').addEventListener('change',()=>{
+  if($('wBreed').checked)assignSexesToExisting('wolf');
+  syncBreedUI();if(S.timeline.length){S.timeline[S.turn]=captureSnapshot();}drawScene(1);
+});
 $('speed').addEventListener('input',()=>{renderSpeedArt();});
 $('graphSpeed').addEventListener('input',()=>{$('speed').value=$('graphSpeed').value;renderSpeedArt();});
-['sz','di','wi','dm','df','wm','wf','wstart'].forEach(id=>$(id).addEventListener('input',()=>updateCapacityInfo(false)));
+['sz','di','wi','dm','df','wm','wf','wstart'].forEach(id=>$(id).addEventListener('input',()=>{updateCapacityInfo(false);updateBreedStatus();}));
 $('runBtn').onclick=()=>S.running?stopRun():startRun(); $('resetBtn').onclick=()=>resetAll(false); $('mapchg').onclick=()=>resetAll(true); $('stepBtn').onclick=()=>{ stopRun(); stepOnce(); };
 window.addEventListener('keydown',e=>{ if(e.key==='Escape') document.querySelectorAll('.modal.on').forEach(m=>m.classList.remove('on')); });
 window.addEventListener('resize',()=>{ drawScene(1); drawMiniGraph(); drawBigGraph(); renderStaticButtonArt(); setRunButton(); });
