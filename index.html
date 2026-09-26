@@ -44,7 +44,7 @@ button,input{font:inherit} button{cursor:pointer}
 .settingGroup.map{grid-area:map}.settingGroup.grass{grid-area:grass}.settingGroup.deer{grid-area:deer}.settingGroup.wolf{grid-area:wolf}.settingGroup.diet{grid-area:diet}.settingGroup.speed{grid-area:speed}
 .groupTitle{display:flex;align-items:center;gap:5px;margin:0 0 4px;padding:3px 5px;background:#111d42;border:2px solid #627bea;color:#fff;font-size:11.5px;font-weight:900;letter-spacing:.04em;text-shadow:1px 1px 0 #000}
 .groupTitle .labelIcon{width:20px;height:20px}
-.groupBody{display:grid;gap:3px}
+.groupBody{display:grid;gap:3px}.breedToggle{background:#050a16;border:2px solid #465fae;padding:4px 6px;color:#fff;font-size:10.5px;font-weight:900}.breedToggle label{display:flex;align-items:center;gap:6px}.breedToggle input{width:16px;height:16px;accent-color:#ffd45c}.breedFields{display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:4px;background:#040914;border:1px solid #263d7c}.breedFields[hidden]{display:none!important}.breedFields .f{grid-template-columns:minmax(98px,1fr) 68px}.breedFields .f input{width:68px}
 .f{display:grid;grid-template-columns:minmax(110px,1fr) 76px;gap:5px;align-items:center;background:#09101f;border:1px solid #263d7c;padding:3px 5px;min-height:28px}
 .f label{display:flex;align-items:center;gap:5px;font-size:10.5px;line-height:1.15;color:#e5e9ff;margin:0;font-weight:900;letter-spacing:.02em}
 .f input,.f select{width:76px;justify-self:end;background:#000;color:#fff;border:2px solid #88a0ff;padding:2px 4px;font:900 12px monospace;line-height:1.15;box-shadow:inset 0 0 0 1px #111a38}
@@ -136,7 +136,17 @@ button,input{font:inherit} button{cursor:pointer}
         <div class="groupBody">
           <div class="f"><label>寿命</label><input id="dl" type="number" min="1" max="200" value="35"></div>
           <div class="f"><label>空腹限界</label><input id="ds" type="number" min="1" max="50" value="7"></div>
-          <div class="f"><label>初期個体数</label><input id="di" type="number" min="0" value="12"></div>
+          <div class="f" id="dTotalRow"><label>初期個体数</label><input id="di" type="number" min="0" value="12"></div>
+          <div class="breedToggle"><label><input id="dBreed" type="checkbox"> 交配・出産を有効にする</label></div>
+          <div id="dBreedFields" class="breedFields" hidden>
+            <div class="f"><label>初期オス</label><input id="dm" type="number" min="0" value="6"></div>
+            <div class="f"><label>初期メス</label><input id="df" type="number" min="0" value="6"></div>
+            <div class="f"><label>1回の出産数</label><input id="dbirth" type="number" min="1" max="10" value="1"></div>
+            <div class="f"><label>子どものメス割合 (%)</label><input id="dfemale" type="number" min="0" max="100" step="0.1" value="50"></div>
+            <div class="f"><label>成熟まで (TURN)</label><input id="dmat" type="number" min="1" max="100" value="4"></div>
+            <div class="f"><label>次の出産まで (TURN)</label><input id="dinterval" type="number" min="1" max="200" value="12"></div>
+            <div class="ruleNote full">実データ：ニホンジカは通常1仔、胎子の性比はほぼ1:1。TURN換算はゲーム用です。</div>
+          </div>
         </div>
       </section>
 
@@ -145,8 +155,18 @@ button,input{font:inherit} button{cursor:pointer}
         <div class="groupBody">
           <div class="f"><label>寿命</label><input id="wl" type="number" min="1" max="200" value="45"></div>
           <div class="f"><label>空腹限界</label><input id="ws" type="number" min="1" max="50" value="9"></div>
-          <div class="f"><label>初期個体数</label><input id="wi" type="number" min="0" value="5"></div>
+          <div class="f" id="wTotalRow"><label>初期個体数</label><input id="wi" type="number" min="0" value="5"></div>
           <div class="f"><label>出現ターン</label><input id="wstart" type="number" min="0" max="999" value="0"><div class="ruleNote">0=最初から / 20=TURN 20から</div></div>
+          <div class="breedToggle"><label><input id="wBreed" type="checkbox"> 交配・出産を有効にする</label></div>
+          <div id="wBreedFields" class="breedFields" hidden>
+            <div class="f"><label>初期オス</label><input id="wm" type="number" min="0" value="2"></div>
+            <div class="f"><label>初期メス</label><input id="wf" type="number" min="0" value="3"></div>
+            <div class="f"><label>1回の出産数</label><input id="wbirth" type="number" min="1" max="14" value="6"></div>
+            <div class="f"><label>子どものメス割合 (%)</label><input id="wfemale" type="number" min="0" max="100" step="0.1" value="50"></div>
+            <div class="f"><label>成熟まで (TURN)</label><input id="wmat" type="number" min="1" max="100" value="8"></div>
+            <div class="f"><label>次の出産まで (TURN)</label><input id="winterval" type="number" min="1" max="200" value="12"></div>
+            <div class="ruleNote full">実データ：灰色オオカミは1産平均6〜7仔という資料があります。性比は地域差があるため50%を基準にします。</div>
+          </div>
         </div>
       </section>
 
@@ -166,7 +186,7 @@ button,input{font:inherit} button{cursor:pointer}
       </section>
     </div>
     <div class="row"><button id="mapchg" class="btn">MAP CHANGE</button><button id="stepBtn" class="btn">1 TURN</button></div>
-    <div class="miniInfo">MAP SIZE は RESET / MAP CHANGE で反映。その他の設定は次のターンから反映します。詳細は HELP を参照。</div>
+    <div class="miniInfo">MAP SIZE・初期個体数・交配ON/OFFは RESET / MAP CHANGE で反映。繁殖条件の数値は次のTURNから反映します。詳細は HELP。</div>
   </div></div>
 
   <div id="graphModal" class="modal"><div class="graphBox">
@@ -189,8 +209,16 @@ button,input{font:inherit} button{cursor:pointer}
       <section class="helpCard"><h3 class="helpTitle">3. オオカミ</h3><p>近くにシカがいればシカを優先します。「出現ターン」を20にすると、TURN 20から参加します。寿命・空腹限界で死ぬと天使の姿になります。</p></section>
       <section class="helpCard"><h3 class="helpTitle">4. オオカミの植物食</h3><ul><li>近くにシカがいる → 草は食べない</li><li>シカがいない + 設定した空腹以上 + 草のあるマス → 設定確率で草を食べる</li><li>草を食べても空腹は0にはならず、設定した分だけ回復</li></ul><p>「食べない」にすると、このルールはOFFです。</p></section>
       <section class="helpCard"><h3 class="helpTitle">5. グラフを見る</h3><p>左上の小グラフをクリックすると拡大します。緑=草、黄=シカ、紫=オオカミ。増え方・減り方・周期に注目してください。</p></section>
-      <section class="helpCard"><h3 class="helpTitle">6. このゲームのねらい</h3><p>数値を変えて「草が少ないと？」「オオカミを途中から入れると？」などを比べ、食物連鎖の関係を考えるための簡略モデルです。</p></section>
-      <section class="helpCard wide"><h3 class="helpTitle">REFERENCE / 参考資料</h3><p><a href="https://www.usgs.gov/publications/weekly-summer-diet-gray-wolves-canis-lupus-northeastern-minnesota" target="_blank" rel="noopener">USGS: Weekly summer diet of gray wolves</a> ／ <a href="https://nsojournals.onlinelibrary.wiley.com/doi/10.1002/wlb3.01224" target="_blank" rel="noopener">Wildlife Biology (2024): Wolf diet</a> ／ <a href="https://www.nps.gov/yell/learn/nature/cyclesprocesses.htm" target="_blank" rel="noopener">Yellowstone NPS: Trophic Cascade</a></p></section>
+      <section class="helpCard"><h3 class="helpTitle">6. 交配・出産</h3><p><b>初期状態では交配・出産はOFF</b>です。チェックを入れた種だけ、成体のオスとメスが上下左右で隣り合い、出産間隔を満たしたメスが子を産みます。生まれた子は設定したTURN数だけ子どもスプライトで表示されます。</p><p>ニホンジカ：通常は1仔で、五葉山の1,946単胎子ではオス49.8%・メス50.2%、双胎は0.29%。北海道足寄では多くのメスが1歳齢で性成熟に達したと報告されています。</p><p>灰色オオカミ：ADWでは1産1〜14仔、平均6〜7仔、性成熟2〜3歳。Yellowstoneでは巣穴から出る時点の平均仔数4.4。仔の性比は研究地域で変動するため、ゲーム初期値はメス50%です。</p><p><b>注意：</b>「成熟までTURN」「次の出産までTURN」は実時間ではなく授業用シミュレーションの調整値です。</p></section>
+      <section class="helpCard"><h3 class="helpTitle">7. このゲームのねらい</h3><p>数値を変えて「草が少ないと？」「オオカミを途中から入れると？」「繁殖をONにすると？」などを比べ、食物連鎖と個体群変化を考えるための簡略モデルです。</p></section>
+      <section class="helpCard wide"><h3 class="helpTitle">REFERENCE / 参考資料</h3><p>
+<a href="https://www.jstage.jst.go.jp/article/mammalstudy/23/2/23_2_103/_article" target="_blank" rel="noopener">Takatsuki 1998：ニホンジカの双胎率・胎子性比</a> ／
+<a href="https://www.jstage.jst.go.jp/article/jvms1991/55/5/55_5_833/_article" target="_blank" rel="noopener">Suzuki & Ohtaishi 1993：エゾシカの繁殖</a> ／
+<a href="https://animaldiversity.org/accounts/Canis_lupus/" target="_blank" rel="noopener">Animal Diversity Web：Gray wolf reproduction</a> ／
+<a href="https://home.nps.gov/yell/learn/ys-24-1-yellowstone-wolf-facts.htm" target="_blank" rel="noopener">Yellowstone NPS：Wolf facts</a> ／
+<a href="https://www.usgs.gov/publications/offspring-sex-ratios-are-male-biased-reflecting-sex-biased-dispersal-idaho-usa-wolves" target="_blank" rel="noopener">USGS：Wolf pup sex ratios</a> ／
+<a href="https://www.usgs.gov/publications/weekly-summer-diet-gray-wolves-canis-lupus-northeastern-minnesota" target="_blank" rel="noopener">USGS：Wolf summer diet</a>
+</p></section>
     </div>
   </div></div>
 
@@ -216,16 +244,22 @@ const neigh=(x,y)=>{const a=[]; if(x>0)a.push({x:x-1,y,dir:'L'}); if(x<S.n-1)a.p
 const px=(c,x,y,w,h,col)=>{c.fillStyle=col;c.fillRect(Math.round(x),Math.round(y),Math.ceil(w),Math.ceil(h));};
 
 function conf(){
+  const dBreed=$('dBreed').checked, wBreed=$('wBreed').checked;
+  const dm=Math.max(0,+$('dm').value||0), df=Math.max(0,+$('df').value||0);
+  const wm=Math.max(0,+$('wm').value||0), wf=Math.max(0,+$('wf').value||0);
   return {
     n:clamp(+$('sz').value||20,2,40),gr:clamp(+$('gr').value||6,1,50),
     dl:clamp(+$('dl').value||35,1,200),ds:clamp(+$('ds').value||7,1,50),
     wl:clamp(+$('wl').value||45,1,200),ws:clamp(+$('ws').value||9,1,50),
-    di:Math.max(0,+$('di').value||0),wi:Math.max(0,+$('wi').value||0),
-    wstart:clamp(+$('wstart').value||0,0,999),
-    wgMode:$('wgMode').value,
-    wgh:clamp(+$('wgh').value||0,0,50),
-    wgp:clamp(+$('wgp').value||0,0,100),
-    wgr:clamp(+$('wgr').value||0,0,50),
+    dBreed,wBreed,dm,df,wm,wf,
+    di:dBreed?dm+df:Math.max(0,+$('di').value||0),
+    wi:wBreed?wm+wf:Math.max(0,+$('wi').value||0),
+    dbirth:clamp(+$('dbirth').value||1,1,10),dfemale:clamp(+$('dfemale').value||50,0,100),
+    dmat:clamp(+$('dmat').value||4,1,100),dinterval:clamp(+$('dinterval').value||12,1,200),
+    wbirth:clamp(+$('wbirth').value||6,1,14),wfemale:clamp(+$('wfemale').value||50,0,100),
+    wmat:clamp(+$('wmat').value||8,1,100),winterval:clamp(+$('winterval').value||12,1,200),
+    wstart:clamp(+$('wstart').value||0,0,999),wgMode:$('wgMode').value,
+    wgh:clamp(+$('wgh').value||0,0,50),wgp:clamp(+$('wgp').value||0,0,100),wgr:clamp(+$('wgr').value||0,0,50),
     speed:clamp(+$('speed').value||6,1,11)
   };
 }
