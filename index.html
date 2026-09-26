@@ -55,7 +55,7 @@ button,input{font:inherit} button{cursor:pointer}
 .copy{position:absolute;left:50%;transform:translateX(-50%);bottom:4px;z-index:8;background:#03060c;border:1px solid #5570c9;padding:2px 8px;font-size:10px;color:#d3dbff}
 .modal{position:absolute;inset:0;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;padding:10px;z-index:20}.modal.on{display:flex}
 .box,.graphBox{width:min(96%,1040px);max-height:calc(100% - 14px);overflow:auto;background:#030711;border:4px solid #fff;outline:4px solid #000;box-shadow:inset 0 0 0 3px #273e86,8px 8px 0 #000;padding:8px;font-family:monospace}
-.graphBox{width:min(99.5%,1260px);box-sizing:border-box;position:relative;padding-right:184px}
+.graphBox{width:min(99.5%,1380px);box-sizing:border-box;position:relative;padding:8px}
 .mh{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#111d42;border:3px solid #627bea;padding:4px 6px;margin-bottom:6px;box-shadow:inset 0 0 0 2px #050814}
 .mh h2{margin:0;font-size:16px;line-height:1.2;letter-spacing:.04em;color:#fff;text-shadow:2px 2px 0 #000}
 .x{background:#8d1f35;color:#fff;border:3px solid #fff;box-shadow:2px 2px 0 #000;padding:3px 8px;font-weight:900}
@@ -116,19 +116,21 @@ button,input{font:inherit} button{cursor:pointer}
 #snapshotCanvas{width:100%;height:auto;max-height:220px;background:#000;image-rendering:pixelated;border:2px solid #233564}
 .snapshotInfo{width:100%;margin-top:3px;font:900 9px/1.35 monospace;color:#d7e1ff}
 
-.graphSideControls{position:absolute;right:8px;top:52px;width:164px;box-sizing:border-box;display:grid;gap:6px;background:#02050d;border:3px solid #465fd4;padding:6px;box-shadow:inset 0 0 0 2px #111d42}
-.graphSideTitle{font:900 10px monospace;color:#ffd45c;text-align:center;padding:3px;background:#111d42;border:2px solid #627bea}
-.graphSideControls .graphSideBtn{height:34px;box-sizing:border-box;border:3px solid #fff;background:#1b2b66;box-shadow:2px 2px 0 #000;padding:1px 3px;overflow:hidden}
+.graphWorkspace{display:grid;grid-template-columns:minmax(0,1fr) 178px;gap:8px;align-items:start}
+.graphMain{min-width:0}
+.graphSideControls{position:static;width:178px;box-sizing:border-box;display:grid;gap:7px;background:#02050d;border:3px solid #465fd4;padding:6px;box-shadow:inset 0 0 0 2px #111d42}
+.graphSideTitle{font:900 10px monospace;color:#ffd45c;text-align:center;padding:4px;background:#111d42;border:2px solid #627bea}
+.graphSideControls .graphSideBtn{height:38px;box-sizing:border-box;border:3px solid #fff;background:#1b2b66;box-shadow:2px 2px 0 #000;padding:2px;overflow:hidden;display:flex;align-items:center;justify-content:center}
 .graphSideControls .graphSideBtn.run{background:#a52a43}.graphSideControls .graphSideBtn.save{background:#245539}
-.graphSideControls .buttonArt{height:24px}
-.graphSideSpeed{display:grid;gap:3px;padding:4px;background:#071034;border:3px solid #fff;box-shadow:inset 0 0 0 2px #1f3d91}
-.graphSideSpeedTop{display:grid;grid-template-columns:1fr 28px;gap:3px;align-items:center}
-.graphSideSpeed .speedLabelArt{width:70px;height:18px}.graphSideSpeed .speedValueArt{width:28px;height:18px}
+.graphSideControls .buttonArt{height:24px;max-width:100%}
+.graphSideSpeed{display:grid;gap:4px;padding:5px;background:#071034;border:3px solid #fff;box-shadow:inset 0 0 0 2px #1f3d91}
+.graphSideSpeedTop{display:grid;grid-template-columns:1fr 30px;gap:4px;align-items:center}
+.graphSideSpeed .speedLabelArt{width:76px;height:20px}.graphSideSpeed .speedValueArt{width:30px;height:20px}
 .graphSideSpeed .statusRange{height:16px}
 .branchLegend{margin-top:5px;display:grid;gap:3px}
 .branchItem{display:flex;align-items:center;gap:7px;padding:3px 6px;background:#050a16;border:1px solid #263d7c;font:900 9px monospace;color:#c7d1ff}
 .dashSample,.solidSample{display:inline-block;width:34px;height:0;border-top:2px dashed rgba(255,255,255,.55)}.solidSample{border-top-style:solid;border-top-color:#fff}
-@media(max-width:860px){.graphBox{padding-right:8px}.graphInspect{grid-template-columns:1fr}.snapshotPanel{max-width:320px;margin:auto}.graphSideControls{position:static;width:auto;margin-top:6px;grid-template-columns:1fr 1.6fr 1fr 1fr 1fr;align-items:stretch}.graphSideTitle{display:none}.graphSideSpeed{grid-column:auto}.actionRow{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:860px){.graphWorkspace{grid-template-columns:1fr}.graphInspect{grid-template-columns:1fr}.snapshotPanel{max-width:320px;margin:auto}.graphSideControls{width:auto;grid-template-columns:1fr 1.4fr 1fr 1fr 1fr;align-items:stretch}.graphSideTitle{display:none}.graphSideSpeed{grid-column:auto}.actionRow{grid-template-columns:repeat(3,1fr)}}
 </style>
 </head>
 <body>
@@ -158,12 +160,12 @@ button,input{font:inherit} button{cursor:pointer}
       <div class="hudStat"><canvas class="iconCounter" id="cWolf" width="36" height="36"></canvas><canvas class="countPix" id="wolfCount" width="54" height="18" aria-label="オオカミ × 000"></canvas></div>
     </div>
     <div class="controlPanel">
-      <button id="openSettings" class="settingBtn" aria-label="せってい"><canvas id="settingsArt" class="buttonArt" width="112" height="24"></canvas></button>
+      <button id="openSettings" class="settingBtn" aria-label="せってい"><canvas id="settingsArt" class="buttonArt" width="128" height="24"></canvas></button>
       <div class="statusSpeed"><canvas id="speedLabelArt" class="speedLabelArt" width="54" height="18"></canvas><input id="speed" class="statusRange" type="range" min="1" max="11" step="1" value="6"><canvas id="speedValueArt" class="speedValueArt" width="30" height="18"></canvas></div>
       <div class="actionRow">
-        <button id="runBtn" class="hudAction run" aria-label="START"><canvas id="runArt" class="buttonArt" width="92" height="24"></canvas></button>
-        <button id="resetBtn" class="hudAction" aria-label="RESET"><canvas id="resetArt" class="buttonArt" width="92" height="24"></canvas></button>
-        <button id="saveBtn" class="hudAction save" aria-label="ほぞん"><canvas id="saveArt" class="buttonArt" width="92" height="24"></canvas></button>
+        <button id="runBtn" class="hudAction run" aria-label="START"><canvas id="runArt" class="buttonArt" width="104" height="24"></canvas></button>
+        <button id="resetBtn" class="hudAction" aria-label="RESET"><canvas id="resetArt" class="buttonArt" width="104" height="24"></canvas></button>
+        <button id="saveBtn" class="hudAction save" aria-label="ほぞん"><canvas id="saveArt" class="buttonArt" width="104" height="24"></canvas></button>
       </div>
     </div>
   </div>
@@ -245,38 +247,42 @@ button,input{font:inherit} button{cursor:pointer}
 
   <div id="graphModal" class="modal"><div class="graphBox">
     <div class="mh"><h2>POPULATION / 個体数グラフ</h2><button class="x" data-close="graphModal">×</button></div>
-    <div class="graphHead"><span>のこっている数の変化 / グラフをクリックしてTURNを選べます</span><span id="graphTurn">TURN 0</span></div>
-    <div class="graphTools">
-      <label>TURN <input id="snapshotTurn" type="number" min="0" value="0"></label>
-      <button id="snapshotGo" class="graphBtn">このTURNをみる</button>
-      <button id="rewindBtn" class="graphBtn rewind">ここからやりなおし</button>
-    </div>
-    <div class="graphInspect">
-      <canvas id="bigGraph"></canvas>
-      <div class="snapshotPanel">
-        <div class="snapshotTitle">FIELD SNAPSHOT</div>
-        <canvas id="snapshotCanvas" width="280" height="220"></canvas>
-        <div id="snapshotInfo" class="snapshotInfo">TURN 0</div>
+    <div class="graphWorkspace">
+      <div class="graphMain">
+        <div class="graphHead"><span>のこっている数の変化 / グラフをクリックしてTURNを選べます</span><span id="graphTurn">TURN 0</span></div>
+        <div class="graphTools">
+          <label>TURN <input id="snapshotTurn" type="number" min="0" value="0"></label>
+          <button id="snapshotGo" class="graphBtn">このTURNをみる</button>
+          <button id="rewindBtn" class="graphBtn rewind">ここからやりなおし</button>
+        </div>
+        <div class="graphInspect">
+          <canvas id="bigGraph"></canvas>
+          <div class="snapshotPanel">
+            <div class="snapshotTitle">FIELD SNAPSHOT</div>
+            <canvas id="snapshotCanvas" width="280" height="220"></canvas>
+            <div id="snapshotInfo" class="snapshotInfo">TURN 0</div>
+          </div>
+        </div>
+        <div class="legend">
+          <div class="legendItem"><canvas class="legendIcon icon-grass" width="22" height="22"></canvas><span>草</span></div>
+          <div class="legendItem"><canvas class="legendIcon icon-deer" width="22" height="22"></canvas><span>シカ</span></div>
+          <div class="legendItem"><canvas class="legendIcon icon-wolf" width="22" height="22"></canvas><span>オオカミ</span></div>
+          <div class="legendItem"><span class="solidSample"></span><span>現在の結果（実線）</span></div>
+        </div>
+        <div id="branchLegend" class="branchLegend"></div>
       </div>
+      <aside class="graphSideControls" aria-label="グラフ画面操作">
+        <div class="graphSideTitle">CONTROL</div>
+        <button id="graphSettingsBtn" class="graphSideBtn" aria-label="せってい"><canvas id="graphSettingsArt" class="buttonArt" width="142" height="24"></canvas></button>
+        <div class="graphSideSpeed">
+          <div class="graphSideSpeedTop"><canvas id="graphSpeedLabelArt" class="speedLabelArt" width="76" height="20"></canvas><canvas id="graphSpeedValueArt" class="speedValueArt" width="30" height="20"></canvas></div>
+          <input id="graphSpeed" class="statusRange" type="range" min="1" max="11" step="1" value="6">
+        </div>
+        <button id="graphRunBtn" class="graphSideBtn run" aria-label="かいし"><canvas id="graphRunArt" class="buttonArt" width="142" height="24"></canvas></button>
+        <button id="graphResetBtn" class="graphSideBtn" aria-label="リセット"><canvas id="graphResetArt" class="buttonArt" width="142" height="24"></canvas></button>
+        <button id="graphSaveBtn" class="graphSideBtn save" aria-label="ほぞん"><canvas id="graphSaveArt" class="buttonArt" width="142" height="24"></canvas></button>
+      </aside>
     </div>
-    <div class="legend">
-      <div class="legendItem"><canvas class="legendIcon icon-grass" width="22" height="22"></canvas><span>草</span></div>
-      <div class="legendItem"><canvas class="legendIcon icon-deer" width="22" height="22"></canvas><span>シカ</span></div>
-      <div class="legendItem"><canvas class="legendIcon icon-wolf" width="22" height="22"></canvas><span>オオカミ</span></div>
-      <div class="legendItem"><span class="solidSample"></span><span>現在の結果（実線）</span></div>
-    </div>
-    <aside class="graphSideControls" aria-label="グラフ画面操作">
-      <div class="graphSideTitle">CONTROL</div>
-      <button id="graphSettingsBtn" class="graphSideBtn" aria-label="せってい"><canvas id="graphSettingsArt" class="buttonArt" width="136" height="24"></canvas></button>
-      <div class="graphSideSpeed">
-        <div class="graphSideSpeedTop"><canvas id="graphSpeedLabelArt" class="speedLabelArt" width="70" height="18"></canvas><canvas id="graphSpeedValueArt" class="speedValueArt" width="28" height="18"></canvas></div>
-        <input id="graphSpeed" class="statusRange" type="range" min="1" max="11" step="1" value="6">
-      </div>
-      <button id="graphRunBtn" class="graphSideBtn run" aria-label="START"><canvas id="graphRunArt" class="buttonArt" width="136" height="24"></canvas></button>
-      <button id="graphResetBtn" class="graphSideBtn" aria-label="RESET"><canvas id="graphResetArt" class="buttonArt" width="136" height="24"></canvas></button>
-      <button id="graphSaveBtn" class="graphSideBtn save" aria-label="ほぞん"><canvas id="graphSaveArt" class="buttonArt" width="136" height="24"></canvas></button>
-    </aside>
-    <div id="branchLegend" class="branchLegend"></div>
   </div></div>
 
   <div id="helpModal" class="modal"><div class="box"><div class="mh"><h2>HELP / あそびかた</h2><button class="x" data-close="helpModal">×</button></div>
@@ -617,44 +623,44 @@ function drawRetroButtonIcon(ctx,kind){
   else if(kind==='settings'){ctx.fillRect(1,3,10,1);ctx.fillRect(1,7,10,1);ctx.fillRect(1,11,10,1);ctx.fillRect(3,2,2,3);ctx.fillRect(7,6,2,3);ctx.fillRect(5,10,2,3)}
   else if(kind==='save'){ctx.fillRect(1,2,10,10);ctx.clearRect(3,3,6,3);ctx.fillRect(3,8,6,3);ctx.fillStyle='#000';ctx.fillRect(4,9,4,1);ctx.fillStyle='#fff'}
 }
-function bitmapRows(ch){
-  return JP_FONT[ch]||PIX_FONT[ch]||PIX_FONT['0'];
-}
-function bitmapTextWidth(text,scale=2,gap=2){
-  let w=0;for(const ch of text){const rows=bitmapRows(ch),cols=rows[0].length;w+=cols*scale+gap}return Math.max(0,w-gap);
-}
-function drawBitmapString(ctx,text,x,y,scale=2,color='#fff',shadow='#444',gap=2){
-  let cx=x;
-  for(const ch of text){
-    const rows=bitmapRows(ch),cols=rows[0].length;
-    for(let r=0;r<rows.length;r++)for(let k=0;k<cols;k++)if(rows[r][k]==='1'){
-      if(shadow){ctx.fillStyle=shadow;ctx.fillRect(cx+k*scale+1,y+r*scale+1,scale,scale)}
-      ctx.fillStyle=color;ctx.fillRect(cx+k*scale,y+r*scale,scale,scale);
-    }
-    cx+=cols*scale+gap;
+function rasterPixelText(ctx,text,x,y,w,h,color='#fff',scale=2){
+  const lw=Math.max(8,Math.floor(w/scale)),lh=Math.max(8,Math.floor(h/scale));
+  const off=document.createElement('canvas');off.width=lw;off.height=lh;
+  const o=off.getContext('2d');o.clearRect(0,0,lw,lh);o.fillStyle='#fff';o.textAlign='center';o.textBaseline='middle';
+  const chars=[...text].length;
+  let fs=Math.min(lh-1, chars>=4?8.5:chars===3?9.5:10);
+  o.font='900 '+fs+'px "Arial","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif';
+  o.fillText(text,lw/2,lh/2+.2);
+  const im=o.getImageData(0,0,lw,lh).data;
+  // dark one-pixel-block shadow
+  ctx.fillStyle='#404040';
+  for(let py=0;py<lh;py++)for(let px0=0;px0<lw;px0++){
+    if(im[(py*lw+px0)*4+3]>105)ctx.fillRect(x+px0*scale+1,y+py*scale+1,scale,scale);
+  }
+  ctx.fillStyle=color;
+  for(let py=0;py<lh;py++)for(let px0=0;px0<lw;px0++){
+    if(im[(py*lw+px0)*4+3]>105)ctx.fillRect(x+px0*scale,y+py*scale,scale,scale);
   }
 }
 function renderRetroTextArt(canvas,text,opts={}){
   if(!canvas)return;
   const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.clearRect(0,0,canvas.width,canvas.height);
-  const scale=opts.scale||2,gap=opts.gap??2,color=opts.color||'#fff',shadow=opts.shadow??'#444';
-  const w=bitmapTextWidth(text,scale,gap),x=Math.floor((canvas.width-w)/2),y=Math.floor((canvas.height-7*scale)/2);
-  drawBitmapString(ctx,text,x,y,scale,color,shadow,gap);
+  rasterPixelText(ctx,text,1,1,canvas.width-2,canvas.height-2,opts.color||'#fff',2);
 }
 function renderRetroButtonArt(canvas,label,icon){
   if(!canvas)return;
   const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;ctx.clearRect(0,0,canvas.width,canvas.height);
-  const scale=2,gap=2,textW=bitmapTextWidth(label,scale,gap),iconW=18,total=iconW+4+textW,start=Math.max(1,Math.floor((canvas.width-total)/2));
-  ctx.save();ctx.translate(start+1,4);ctx.scale(1.25,1.25);drawRetroButtonIcon(ctx,icon);ctx.restore();
-  drawBitmapString(ctx,label,start+iconW+4,5,scale,'#fff','#444',gap);
+  const iconBox=20;
+  ctx.save();ctx.translate(3,4);ctx.scale(1.15,1.15);drawRetroButtonIcon(ctx,icon);ctx.restore();
+  rasterPixelText(ctx,label,iconBox,1,canvas.width-iconBox-2,canvas.height-2,'#fff',2);
 }
 function renderSpeedArt(){
   const v=String($('speed')?.value||6);
-  renderRetroTextArt($('speedLabelArt'),'はやさ',{scale:2,color:'#d8e1ff'});
-  renderRetroTextArt($('speedValueArt'),v,{scale:2,color:'#ffd45c'});
+  renderRetroTextArt($('speedLabelArt'),'はやさ',{color:'#d8e1ff'});
+  renderRetroTextArt($('speedValueArt'),v,{color:'#ffd45c'});
   if($('graphSpeed'))$('graphSpeed').value=v;
-  renderRetroTextArt($('graphSpeedLabelArt'),'はやさ',{scale:2,color:'#d8e1ff'});
-  renderRetroTextArt($('graphSpeedValueArt'),v,{scale:2,color:'#ffd45c'});
+  renderRetroTextArt($('graphSpeedLabelArt'),'はやさ',{color:'#d8e1ff'});
+  renderRetroTextArt($('graphSpeedValueArt'),v,{color:'#ffd45c'});
 }
 function renderStaticButtonArt(){
   renderRetroButtonArt($('settingsArt'),'せってい','settings');
