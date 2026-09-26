@@ -57,7 +57,7 @@ button,input{font:inherit} button{cursor:pointer}
 .speedBox{display:block;background:#09101f;border:1px solid #263d7c;padding:4px}
 .speedBox>label{display:flex;align-items:center;gap:5px;font-size:10.5px;font-weight:900;color:#e5e9ff;margin-bottom:3px}
 .speedLine{display:grid;grid-template-columns:38px 1fr 38px;gap:4px;align-items:center}.speedWord{font-size:8.5px;color:#d8e1ff;text-align:center;font-weight:900}.pixelRange{-webkit-appearance:none;appearance:none;width:100%;height:15px;background:#000;border:2px solid #88a0ff;box-shadow:inset 0 0 0 1px #000;padding:0}.pixelRange::-webkit-slider-runnable-track{height:5px;background:repeating-linear-gradient(90deg,#516fd6 0 7%,#1a2d66 7% 14%)}.pixelRange::-webkit-slider-thumb{-webkit-appearance:none;width:15px;height:15px;margin-top:-5px;background:#ffd45c;border:2px solid #6f3200;box-shadow:1px 1px 0 #000}.pixelRange::-moz-range-track{height:5px;background:#516fd6}.pixelRange::-moz-range-thumb{width:11px;height:11px;background:#ffd45c;border:2px solid #6f3200;border-radius:0}
-.speedTicks{display:grid;grid-template-columns:repeat(7,1fr);margin:2px 39px 0;font-size:8px;color:#9fb2ff;text-align:center}
+.speedTicks{display:grid;grid-template-columns:repeat(9,1fr);margin:2px 39px 0;font-size:8px;color:#9fb2ff;text-align:center}
 .labelIcon{width:22px;height:22px;display:block;background:#000;flex:none;image-rendering:pixelated}
 .help{margin:0;padding:0;font-size:11px;line-height:1.45;color:#eef2ff}
 .helpGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
@@ -152,7 +152,7 @@ button,input{font:inherit} button{cursor:pointer}
 
       <section class="settingGroup speed">
         <div class="groupTitle">GAME SPEED</div>
-        <div class="speedBox"><label>TURN SPEED <span id="speedValue">4</span></label><div class="speedLine"><span class="speedWord">SLOW</span><input id="speed" class="pixelRange" type="range" min="1" max="7" step="1" value="4"><span class="speedWord">FAST</span></div><div class="speedTicks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span></div></div>
+        <div class="speedBox"><label>TURN SPEED <span id="speedValue">5</span></label><div class="speedLine"><span class="speedWord">SLOW</span><input id="speed" class="pixelRange" type="range" min="1" max="9" step="1" value="5"><span class="speedWord">FAST</span></div><div class="speedTicks"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div></div>
       </section>
 
       <section class="settingGroup diet">
@@ -184,7 +184,7 @@ button,input{font:inherit} button{cursor:pointer}
 
   <div id="helpModal" class="modal"><div class="box"><div class="mh"><h2>HELP / あそびかた</h2><button class="x" data-close="helpModal">×</button></div>
     <div class="help helpGrid">
-      <section class="helpCard"><h3 class="helpTitle">1. まず動かす</h3><p><b>START</b>で進み、<b>PAUSE</b>で止まります。<b>RESET</b>で最初から。速度はSETで<b>1〜7</b>。1がいちばん遅く、7がいちばん速いです。</p></section>
+      <section class="helpCard"><h3 class="helpTitle">1. まず動かす</h3><p><b>START</b>で進み、<b>PAUSE</b>で止まります。<b>RESET</b>で最初から。速度はSETで<b>1〜9</b>。1がいちばん遅く、9がいちばん速いです。</p></section>
       <section class="helpCard"><h3 class="helpTitle">2. シカ</h3><p>シカは近くの草を優先して移動します。草を食べると空腹は0になります。<b>寿命</b>または<b>空腹限界</b>をこえると、天使の姿になって消えます。</p></section>
       <section class="helpCard"><h3 class="helpTitle">3. オオカミ</h3><p>近くにシカがいればシカを優先します。「出現ターン」を20にすると、TURN 20から参加します。寿命・空腹限界で死ぬと天使の姿になります。</p></section>
       <section class="helpCard"><h3 class="helpTitle">4. オオカミの植物食</h3><ul><li>近くにシカがいる → 草は食べない</li><li>シカがいない + 設定した空腹以上 + 草のあるマス → 設定確率で草を食べる</li><li>草を食べても空腹は0にはならず、設定した分だけ回復</li></ul><p>「食べない」にすると、このルールはOFFです。</p></section>
@@ -226,12 +226,12 @@ function conf(){
     wgh:clamp(+$('wgh').value||0,0,50),
     wgp:clamp(+$('wgp').value||0,0,100),
     wgr:clamp(+$('wgr').value||0,0,50),
-    speed:clamp(+$('speed').value||4,1,7)
+    speed:clamp(+$('speed').value||5,1,9)
   };
 }
 function turnTiming(){
   const v=conf().speed;
-  return [{dur:0,gap:0},{dur:1400,gap:520},{dur:950,gap:340},{dur:680,gap:210},{dur:420,gap:90},{dur:260,gap:35},{dur:150,gap:5},{dur:85,gap:0}][v];
+  return [{dur:0,gap:0},{dur:2100,gap:850},{dur:1400,gap:520},{dur:950,gap:340},{dur:680,gap:210},{dur:420,gap:90},{dur:260,gap:35},{dur:150,gap:5},{dur:85,gap:0},{dur:52,gap:0}][v];
 }
 function makeGrid(n=conf().n){
   S.n=n; const q=conf(); S.cells=[];
